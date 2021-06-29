@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tiHours"
+        android:id="@+id/tiMinutes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_4"
@@ -29,13 +29,13 @@
         android:layout_height="wrap_content"
         android:text=":"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintBottom_toBottomOf="@+id/tiHours"
-        app:layout_constraintEnd_toStartOf="@+id/tiMinutes"
-        app:layout_constraintStart_toEndOf="@+id/tiHours"
-        app:layout_constraintTop_toTopOf="@+id/tiHours" />
+        app:layout_constraintBottom_toBottomOf="@+id/tiMinutes"
+        app:layout_constraintEnd_toStartOf="@+id/tiSeconds"
+        app:layout_constraintStart_toEndOf="@+id/tiMinutes"
+        app:layout_constraintTop_toTopOf="@+id/tiMinutes" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tiMinutes"
+        android:id="@+id/tiSeconds"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_4"
@@ -60,10 +60,10 @@
         android:layout_height="wrap_content"
         android:text="/"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintBottom_toBottomOf="@+id/tiHours"
+        app:layout_constraintBottom_toBottomOf="@+id/tiMinutes"
         app:layout_constraintEnd_toStartOf="@+id/tiLayoutUnits"
-        app:layout_constraintStart_toEndOf="@+id/tiMinutes"
-        app:layout_constraintTop_toTopOf="@+id/tiHours" />
+        app:layout_constraintStart_toEndOf="@+id/tiSeconds"
+        app:layout_constraintTop_toTopOf="@+id/tiMinutes" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiLayoutUnits"

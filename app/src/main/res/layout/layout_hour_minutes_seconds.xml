@@ -59,12 +59,12 @@
         android:text=":"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintBottom_toBottomOf="@+id/tiHours"
-        app:layout_constraintEnd_toStartOf="@+id/tvSeconds"
+        app:layout_constraintEnd_toStartOf="@+id/tiSeconds"
         app:layout_constraintStart_toEndOf="@+id/tiMinutes"
         app:layout_constraintTop_toTopOf="@+id/tiHours" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tvSeconds"
+        android:id="@+id/tiSeconds"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_4"
