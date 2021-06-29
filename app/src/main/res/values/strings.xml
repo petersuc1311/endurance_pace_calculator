@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Endurance Pace Calculator</string>
+
+    // Tabs labels
+    <string name="pace_calculator_tab_label">Pace</string>
+    <string name="zones_calculator_tab_label">Zones</string>
+    <string name="splits_calculator_tab_label">Splits</string>
+
+
+    //Base drop down labels
+    <string name="activities_label">Activity</string>
+    <string name="zones_label">Choose method</string>
+    <string name="distance_label">Distance</string>
+
+    //Subtitle labels
+    <string name="duration_label">Duration</string>
+    <string name="pace_label">Pace</string>
+    <string name="swim_label">Swim</string>
+    <string name="transition_label">Transition</string>
+    <string name="bike_label">Bike</string>
+    <string name="run_label">Run</string>
+    <string name="total_label">Total</string>
+    <string name="hint_hours">hh</string>
+    <string name="hint_minutes">mm</string>
+    <string name="hint_seconds">ss</string>
+    <string name="frequency_label">Frequency</string>
+    <string name="split_label">Split</string>
+    <string name="time_label">Time</string>
+
+
+    //Slider values
+    <string name="slide_start_value">0</string>
+    <string name="slider_value_from">-50</string>
+    <string name="slider_value_to">50</string>
+
+    //Zones labels
+    <string name="bpm_label">BPM</string>
+    <string name="instructions_label">Test and calculate each activity separately.</string>
+    <string name="zone_label">Zone</string>
+    <string name="lthr_percentage_label">% LTHR</string>
+    <string name="zone_range_label">Range (BPM)</string>
+    <string name="total_duration_label">Total Duration</string>
+    <string name="transition_one_label">T1</string>
+    <string name="transition_two_label">T2</string>
+    <string name="swim_unit_label">/100m</string>
+    <string name="bike_unit_label">km/h</string>
+    <string name="run_unit_label">/km</string>
+
+</resources>

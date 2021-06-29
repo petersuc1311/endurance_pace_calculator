@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSwimLabel"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/swim_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/swimSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        app:layout_constraintEnd_toStartOf="@id/tiSwimPace"
+        app:layout_constraintStart_toStartOf="@id/tvSwimLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvSwimLabel" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tiSwimPace"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/swimSlider"
+        app:layout_constraintEnd_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintStart_toEndOf="@id/swimSlider"
+        app:layout_constraintTop_toTopOf="@id/swimSlider" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSwimUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/swim_unit_label"
+        app:layout_constraintBottom_toBottomOf="@id/swimSlider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tiSwimPace"
+        app:layout_constraintTop_toTopOf="@id/swimSlider" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTransitionOneLabel"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="@string/transition_one_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/swimSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/transitionOneSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        app:layout_constraintEnd_toStartOf="@id/tiSwimPace"
+        app:layout_constraintStart_toStartOf="@id/tvTransitionOneLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvTransitionOneLabel" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tiTransitionOneTime"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/transitionOneSlider"
+        app:layout_constraintEnd_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintStart_toEndOf="@id/transitionOneSlider"
+        app:layout_constraintTop_toTopOf="@id/transitionOneSlider" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvBikeLabel"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="@string/bike_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transitionOneSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/bikeSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        app:layout_constraintEnd_toStartOf="@id/tiSwimPace"
+        app:layout_constraintStart_toStartOf="@id/tvBikeLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvBikeLabel" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tiBikePace"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/bikeSlider"
+        app:layout_constraintEnd_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintStart_toEndOf="@id/bikeSlider"
+        app:layout_constraintTop_toTopOf="@id/bikeSlider" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvBikeUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bike_unit_label"
+        app:layout_constraintBottom_toBottomOf="@id/bikeSlider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tiBikePace"
+        app:layout_constraintTop_toTopOf="@id/bikeSlider" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTransitionTwoLabel"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="@string/transition_one_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bikeSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/transitionTwoSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        app:layout_constraintEnd_toStartOf="@id/tiSwimPace"
+        app:layout_constraintStart_toStartOf="@id/tvTransitionTwoLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvTransitionTwoLabel" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tiTransitionTwoTime"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/transitionTwoSlider"
+        app:layout_constraintEnd_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintStart_toEndOf="@id/transitionTwoSlider"
+        app:layout_constraintTop_toTopOf="@id/transitionTwoSlider" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvRunLabel"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="@string/run_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/transitionTwoSlider" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/runSlider"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        app:layout_constraintEnd_toStartOf="@id/tiSwimPace"
+        app:layout_constraintStart_toStartOf="@id/tvRunLabel"
+        app:layout_constraintTop_toBottomOf="@id/tvRunLabel" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/tiRunPace"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/runSlider"
+        app:layout_constraintEnd_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintStart_toEndOf="@id/runSlider"
+        app:layout_constraintTop_toTopOf="@id/runSlider" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvRunUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/run_unit_label"
+        app:layout_constraintBottom_toBottomOf="@id/runSlider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tiRunPace"
+        app:layout_constraintTop_toTopOf="@id/runSlider" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTotalTimeLabel"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="@string/total_duration_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/runSlider" />
+
+    <include
+        android:id="@+id/layoutRunTime"
+        layout="@layout/layout_hour_minutes_seconds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalTimeLabel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
