@@ -29,6 +29,9 @@ class PaceViewModel @Inject constructor() :
 
     private val _activityType = MutableStateFlow(ActivityType.FIVE_KM)
 
+    private val _swimPaceValue = MutableStateFlow("2:00")
+    val swimPaceValue: StateFlow<String> = _swimPaceValue
+
     fun setActivityType(activityType: ActivityType) {
         _activityType.value = activityType
     }
@@ -81,5 +84,29 @@ class PaceViewModel @Inject constructor() :
             )
 
 
+    }
+
+    fun submitTriathlonStagePace(sliderValue: Float, triStage: TriStage) {
+        when(triStage) {
+            TriStage.SWIM -> {
+                _swimPaceValue.value = sliderValue.toString()
+            }
+
+            TriStage.T1 -> {
+
+            }
+
+            TriStage.BIKE -> {
+
+            }
+
+            TriStage.T2 -> {
+
+            }
+
+            TriStage.RUN -> {
+
+            }
+        }
     }
 }

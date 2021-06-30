@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tiDurationHours"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tiTriDurationHours"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_4"
-        style="@style/TimeInputTextAppearance"
-        android:hint="@string/hint_hours"
+        android:text="00"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintEnd_toStartOf="@+id/tvColonFirst"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,19 +29,20 @@
         android:layout_height="wrap_content"
         android:text=":"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintBottom_toBottomOf="@+id/tiDurationHours"
-        app:layout_constraintEnd_toStartOf="@+id/tiDurationMinutes"
-        app:layout_constraintStart_toEndOf="@+id/tiDurationHours"
-        app:layout_constraintTop_toTopOf="@+id/tiDurationHours" />
+        app:layout_constraintBottom_toBottomOf="@+id/tiTriDurationHours"
+        app:layout_constraintEnd_toStartOf="@+id/tiTriDurationMinutes"
+        app:layout_constraintStart_toEndOf="@+id/tiTriDurationHours"
+        app:layout_constraintTop_toTopOf="@+id/tiTriDurationHours" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tiDurationMinutes"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tiTriDurationMinutes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_4"
         android:layout_marginEnd="@dimen/dimen_4"
-        style="@style/TimeInputTextAppearance"
-        android:hint="@string/hint_minutes"
+        android:text="00"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintEnd_toStartOf="@+id/tvColonSecond"
         app:layout_constraintStart_toEndOf="@+id/tvColonFirst"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,18 +60,19 @@
         android:layout_height="wrap_content"
         android:text=":"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintBottom_toBottomOf="@+id/tiDurationHours"
-        app:layout_constraintEnd_toStartOf="@+id/tiDurationSeconds"
-        app:layout_constraintStart_toEndOf="@+id/tiDurationMinutes"
-        app:layout_constraintTop_toTopOf="@+id/tiDurationHours" />
+        app:layout_constraintBottom_toBottomOf="@+id/tiTriDurationHours"
+        app:layout_constraintEnd_toStartOf="@+id/tiTriDurationSeconds"
+        app:layout_constraintStart_toEndOf="@+id/tiTriDurationMinutes"
+        app:layout_constraintTop_toTopOf="@+id/tiTriDurationHours" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/tiDurationSeconds"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tiTriDurationSeconds"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_4"
-        style="@style/TimeInputTextAppearance"
-        android:hint="@string/hint_seconds"
+        android:text="00"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvColonSecond"
         app:layout_constraintTop_toTopOf="parent" />
