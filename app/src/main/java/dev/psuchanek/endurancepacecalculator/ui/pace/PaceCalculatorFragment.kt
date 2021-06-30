@@ -20,7 +20,6 @@ import dev.psuchanek.endurancepacecalculator.databinding.CalculatorBaseLayoutBin
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
@@ -147,11 +146,11 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     }
 
     private fun setupTriSlidersTouchListeners() {
-        sliderSwim.addOnChangeListener(addOnSliderValueChangeListener(sliderSwim.id))
-        sliderTransitionOne.addOnChangeListener(addOnSliderValueChangeListener(sliderTransitionOne.id))
-        sliderBike.addOnChangeListener(addOnSliderValueChangeListener(sliderBike.id))
-        sliderTransitionTwo.addOnChangeListener(addOnSliderValueChangeListener(sliderTransitionTwo.id))
-        sliderRun.addOnChangeListener(addOnSliderValueChangeListener(sliderRun.id))
+        sliderSwim.addOnChangeListener(addOnSliderValueChangeListener())
+        sliderTransitionOne.addOnChangeListener(addOnSliderValueChangeListener())
+        sliderBike.addOnChangeListener(addOnSliderValueChangeListener())
+        sliderTransitionTwo.addOnChangeListener(addOnSliderValueChangeListener())
+        sliderRun.addOnChangeListener(addOnSliderValueChangeListener())
     }
 
     private fun setupObservers() {
@@ -172,7 +171,39 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
                 binding.layoutPaceCalculator.layoutTriathlon.tiSwimPace.text = it
             }
         }
+
+        lifecycleScope.launch {
+            paceViewModel.transitionOneValue.collect {
+                binding.layoutPaceCalculator.layoutTriathlon.tiTransitionOneTime.text = it
+            }
+        }
+
+        lifecycleScope.launch {
+            paceViewModel.bikePaceValue.collect {
+                binding.layoutPaceCalculator.layoutTriathlon.tiBikePace.text = it
+            }
+        }
+
+        lifecycleScope.launch {
+            paceViewModel.transitionTwoValue.collect {
+                binding.layoutPaceCalculator.layoutTriathlon.tiTransitionTwoTime.text = it
+            }
+
+        }
+
+        lifecycleScope.launch {
+            paceViewModel.runPaceValue.collect {
+                binding.layoutPaceCalculator.layoutTriathlon.tiRunPace.text = it
+            }
+        }
+
+        lifecycleScope.launch {
+            paceViewModel.triathlonDurationValue.collect { durationList ->
+                updateTriathlonDurationUI(durationList)
+            }
+        }
     }
+
 
     private fun updatePaceUI(paceList: List<String>) {
         if (!tiPaceMinutes.hasFocus()) tiPaceMinutes.setText(paceList[0])
@@ -183,6 +214,15 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         if (!tiDurationHours.hasFocus()) tiDurationHours.setText(durationList[0])
         if (!tiDurationMinutes.hasFocus()) tiDurationMinutes.setText(durationList[1])
         if (!tiDurationSeconds.hasFocus()) tiDurationSeconds.setText(durationList[2])
+    }
+
+    private fun updateTriathlonDurationUI(durationList: List<String>) {
+        binding.layoutPaceCalculator.layoutTriathlon.layoutTriathlonTotalDurationTime.tiTriDurationHours.text =
+            durationList[0]
+        binding.layoutPaceCalculator.layoutTriathlon.layoutTriathlonTotalDurationTime.tiTriDurationMinutes.text =
+            durationList[1]
+        binding.layoutPaceCalculator.layoutTriathlon.layoutTriathlonTotalDurationTime.tiTriDurationSeconds.text =
+            durationList[2]
     }
 
     private fun initAdapters() {
@@ -374,34 +414,30 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         paceViewModel.submitPace(minutes, seconds)
     }
 
-    private fun addOnSliderValueChangeListener(sliderId: Int) =
+    private fun addOnSliderValueChangeListener() =
         Slider.OnChangeListener { slider, value, fromUser ->
-            Timber.d(
-                "DEBUG: the id which triggered: ${slider.id} and the swim id ${sliderSwim.id}"
-            )
             when (slider.id) {
                 sliderSwim.id -> {
-                    Timber.d("DEBUG: slide value: $value")
-                    paceViewModel.submitTriathlonStagePace(value, TriStage.SWIM)
+                    submitTriathlonStagePaceToViewModel(value, TriStage.SWIM)
                 }
-
-                sliderSwim.id -> {
-
+                sliderTransitionOne.id -> {
+                    submitTriathlonStagePaceToViewModel(value, TriStage.T1)
                 }
-
-                sliderSwim.id -> {
-
+                sliderBike.id -> {
+                    submitTriathlonStagePaceToViewModel(value, TriStage.BIKE)
                 }
-
-                sliderSwim.id -> {
-
+                sliderTransitionTwo.id -> {
+                    submitTriathlonStagePaceToViewModel(value, TriStage.T2)
                 }
-
-                sliderSwim.id -> {
-
+                sliderRun.id -> {
+                    submitTriathlonStagePaceToViewModel(value, TriStage.RUN)
                 }
             }
         }
+
+    private fun submitTriathlonStagePaceToViewModel(value: Float, stage: TriStage) {
+        paceViewModel.submitTriathlonStagePace(value, stage)
+    }
 
     private fun setupSpinnerListeners() {
         binding.dropDownBaseSpinner.onItemClickListener = activitySpinnerOnItemClickListener()
@@ -457,7 +493,7 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
             }
         }
         when (this) {
-            0, 1, 2, 3 -> {
+            in 0..3 -> {
                 submitPaceValuesToViewModel(
                     if (tiPaceMinutes.text.toString()
                             .isNotBlank()
@@ -467,6 +503,13 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
                             .isNotBlank()
                     ) tiPaceSeconds.text.toString() else DEFAULT_TIME_VALUE
                 )
+            }
+            in 4..7 -> {
+                submitTriathlonStagePaceToViewModel(sliderSwim.value, TriStage.SWIM)
+                submitTriathlonStagePaceToViewModel(sliderTransitionOne.value, TriStage.T1)
+                submitTriathlonStagePaceToViewModel(sliderBike.value, TriStage.BIKE)
+                submitTriathlonStagePaceToViewModel(sliderTransitionTwo.value, TriStage.T2)
+                submitTriathlonStagePaceToViewModel(sliderRun.value, TriStage.RUN)
             }
         }
 

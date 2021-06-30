@@ -232,7 +232,7 @@
         app:layout_constraintTop_toBottomOf="@id/runSlider" />
 
     <include
-        android:id="@+id/layoutRunTime"
+        android:id="@+id/layoutTriathlonTotalDurationTime"
         layout="@layout/layout_textviews_hour_minutes_seconds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

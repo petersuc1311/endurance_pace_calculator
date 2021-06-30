@@ -8,6 +8,9 @@ import dev.psuchanek.endurancepacecalculator.utils.PaceCalculatorHelper.Companio
 import dev.psuchanek.endurancepacecalculator.utils.PaceCalculatorHelper.Companion.MAX_MINUTES_SECONDS_VALUE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flow
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,6 +18,9 @@ class PaceViewModel @Inject constructor() :
     ViewModel() {
 
     private val paceCalculatorHelper: PaceCalculatorHelper = PaceCalculatorHelper()
+
+    private val _triathlonDurationValue = MutableStateFlow(DEFAULT_DURATION)
+    val triathlonDurationValue: StateFlow<List<String>> = _triathlonDurationValue
 
     private val _inputCheckStatus = MutableStateFlow(InputCheckStatus.PASS)
     val inputCheckStatus: StateFlow<InputCheckStatus> = _inputCheckStatus
@@ -31,6 +37,18 @@ class PaceViewModel @Inject constructor() :
 
     private val _swimPaceValue = MutableStateFlow("2:00")
     val swimPaceValue: StateFlow<String> = _swimPaceValue
+
+    private val _transitionOneValue = MutableStateFlow("5:00")
+    val transitionOneValue: StateFlow<String> = _transitionOneValue
+
+    private val _bikePaceValue = MutableStateFlow("25")
+    val bikePaceValue: StateFlow<String> = _bikePaceValue
+
+    private val _transitionTwoValue = MutableStateFlow("5:00")
+    val transitionTwoValue: StateFlow<String> = _transitionTwoValue
+
+    private val _runPaceValue = MutableStateFlow("5:30")
+    val runPaceValue: StateFlow<String> = _runPaceValue
 
     fun setActivityType(activityType: ActivityType) {
         _activityType.value = activityType
@@ -87,26 +105,66 @@ class PaceViewModel @Inject constructor() :
     }
 
     fun submitTriathlonStagePace(sliderValue: Float, triStage: TriStage) {
-        when(triStage) {
+        val triathlonDistance = when (_activityType.value) {
+            ActivityType.SPRINT -> PaceCalculatorHelper.SPRINT_TRI
+            ActivityType.OLYMPIC -> PaceCalculatorHelper.OLYMPIC_TRI
+            ActivityType.HALF_TRIATHLON -> PaceCalculatorHelper.HALF_DISTANCE_TRI
+            ActivityType.FULL_TRIATHLON -> PaceCalculatorHelper.FULL_DISTANCE_TRI
+            else -> -1
+        }
+        when (triStage) {
             TriStage.SWIM -> {
-                _swimPaceValue.value = sliderValue.toString()
+                _swimPaceValue.value =
+                    paceCalculatorHelper.generateTriathlonSwimOrTransitionTimePaceString(
+                        sliderValue,
+                        PaceCalculatorHelper.SWIM
+                    )
+                paceCalculatorHelper.generateTimeInSecondsFromPaceValue(
+                    sliderValue,
+                    PaceCalculatorHelper.SWIM,
+                    triathlonDistance
+                )
             }
 
             TriStage.T1 -> {
-
+                _transitionOneValue.value =
+                    paceCalculatorHelper.generateTriathlonSwimOrTransitionTimePaceString(
+                        sliderValue,
+                        PaceCalculatorHelper.T1
+                    )
             }
 
             TriStage.BIKE -> {
 
+                _bikePaceValue.value = sliderValue.toString()
+                paceCalculatorHelper.generateTimeInSecondsFromPaceValue(
+                    sliderValue,
+                    PaceCalculatorHelper.BIKE,
+                    triathlonDistance
+                )
             }
 
             TriStage.T2 -> {
-
+                _transitionTwoValue.value =
+                    paceCalculatorHelper.generateTriathlonSwimOrTransitionTimePaceString(
+                        sliderValue,
+                        PaceCalculatorHelper.T2
+                    )
             }
 
             TriStage.RUN -> {
-
+                _runPaceValue.value =
+                    paceCalculatorHelper.generateTriathlonSwimOrTransitionTimePaceString(
+                        sliderValue,
+                        PaceCalculatorHelper.RUN
+                    )
+                paceCalculatorHelper.generateTimeInSecondsFromPaceValue(
+                    sliderValue,
+                    PaceCalculatorHelper.RUN,
+                    triathlonDistance
+                )
             }
         }
+        _triathlonDurationValue.value = paceCalculatorHelper.getTriathlonTotalDurationValues()
     }
 }
