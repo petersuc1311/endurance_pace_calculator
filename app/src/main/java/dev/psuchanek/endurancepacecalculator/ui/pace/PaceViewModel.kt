@@ -19,9 +19,6 @@ class PaceViewModel @Inject constructor() :
 
     private val _activityType = MutableStateFlow(ActivityType.FIVE_KM)
 
-    private val _inputCheckStatus = MutableStateFlow(InputCheckStatus.PASS)
-    val inputCheckStatus: StateFlow<InputCheckStatus> = _inputCheckStatus
-
     private val _runPaceValues = MutableStateFlow(DEFAULT_PACE)
     val runPaceValues: StateFlow<List<String>> = _runPaceValues
 
@@ -50,19 +47,19 @@ class PaceViewModel @Inject constructor() :
         _activityType.value = activityType
     }
 
-    fun submitPaceValue(value: Float) {
-        setRunDurationValues(value)
-        setRunPaceValues(value)
+    fun submitRunPaceValue(value: Float) {
+        setRunDurationValue(value)
+        setRunPaceValue(value)
     }
 
-    private fun setRunDurationValues(value: Float) {
+    private fun setRunDurationValue(value: Float) {
         _runDurationValues.value = paceCalculatorHelper.convertRunPaceValueToDuration(
             value,
             getRunDistance()
         )
     }
 
-    private fun setRunPaceValues(value: Float) {
+    private fun setRunPaceValue(value: Float) {
         _runPaceValues.value =
             paceCalculatorHelper.generateRunPaceListOfValuesFromFloatPaceValue(value)
     }

@@ -2,7 +2,6 @@ package dev.psuchanek.endurancepacecalculator.ui.pace
 
 
 import com.google.common.truth.Truth.assertThat
-import dev.psuchanek.endurancepacecalculator.utils.InputCheckStatus
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -25,7 +24,7 @@ class PaceViewModelTest {
         val paceValue = 330f
 
         //When
-        paceViewModel.submitPaceValue(paceValue)
+        paceViewModel.submitRunPaceValue(paceValue)
         val result = paceViewModel.runPaceValues.first()
 
         //Then

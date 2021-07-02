@@ -25,11 +25,10 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     private lateinit var binding: CalculatorBaseLayoutBinding
     private val paceViewModel: PaceViewModel by viewModels()
 
-    private lateinit var tvRunPaceMinutes: MaterialTextView
-    private lateinit var tvRunPaceSeconds: MaterialTextView
-    private lateinit var tvRunDurationHours: MaterialTextView
-    private lateinit var tvRunDurationMinutes: MaterialTextView
-    private lateinit var tvRunDurationSeconds: MaterialTextView
+
+    private lateinit var tvDurationHours: MaterialTextView
+    private lateinit var tvDurationMinutes: MaterialTextView
+    private lateinit var tvDurationSeconds: MaterialTextView
 
     private lateinit var sliderSwim: Slider
     private lateinit var sliderTransitionOne: Slider
@@ -60,36 +59,23 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
 
     private fun initUI() {
-        setupRunUI()
-        setupTriUI()
-    }
-
-    private fun setupRunUI() {
-        tvRunPaceMinutes =
-            binding.layoutPaceCalculator.layoutRunning.layoutRunningPace.tvRunPaceMinutes
-        tvRunPaceSeconds =
-            binding.layoutPaceCalculator.layoutRunning.layoutRunningPace.tvRunPaceSeconds
-        tvRunDurationHours =
+        tvDurationHours =
             binding.layoutPaceCalculator.layoutRunning.layoutRunningTime.tvDurationHours
-        tvRunDurationMinutes =
+        tvDurationMinutes =
             binding.layoutPaceCalculator.layoutRunning.layoutRunningTime.tvDurationMinutes
-        tvRunDurationSeconds =
+        tvDurationSeconds =
             binding.layoutPaceCalculator.layoutRunning.layoutRunningTime.tvDurationSeconds
 
         sliderRunPace = binding.layoutPaceCalculator.layoutRunning.sliderRunPace
-        submitPaceValuesToViewModel(sliderRunPace.value)
 
-    }
-
-    private fun setupTriUI() {
         sliderSwim = binding.layoutPaceCalculator.layoutTriathlon.swimSlider
         sliderTransitionOne = binding.layoutPaceCalculator.layoutTriathlon.transitionOneSlider
         sliderBike = binding.layoutPaceCalculator.layoutTriathlon.bikeSlider
         sliderTransitionTwo = binding.layoutPaceCalculator.layoutTriathlon.transitionTwoSlider
         sliderRun = binding.layoutPaceCalculator.layoutTriathlon.runSlider
 
+        submitPaceValuesToViewModel(sliderRunPace.value)
     }
-
 
     private fun setupSlidersTouchListeners() {
         sliderSwim.addOnChangeListener(addOnSliderValueChangeListener())
@@ -153,25 +139,24 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
 
     private fun updatePaceUI(paceList: List<String>) {
-        tvRunPaceMinutes.text = paceList[0]
-        tvRunPaceSeconds.text = paceList[1]
+        binding.layoutPaceCalculator.layoutRunning.layoutRunningPace.tvRunPaceMinutes.text =
+            paceList[0]
+        binding.layoutPaceCalculator.layoutRunning.layoutRunningPace.tvRunPaceSeconds.text =
+            paceList[1]
     }
 
     private fun updateDurationUI(durationList: List<String>) {
-        tvRunDurationHours.text = durationList[0]
-        tvRunDurationMinutes.text = durationList[1]
-        tvRunDurationSeconds.text = durationList[2]
+        tvDurationHours.text = durationList[0]
+        tvDurationMinutes.text = durationList[1]
+        tvDurationSeconds.text = durationList[2]
 
 
     }
 
     private fun updateTriathlonDurationUI(durationList: List<String>) {
-        binding.layoutPaceCalculator.layoutTriathlon.layoutTriathlonTotalDurationTime.tvDurationHours.text =
-            durationList[0]
-        binding.layoutPaceCalculator.layoutTriathlon.layoutTriathlonTotalDurationTime.tvDurationMinutes.text =
-            durationList[1]
-        binding.layoutPaceCalculator.layoutTriathlon.layoutTriathlonTotalDurationTime.tvDurationSeconds.text =
-            durationList[2]
+        tvDurationHours.text = durationList[0]
+        tvDurationMinutes.text = durationList[1]
+        tvDurationSeconds.text = durationList[2]
     }
 
     private fun initAdapters() {
@@ -213,7 +198,7 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         }
 
     private fun submitPaceValuesToViewModel(value: Float) {
-        paceViewModel.submitPaceValue(value)
+        paceViewModel.submitRunPaceValue(value)
     }
 
     private fun submitTriathlonStagePaceToViewModel(value: Float, stage: TriStage) {
