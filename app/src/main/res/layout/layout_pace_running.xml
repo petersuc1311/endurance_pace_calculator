@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/duration_label"/>
 
-    <include layout="@layout/layout_hour_minutes_seconds"
+    <include layout="@layout/layout_textviews_hour_minutes_seconds"
         android:layout_marginTop="@dimen/dimen_8"
         android:id="@+id/layoutRunningTime"
         android:layout_width="match_parent"
@@ -32,11 +32,43 @@
         android:text="@string/pace_label"/>
 
     <include
-        layout="@layout/layout_minutes_seconds_unit"
+        layout="@layout/layout_textviews_minutes_seconds_unit"
         android:layout_marginTop="@dimen/dimen_8"
         android:id="@+id/layoutRunningPace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tvPaceLabel"/>
+
+    <com.google.android.material.slider.Slider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:value="330"
+        android:valueFrom="120"
+        android:valueTo="540"
+        app:labelBehavior="gone"
+        android:stepSize="5"
+        android:id="@+id/sliderRunPace"
+        app:layout_constraintTop_toBottomOf="@id/layoutRunningPace"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvFasterLabel"
+        style="@style/LabelsTheme"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/sliderRunPace"
+        app:layout_constraintStart_toStartOf="@id/sliderRunPace"
+        android:text="@string/faster_label"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSlowerLabel"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4"
+        app:layout_constraintTop_toBottomOf="@id/sliderRunPace"
+        app:layout_constraintEnd_toEndOf="@id/sliderRunPace"
+        android:text="@string/slower_label"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

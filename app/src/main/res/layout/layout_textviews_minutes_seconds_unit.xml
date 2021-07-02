@@ -5,14 +5,14 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvDurationHours"
+        android:id="@+id/tvRunPaceMinutes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dimen_4"
         android:text="00"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintEnd_toStartOf="@+id/tvColonFirst"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineFirst"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,18 +24,18 @@
         app:layout_constraintGuide_percent="0.33" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvColonFirst"
+        android:id="@+id/tvColon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=":"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDurationHours"
-        app:layout_constraintEnd_toStartOf="@+id/tvDurationMinutes"
-        app:layout_constraintStart_toEndOf="@+id/tvDurationHours"
-        app:layout_constraintTop_toTopOf="@+id/tvDurationHours" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvRunPaceMinutes"
+        app:layout_constraintEnd_toStartOf="@+id/tvRunPaceSeconds"
+        app:layout_constraintStart_toEndOf="@+id/tvRunPaceMinutes"
+        app:layout_constraintTop_toTopOf="@+id/tvRunPaceMinutes" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvDurationMinutes"
+        android:id="@+id/tvRunPaceSeconds"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_4"
@@ -43,8 +43,8 @@
         android:text="00"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintEnd_toStartOf="@+id/tvColonSecond"
-        app:layout_constraintStart_toEndOf="@+id/tvColonFirst"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineSecond"
+        app:layout_constraintStart_toEndOf="@+id/tvColon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -55,26 +55,26 @@
         app:layout_constraintGuide_percent="0.66" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvColonSecond"
+        android:id="@+id/tvSlash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=":"
+        android:text="/"
+        android:layout_marginEnd="@dimen/dimen_4"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDurationHours"
-        app:layout_constraintEnd_toStartOf="@+id/tvDurationSeconds"
-        app:layout_constraintStart_toEndOf="@+id/tvDurationMinutes"
-        app:layout_constraintTop_toTopOf="@+id/tvDurationHours" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvRunPaceSeconds"
+        app:layout_constraintEnd_toStartOf="@+id/tvUnit"
+        app:layout_constraintStart_toEndOf="@+id/tvRunPaceSeconds"
+        app:layout_constraintTop_toTopOf="@+id/tvRunPaceSeconds" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvDurationSeconds"
-        android:layout_width="0dp"
+        android:id="@+id/tvUnit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_4"
-        android:text="00"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvColonSecond"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="km"
+        style="@style/PaceTextViewAppearance"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRunPaceMinutes"
+        app:layout_constraintStart_toEndOf="@+id/tvSlash"
+        app:layout_constraintTop_toTopOf="@+id/tvRunPaceMinutes" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

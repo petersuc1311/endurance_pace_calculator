@@ -9,11 +9,12 @@ class PaceCalculatorHelper {
     private var transitionOneInSeconds: Int = 0
     private var transitionTwoInSeconds: Int = 0
     private var runPaceInSeconds: Int = 0
+    private var runDurationInSeconds: Float = 0f
 
 
-    private var swimTimeInSeconds: Float = 0f
-    private var bikeTimeInSeconds: Float = 0f
-    private var runTimeInSeconds: Float = 0f
+    private var swimDurationInSeconds: Float = 0f
+    private var bikeDurationInSeconds: Float = 0f
+    private var triathlonRunDurationInSeconds: Float = 0f
 
 
     private var _unitInUse: Units = Units.METRIC
@@ -23,15 +24,9 @@ class PaceCalculatorHelper {
         _unitInUse = unit
     }
 
-    fun convertPaceToDuration(
-        minutes: Int = 0,
-        seconds: Int = 0,
-        activityType: ActivityType
-    ): List<String> {
-        val distance = activityType.getDistance()
-        val minutesInSeconds = minutes * MINUTES_TO_SECONDS_COEF
-        val secondsByDistance = (minutesInSeconds + seconds) * distance
-        return generateDurationListOfStrings(secondsByDistance)
+    fun convertRunPaceValueToDuration(paceValue: Float, runDistance: Float): List<String> {
+        runDurationInSeconds = paceValue * runDistance
+        return generateDurationListOfStrings(runDurationInSeconds)
     }
 
     private fun ActivityType.getDistance() = when (this) {
@@ -62,19 +57,8 @@ class PaceCalculatorHelper {
             secondsOutput.convertToDoubleDigitStringFormat()
         )
     }
-
-
-    fun convertDurationToPace(
-        hours: Int = 0,
-        minutes: Int = 0,
-        seconds: Int = 0,
-        activityType: ActivityType
-    ): List<String> {
-        val distance = activityType.getDistance()
-        val durationInSeconds = getDurationInSeconds(hours, minutes, seconds)
-        val paceInSeconds = (durationInSeconds / distance).toInt()
-
-        return generatePaceListOfStrings(paceInSeconds)
+    fun generateRunPaceListOfValuesFromFloatPaceValue(value: Float):List<String> {
+        return generatePaceListOfStrings(value.toInt())
     }
 
     private fun generatePaceListOfStrings(paceInSeconds: Int): List<String> {
@@ -84,10 +68,6 @@ class PaceCalculatorHelper {
             minutes.convertToDoubleDigitStringFormat(),
             seconds.convertToDoubleDigitStringFormat()
         )
-    }
-
-    private fun getDurationInSeconds(hours: Int, minutes: Int, seconds: Int): Int {
-        return hours * HOURS_TO_SECONDS_COEF + minutes * MINUTES_TO_SECONDS_COEF + seconds
     }
 
     fun generateTriathlonSwimOrTransitionTimePaceString(
@@ -132,7 +112,7 @@ class PaceCalculatorHelper {
         }
     }
 
-    fun generateTimeInSecondsFromPaceValue(
+    fun generateDurationInSecondsFromPaceValue(
         paceValue: Float,
         activityType: Int,
         triathlonDistance: Int
@@ -157,14 +137,14 @@ class PaceCalculatorHelper {
     private fun calculateSprintTimeInSeconds(paceValue: Float, activityType: Int) {
         when (activityType) {
             SWIM -> {
-                swimTimeInSeconds = ((SPRINT_SWIM_METRIC / SWIM_UNIT_COEF) * paceValue)
+                swimDurationInSeconds = ((SPRINT_SWIM_METRIC / SWIM_UNIT_COEF) * paceValue)
             }
             BIKE -> {
-                bikeTimeInSeconds =
+                bikeDurationInSeconds =
                     ((SPRINT_BIKE_METRIC / paceValue) * HOURS_TO_SECONDS_COEF)
             }
             RUN -> {
-                runTimeInSeconds = (SPRINT_RUN_METRIC * paceValue)
+                triathlonRunDurationInSeconds = (SPRINT_RUN_METRIC * paceValue)
             }
 
         }
@@ -173,14 +153,14 @@ class PaceCalculatorHelper {
     private fun calculateOlympicTimeInSeconds(paceValue: Float, activityType: Int) {
         when (activityType) {
             SWIM -> {
-                swimTimeInSeconds = ((OLYMPIC_SWIM_METRIC / SWIM_UNIT_COEF) * paceValue)
+                swimDurationInSeconds = ((OLYMPIC_SWIM_METRIC / SWIM_UNIT_COEF) * paceValue)
             }
             BIKE -> {
-                bikeTimeInSeconds =
+                bikeDurationInSeconds =
                     ((OLYMPIC_BIKE_METRIC / paceValue) * HOURS_TO_SECONDS_COEF)
             }
             RUN -> {
-                runTimeInSeconds = (OLYMPIC_RUN_METRIC * paceValue)
+                triathlonRunDurationInSeconds = (OLYMPIC_RUN_METRIC * paceValue)
             }
 
         }
@@ -189,15 +169,15 @@ class PaceCalculatorHelper {
     private fun calculateHalfDistanceTimeInSeconds(paceValue: Float, activityType: Int) {
         when (activityType) {
             SWIM -> {
-                swimTimeInSeconds =
+                swimDurationInSeconds =
                     ((HALF_DISTANCE_SWIM_METRIC / SWIM_UNIT_COEF) * paceValue)
             }
             BIKE -> {
-                bikeTimeInSeconds =
+                bikeDurationInSeconds =
                     ((HALF_DISTANCE_BIKE_METRIC / paceValue) * HOURS_TO_SECONDS_COEF)
             }
             RUN -> {
-                runTimeInSeconds = (HALF_DISTANCE_RUN_METRIC * paceValue)
+                triathlonRunDurationInSeconds = (HALF_DISTANCE_RUN_METRIC * paceValue)
             }
 
         }
@@ -206,15 +186,15 @@ class PaceCalculatorHelper {
     private fun calculateFullDistanceTimeInSeconds(paceValue: Float, activityType: Int) {
         when (activityType) {
             SWIM -> {
-                swimTimeInSeconds =
+                swimDurationInSeconds =
                     ((FULL_DISTANCE_SWIM_METRIC / SWIM_UNIT_COEF) * paceValue)
             }
             BIKE -> {
-                bikeTimeInSeconds =
+                bikeDurationInSeconds =
                     ((FULL_DISTANCE_BIKE_METRIC / paceValue) * HOURS_TO_SECONDS_COEF)
             }
             RUN -> {
-                runTimeInSeconds = (FULL_DISTANCE_RUN_METRIC * paceValue)
+                triathlonRunDurationInSeconds = (FULL_DISTANCE_RUN_METRIC * paceValue)
             }
 
         }
@@ -222,23 +202,29 @@ class PaceCalculatorHelper {
 
     fun getTriathlonTotalDurationValues(): List<String> {
         val totalDurationInSeconds =
-            swimTimeInSeconds + transitionOneInSeconds + bikeTimeInSeconds + transitionTwoInSeconds + runTimeInSeconds
+            swimDurationInSeconds + transitionOneInSeconds + bikeDurationInSeconds + transitionTwoInSeconds + triathlonRunDurationInSeconds
         return generateDurationListOfStrings(totalDurationInSeconds)
     }
 
 
     fun getTriDurationInSeconds() =
-        swimPaceInSeconds + transitionOneInSeconds + bikeTimeInSeconds + transitionTwoInSeconds + runTimeInSeconds
+        swimPaceInSeconds + transitionOneInSeconds + bikeDurationInSeconds + transitionTwoInSeconds + triathlonRunDurationInSeconds
+
+
 
 
     companion object {
         val DEFAULT_PACE = listOf("00", "00")
         val DEFAULT_DURATION = listOf("00", "00", "00")
-        const val MAX_MINUTES_SECONDS_VALUE = 59
 
         private const val SWIM_UNIT_COEF = 100
         private const val HOURS_TO_SECONDS_COEF = 3600
         private const val MINUTES_TO_SECONDS_COEF = 60
+
+        const val RUN_5K = 5f
+        const val RUN_10K = 10f
+        const val RUN_HALF_MARATHON = 21.097f
+        const val RUN_FULL_MARATHON = 42.195f
 
         const val SWIM = 1
         const val T1 = 2

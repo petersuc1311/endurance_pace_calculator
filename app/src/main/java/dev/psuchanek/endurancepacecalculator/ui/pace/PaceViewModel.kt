@@ -5,12 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.psuchanek.endurancepacecalculator.utils.*
 import dev.psuchanek.endurancepacecalculator.utils.PaceCalculatorHelper.Companion.DEFAULT_DURATION
 import dev.psuchanek.endurancepacecalculator.utils.PaceCalculatorHelper.Companion.DEFAULT_PACE
-import dev.psuchanek.endurancepacecalculator.utils.PaceCalculatorHelper.Companion.MAX_MINUTES_SECONDS_VALUE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,89 +15,56 @@ class PaceViewModel @Inject constructor() :
 
     private val paceCalculatorHelper: PaceCalculatorHelper = PaceCalculatorHelper()
 
-    private val _triathlonDurationValue = MutableStateFlow(DEFAULT_DURATION)
-    val triathlonDurationValue: StateFlow<List<String>> = _triathlonDurationValue
-
-    private val _inputCheckStatus = MutableStateFlow(InputCheckStatus.PASS)
-    val inputCheckStatus: StateFlow<InputCheckStatus> = _inputCheckStatus
-
-    private val _paceValues = MutableStateFlow(DEFAULT_PACE)
-    val paceValues: StateFlow<List<String>> = _paceValues
-
-    private val _durationValues = MutableStateFlow(DEFAULT_DURATION)
-    val durationValues: StateFlow<List<String>> = _durationValues
-
     private val _unitsType = MutableStateFlow(Units.METRIC)
 
     private val _activityType = MutableStateFlow(ActivityType.FIVE_KM)
 
-    private val _swimPaceValue = MutableStateFlow("2:00")
-    val swimPaceValue: StateFlow<String> = _swimPaceValue
+    private val _inputCheckStatus = MutableStateFlow(InputCheckStatus.PASS)
+    val inputCheckStatus: StateFlow<InputCheckStatus> = _inputCheckStatus
+
+    private val _runPaceValues = MutableStateFlow(DEFAULT_PACE)
+    val runPaceValues: StateFlow<List<String>> = _runPaceValues
+
+    private val _runDurationValues = MutableStateFlow(DEFAULT_DURATION)
+    val runDurationValues: StateFlow<List<String>> = _runDurationValues
+
+    private val _triDurationValue = MutableStateFlow(DEFAULT_DURATION)
+    val triDurationValue: StateFlow<List<String>> = _triDurationValue
+
+    private val _triSwimPaceValue = MutableStateFlow("2:00")
+    val triSwimPaceValue: StateFlow<String> = _triSwimPaceValue
 
     private val _transitionOneValue = MutableStateFlow("5:00")
     val transitionOneValue: StateFlow<String> = _transitionOneValue
 
-    private val _bikePaceValue = MutableStateFlow("25")
-    val bikePaceValue: StateFlow<String> = _bikePaceValue
+    private val _triBikePaceValue = MutableStateFlow("25")
+    val triBikePaceValue: StateFlow<String> = _triBikePaceValue
 
     private val _transitionTwoValue = MutableStateFlow("5:00")
     val transitionTwoValue: StateFlow<String> = _transitionTwoValue
 
-    private val _runPaceValue = MutableStateFlow("5:30")
-    val runPaceValue: StateFlow<String> = _runPaceValue
+    private val _triRunPaceValue = MutableStateFlow("5:30")
+    val triRunPaceValue: StateFlow<String> = _triRunPaceValue
 
     fun setActivityType(activityType: ActivityType) {
         _activityType.value = activityType
     }
 
-    fun submitPace(
-        minutes: String = DEFAULT_TIME_VALUE,
-        seconds: String = DEFAULT_TIME_VALUE,
-        units: Units = Units.METRIC
-    ) {
-        when {
-            minutes.length > 2 || seconds.length > 2 -> {
-                _inputCheckStatus.value = InputCheckStatus.LENGTH_ERROR
-            }
-
-            minutes.toInt() > MAX_MINUTES_SECONDS_VALUE || seconds.toInt() > MAX_MINUTES_SECONDS_VALUE -> {
-                _inputCheckStatus.value = InputCheckStatus.VALUE_ERROR
-            }
-        }
-
-        _durationValues.value =
-            paceCalculatorHelper.convertPaceToDuration(
-                minutes.toInt(),
-                seconds.toInt(),
-                _activityType.value
-            )
-
+    fun submitPaceValue(value: Float) {
+        setRunDurationValues(value)
+        setRunPaceValues(value)
     }
 
-    fun submitDuration(
-        hours: String = DEFAULT_TIME_VALUE,
-        minutes: String = DEFAULT_TIME_VALUE,
-        seconds: String = DEFAULT_TIME_VALUE,
-        units: Units = Units.METRIC
-    ) {
-        when {
-            hours.length > 2 || minutes.length > 2 || seconds.length > 2 -> {
-                _inputCheckStatus.value = InputCheckStatus.LENGTH_ERROR
-            }
-            minutes.toInt() > MAX_MINUTES_SECONDS_VALUE || seconds.toInt() > MAX_MINUTES_SECONDS_VALUE -> {
-                _inputCheckStatus.value = InputCheckStatus.VALUE_ERROR
-            }
-        }
+    private fun setRunDurationValues(value: Float) {
+        _runDurationValues.value = paceCalculatorHelper.convertRunPaceValueToDuration(
+            value,
+            getRunDistance()
+        )
+    }
 
-        _paceValues.value =
-            paceCalculatorHelper.convertDurationToPace(
-                hours.toInt(),
-                minutes.toInt(),
-                seconds.toInt(),
-                _activityType.value
-            )
-
-
+    private fun setRunPaceValues(value: Float) {
+        _runPaceValues.value =
+            paceCalculatorHelper.generateRunPaceListOfValuesFromFloatPaceValue(value)
     }
 
     fun submitTriathlonStagePace(sliderValue: Float, triStage: TriStage) {
@@ -114,12 +77,12 @@ class PaceViewModel @Inject constructor() :
         }
         when (triStage) {
             TriStage.SWIM -> {
-                _swimPaceValue.value =
+                _triSwimPaceValue.value =
                     paceCalculatorHelper.generateTriathlonSwimOrTransitionTimePaceString(
                         sliderValue,
                         PaceCalculatorHelper.SWIM
                     )
-                paceCalculatorHelper.generateTimeInSecondsFromPaceValue(
+                paceCalculatorHelper.generateDurationInSecondsFromPaceValue(
                     sliderValue,
                     PaceCalculatorHelper.SWIM,
                     triathlonDistance
@@ -136,8 +99,8 @@ class PaceViewModel @Inject constructor() :
 
             TriStage.BIKE -> {
 
-                _bikePaceValue.value = sliderValue.toString()
-                paceCalculatorHelper.generateTimeInSecondsFromPaceValue(
+                _triBikePaceValue.value = sliderValue.toString()
+                paceCalculatorHelper.generateDurationInSecondsFromPaceValue(
                     sliderValue,
                     PaceCalculatorHelper.BIKE,
                     triathlonDistance
@@ -153,18 +116,26 @@ class PaceViewModel @Inject constructor() :
             }
 
             TriStage.RUN -> {
-                _runPaceValue.value =
+                _triRunPaceValue.value =
                     paceCalculatorHelper.generateTriathlonSwimOrTransitionTimePaceString(
                         sliderValue,
                         PaceCalculatorHelper.RUN
                     )
-                paceCalculatorHelper.generateTimeInSecondsFromPaceValue(
+                paceCalculatorHelper.generateDurationInSecondsFromPaceValue(
                     sliderValue,
                     PaceCalculatorHelper.RUN,
                     triathlonDistance
                 )
             }
         }
-        _triathlonDurationValue.value = paceCalculatorHelper.getTriathlonTotalDurationValues()
+        _triDurationValue.value = paceCalculatorHelper.getTriathlonTotalDurationValues()
+    }
+
+    private fun getRunDistance(): Float = when (_activityType.value) {
+        ActivityType.FIVE_KM -> PaceCalculatorHelper.RUN_5K
+        ActivityType.TEN_KM -> PaceCalculatorHelper.RUN_10K
+        ActivityType.HALF_MARATHON -> PaceCalculatorHelper.RUN_HALF_MARATHON
+        ActivityType.FULL_MARATHON -> PaceCalculatorHelper.RUN_FULL_MARATHON
+        else -> -1f
     }
 }

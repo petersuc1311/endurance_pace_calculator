@@ -45,5 +45,7 @@
     <string name="swim_unit_label">/100m</string>
     <string name="bike_unit_label">km/h</string>
     <string name="run_unit_label">/km</string>
+    <string name="faster_label">Faster</string>
+    <string name="slower_label">Slower</string>
 
 </resources>
