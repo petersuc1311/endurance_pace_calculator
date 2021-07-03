@@ -7,6 +7,7 @@ import dev.psuchanek.endurancepacecalculator.utils.PaceCalculatorHelper.Companio
 import dev.psuchanek.endurancepacecalculator.utils.PaceCalculatorHelper.Companion.DEFAULT_PACE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,6 +43,7 @@ class PaceViewModel @Inject constructor() :
 
     private val _triRunPaceValue = MutableStateFlow("5:30")
     val triRunPaceValue: StateFlow<String> = _triRunPaceValue
+
 
     fun setActivityType(activityType: ActivityType) {
         _activityType.value = activityType

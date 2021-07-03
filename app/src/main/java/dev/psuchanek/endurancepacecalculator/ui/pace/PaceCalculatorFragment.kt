@@ -26,9 +26,13 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     private val paceViewModel: PaceViewModel by viewModels()
 
 
-    private lateinit var tvDurationHours: MaterialTextView
-    private lateinit var tvDurationMinutes: MaterialTextView
-    private lateinit var tvDurationSeconds: MaterialTextView
+    private lateinit var tvRunDurationHours: MaterialTextView
+    private lateinit var tvRunDurationMinutes: MaterialTextView
+    private lateinit var tvRunDurationSeconds: MaterialTextView
+
+    private lateinit var tvTriathlonDurationHours: MaterialTextView
+    private lateinit var tvTriathlonDurationMinutes: MaterialTextView
+    private lateinit var tvTriathlonDurationSeconds: MaterialTextView
 
     private lateinit var sliderSwim: Slider
     private lateinit var sliderTransitionOne: Slider
@@ -55,26 +59,31 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         setupObservers()
         initAdapters()
         setupSpinnerListeners()
+        submitPaceValuesToViewModel(sliderRunPace.value)
     }
 
 
     private fun initUI() {
-        tvDurationHours =
-            binding.layoutPaceCalculator.layoutRunning.layoutRunningTime.tvDurationHours
-        tvDurationMinutes =
-            binding.layoutPaceCalculator.layoutRunning.layoutRunningTime.tvDurationMinutes
-        tvDurationSeconds =
-            binding.layoutPaceCalculator.layoutRunning.layoutRunningTime.tvDurationSeconds
-
+        binding.layoutPaceCalculator.layoutRunning.layoutRunningTime.apply {
+            this@PaceCalculatorFragment.tvRunDurationHours = tvDurationHours
+            this@PaceCalculatorFragment.tvRunDurationMinutes = tvDurationMinutes
+            this@PaceCalculatorFragment.tvRunDurationSeconds = tvDurationSeconds
+        }
         sliderRunPace = binding.layoutPaceCalculator.layoutRunning.sliderRunPace
 
-        sliderSwim = binding.layoutPaceCalculator.layoutTriathlon.swimSlider
-        sliderTransitionOne = binding.layoutPaceCalculator.layoutTriathlon.transitionOneSlider
-        sliderBike = binding.layoutPaceCalculator.layoutTriathlon.bikeSlider
-        sliderTransitionTwo = binding.layoutPaceCalculator.layoutTriathlon.transitionTwoSlider
-        sliderRun = binding.layoutPaceCalculator.layoutTriathlon.runSlider
+        binding.layoutPaceCalculator.layoutTriathlon.apply {
+            sliderSwim = swimSlider
+            sliderTransitionOne = transitionOneSlider
+            sliderBike = bikeSlider
+            sliderTransitionTwo = transitionTwoSlider
+            sliderRun = runSlider
 
-        submitPaceValuesToViewModel(sliderRunPace.value)
+            layoutTriathlonTotalDurationTime.apply {
+                tvTriathlonDurationHours = tvDurationHours
+                tvTriathlonDurationMinutes = tvDurationMinutes
+                tvTriathlonDurationSeconds = tvDurationSeconds
+            }
+        }
     }
 
     private fun setupSlidersTouchListeners() {
@@ -89,7 +98,7 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     private fun setupObservers() {
         lifecycleScope.launch {
             paceViewModel.runDurationValues.collect { durationList ->
-                updateDurationUI(durationList)
+                updateRunDurationUI(durationList)
             }
         }
 
@@ -139,24 +148,27 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
 
     private fun updatePaceUI(paceList: List<String>) {
-        binding.layoutPaceCalculator.layoutRunning.layoutRunningPace.tvRunPaceMinutes.text =
-            paceList[0]
-        binding.layoutPaceCalculator.layoutRunning.layoutRunningPace.tvRunPaceSeconds.text =
-            paceList[1]
+        binding.layoutPaceCalculator.layoutRunning.layoutRunningPace.apply {
+            tvRunPaceMinutes.text = paceList[0]
+            tvRunPaceSeconds.text = paceList[1]
+        }
+
     }
 
-    private fun updateDurationUI(durationList: List<String>) {
-        tvDurationHours.text = durationList[0]
-        tvDurationMinutes.text = durationList[1]
-        tvDurationSeconds.text = durationList[2]
+    private fun updateRunDurationUI(durationList: List<String>) {
+        tvRunDurationHours.text = durationList[0]
+        tvRunDurationMinutes.text = durationList[1]
+        tvRunDurationSeconds.text = durationList[2]
 
 
     }
 
     private fun updateTriathlonDurationUI(durationList: List<String>) {
-        tvDurationHours.text = durationList[0]
-        tvDurationMinutes.text = durationList[1]
-        tvDurationSeconds.text = durationList[2]
+        tvTriathlonDurationHours.text = durationList[0]
+        tvTriathlonDurationMinutes.text = durationList[1]
+        tvTriathlonDurationSeconds.text = durationList[2]
+
+
     }
 
     private fun initAdapters() {
