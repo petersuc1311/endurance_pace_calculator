@@ -2,6 +2,7 @@ package dev.psuchanek.endurancepacecalculator.utils
 
 
 import com.google.common.truth.Truth.assertThat
+import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
 import dev.psuchanek.endurancepacecalculator.calculator.ZonesCalculatorHelper
 import org.junit.Before
 import org.junit.Test
@@ -74,6 +75,120 @@ class ZonesCalculatorHelperTest {
 
         val lowerBound = "${result[1].lowerPaceRange[0]}:${result[1].lowerPaceRange[1]}"
         val upperBound = "${result[1].upperPaceRange[0]}:${result[1].upperPaceRange[1]}"
+
+        //Then
+        assertThat("$lowerBound->$upperBound").isEqualTo(
+            expectedResult
+        )
+    }
+
+    @Test
+    fun`generate bike power zones from functional threshold power and return zone one`() {
+        //Given
+        val bikeFTP = 250
+        val expectedResult = "125->175"
+        //When
+        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE)
+        val result = zonesCalculatorHelper.getBikePowerZones()
+
+        //Then
+        val lowerBound = "${result[0].lowerPowerRange}"
+        val upperBound = "${result[0].upperPowerRange}"
+
+        //Then
+        assertThat("$lowerBound->$upperBound").isEqualTo(
+            expectedResult
+        )
+    }
+
+    @Test
+    fun`generate bike power zones from functional threshold power and return zone seven`() {
+        //Given
+        val bikeFTP = 250
+        val expectedResult = "287->999"
+        //When
+        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE)
+        val result = zonesCalculatorHelper.getBikePowerZones()
+
+        //Then
+        val lowerBound = "${result[6].lowerPowerRange}"
+        val upperBound = "${result[6].upperPowerRange}"
+
+        //Then
+        assertThat("$lowerBound->$upperBound").isEqualTo(
+            expectedResult
+        )
+    }
+
+    @Test
+    fun`generate run power zones from functional threshold power and return zone one`() {
+        //Given
+        val runFTP = 250
+        val expectedResult = "125->190"
+        //When
+        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN)
+        val result = zonesCalculatorHelper.getRunPowerZones()
+
+        //Then
+        val lowerBound = "${result[0].lowerPowerRange}"
+        val upperBound = "${result[0].upperPowerRange}"
+
+        //Then
+        assertThat("$lowerBound->$upperBound").isEqualTo(
+            expectedResult
+        )
+    }
+
+    @Test
+    fun`generate run power zones from functional threshold power and return zone seven`() {
+        //Given
+        val runFTP = 250
+        val expectedResult = "312->999"
+        //When
+        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN)
+        val result = zonesCalculatorHelper.getRunPowerZones()
+
+        //Then
+        val lowerBound = "${result[6].lowerPowerRange}"
+        val upperBound = "${result[6].upperPowerRange}"
+
+        //Then
+        assertThat("$lowerBound->$upperBound").isEqualTo(
+            expectedResult
+        )
+    }
+
+    @Test
+    fun`generate heart rate zones from lactate threshold and return zone one`() {
+        //Given
+        val lthr = 170
+        val expectedResult = "122->137"
+        //When
+        zonesCalculatorHelper.generateHeartRateZones(lthr)
+        val result = zonesCalculatorHelper.getHeartRateZones()
+
+        //Then
+        val lowerBound = "${result[0].lowerHeartRateRange}"
+        val upperBound = "${result[0].upperHeartRateRange}"
+
+        //Then
+        assertThat("$lowerBound->$upperBound").isEqualTo(
+            expectedResult
+        )
+    }
+
+    @Test
+    fun`generate heart rate zones from lactate threshold and return zone five`() {
+        //Given
+        val lthr = 170
+        val expectedResult = "178->999"
+        //When
+        zonesCalculatorHelper.generateHeartRateZones(lthr)
+        val result = zonesCalculatorHelper.getHeartRateZones()
+
+        //Then
+        val lowerBound = "${result[4].lowerHeartRateRange}"
+        val upperBound = "${result[4].upperHeartRateRange}"
 
         //Then
         assertThat("$lowerBound->$upperBound").isEqualTo(

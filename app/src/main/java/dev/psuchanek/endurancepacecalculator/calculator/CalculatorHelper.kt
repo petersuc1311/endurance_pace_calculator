@@ -36,6 +36,7 @@ open class CalculatorHelper {
     companion object {
         val DEFAULT_PACE = listOf("00", "00")
         val DEFAULT_DURATION = listOf("00", "00", "00")
+        const val RUN_BIKE_HR = 6
 
         const val SWIM_UNIT_COEF = 100
         const val SECONDS_IN_ONE_HOUR = 3600
