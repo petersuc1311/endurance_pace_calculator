@@ -1,10 +1,11 @@
 package dev.psuchanek.endurancepacecalculator.calculator
 
 import dev.psuchanek.endurancepacecalculator.models.HeartRateZones
-import dev.psuchanek.endurancepacecalculator.models.PowerZones
 import dev.psuchanek.endurancepacecalculator.models.PaceZones
+import dev.psuchanek.endurancepacecalculator.models.PowerZones
+import dev.psuchanek.endurancepacecalculator.models.Zones
 import java.security.InvalidParameterException
-import kotlin.math.ceil
+
 
 class ZonesCalculatorHelper : CalculatorHelper() {
 
@@ -18,204 +19,180 @@ class ZonesCalculatorHelper : CalculatorHelper() {
     private var runPowerZones = emptyList<PowerZones>()
 
     private var lthr: Int = 0
-    private var heartRateZones = emptyList<HeartRateZones>()
+    private var zones = emptyList<Zones>()
 
     fun getCSSPace() = criticalSwimSpeedPaceValues
-    fun getCSSZones() = criticalSwimSpeedPaceZones
 
-    fun getBikePowerZones() = bikePowerZones
-    fun getRunPowerZones() = runPowerZones
+    @Suppress("UNCHECKED_CAST")
+    fun getCSSZones() = zones as List<PaceZones>
 
-    fun getHeartRateZones() = heartRateZones
+    @Suppress("UNCHECKED_CAST")
+    fun getBikePowerZones() = zones as List<PowerZones>
+
+    @Suppress("UNCHECKED_CAST")
+    fun getRunPowerZones() = zones as List<PowerZones>
+
+    @Suppress("UNCHECKED_CAST")
+    fun getHeartRateZones() = zones as List<HeartRateZones>
 
 
-    fun generateCriticalSwimSpeedPace(
+    fun generateCriticalSwimSpeedPaceZones(
         paceValue400: Float,
         paceValue200: Float
     ) {
         calculateCriticalSwimSpeed(paceValue400, paceValue200)
         criticalSwimSpeedPaceValues = generatePaceListOfStrings(swimCSSValue.toInt())
+        zones = calculateZones(boundsList = LIST_OF_SWIM_ZONE_BOUNDS, methodType = SWIM_PACE)
     }
 
     private fun calculateCriticalSwimSpeed(paceValue400: Float, paceValue200: Float) {
         swimCSSValue = (paceValue400 - paceValue200) / 2
     }
 
-    fun generateZonesForCriticalSwimSpeed() {
-        val swimSpeedZonesList = mutableListOf<PaceZones>()
-
-        for (i in LIST_OF_SWIM_ZONE_BOUNDS.indices) {
-            val lowerPaceBoundValue = calculateZoneBound(
-                LIST_OF_SWIM_ZONE_BOUNDS[i],
-                SWIM
-            )
-
-            val upperPaceBoundValue: Int
-
-            when {
-                i != (LIST_OF_SWIM_ZONE_BOUNDS.size - 1) -> {
-                    upperPaceBoundValue = calculateZoneBound(
-                        LIST_OF_SWIM_ZONE_BOUNDS[i + 1],
-                        SWIM
-                    )
-                    swimSpeedZonesList.add(
-                        i, PaceZones(
-                            zone = i,
-                            lowerZoneBound = LIST_OF_SWIM_ZONE_BOUNDS[i].toString(),
-                            upperZoneBound = LIST_OF_SWIM_ZONE_BOUNDS[i + 1].toString(),
-                            lowerPaceRange = generatePaceListOfStrings(lowerPaceBoundValue),
-                            upperPaceRange = generatePaceListOfStrings(upperPaceBoundValue)
-                        )
-                    )
-
-                }
-                else -> {
-                    swimSpeedZonesList.add(
-                        i, PaceZones(
-                            zone = i,
-                            lowerZoneBound = LIST_OF_SWIM_ZONE_BOUNDS[i].toString(),
-                            upperZoneBound = ZONE_SEVEN_UPPER_ZONE_RANGE,
-                            lowerPaceRange = generatePaceListOfStrings(lowerPaceBoundValue),
-                            upperPaceRange = listOf(ZONE_SEVEN_UPPER_ZONE_BOUND)
-                        )
-                    )
-                }
-
-            }
-        }
-
-        criticalSwimSpeedPaceZones = swimSpeedZonesList
-    }
 
     fun generatePowerZones(ftp: Int, activity: Int) {
         when (activity) {
-            BIKE -> {
+            BIKE_POWER -> {
                 bikeFTP = ftp
-                bikePowerZones = calculatePowerZones(activity, LIST_OF_BIKE_POWER_ZONE_BOUNDS)
+                zones = calculateZones(
+                    boundsList = LIST_OF_BIKE_POWER_ZONE_BOUNDS,
+                    methodType = activity
+                )
             }
-            RUN -> {
+            RUN_POWER -> {
                 runFTP = ftp
-                runPowerZones = calculatePowerZones(activity, LIST_OF_RUN_POWER_ZONE_BOUNDS)
+                zones = calculateZones(
+                    boundsList = LIST_OF_RUN_POWER_ZONE_BOUNDS,
+                    methodType = activity
+                )
             }
         }
     }
 
-    private fun calculatePowerZones(activity: Int, zoneBounds: List<Int>): List<PowerZones> {
-        val powerZones = mutableListOf<PowerZones>()
-
-        for (i in zoneBounds.indices) {
-            val lowerPaceBoundValue = calculateZoneBound(
-                zoneBounds[i],
-                activity
-            )
-
-            val upperPaceBoundValue: Int
-
-            when {
-                i != (zoneBounds.size - 1) -> {
-                    upperPaceBoundValue = calculateZoneBound(
-                        zoneBounds[i + 1],
-                        activity
-                    )
-                    powerZones.add(
-                        i, PowerZones(
-                            zone = i,
-                            lowerZoneBound = zoneBounds[i].toString(),
-                            upperZoneBound = zoneBounds[i + 1].toString(),
-                            lowerPowerRange = lowerPaceBoundValue,
-                            upperPowerRange = upperPaceBoundValue
-                        )
-                    )
-
-                }
-                else -> {
-                    powerZones.add(
-                        i, PowerZones(
-                            zone = i,
-                            lowerZoneBound = zoneBounds[i].toString(),
-                            upperZoneBound = ZONE_SEVEN_UPPER_ZONE_RANGE,
-                            lowerPowerRange = lowerPaceBoundValue,
-                            upperPowerRange = ZONE_SEVEN_POWER_UPPER_ZONE_RANGE
-                        )
-                    )
-                }
-
-            }
-        }
-        return powerZones
-    }
 
     fun generateHeartRateZones(lthr: Int) {
         this.lthr = lthr
-        heartRateZones = calculateHeartRateZones()
+        zones = calculateZones(boundsList = LIST_OF_HR_ZONE_BOUNDS, LTHR)
     }
 
-    private fun calculateHeartRateZones(): List<HeartRateZones> {
-        val heartRateZones = mutableListOf<HeartRateZones>()
 
-        for (i in LIST_OF_HR_ZONE_BOUNDS.indices) {
-            val lowerPaceBoundValue = calculateZoneBound(
-                LIST_OF_HR_ZONE_BOUNDS[i],
-                RUN_BIKE_HR
+    private fun calculateZones(boundsList: List<Int>, methodType: Int): List<Zones> {
+
+        val zonesList = mutableListOf<Zones>()
+
+        for (i in boundsList.indices) {
+            val lowerBoundValue = calculateZoneBound(
+                boundsList[i],
+                methodType
             )
 
-            val upperPaceBoundValue: Int
+            val upperBoundValue: Int
+
 
             when {
-                i != (LIST_OF_HR_ZONE_BOUNDS.size - 1) -> {
-                    upperPaceBoundValue = calculateZoneBound(
-                        LIST_OF_HR_ZONE_BOUNDS[i + 1],
-                        RUN_BIKE_HR
+                i != (boundsList.size - 1) -> {
+                    upperBoundValue = calculateZoneBound(
+                        boundsList[i + 1],
+                        methodType
                     )
-                    heartRateZones.add(
-                        i, HeartRateZones(
+                    zonesList.add(
+                        i, getZoneModel(
+                            methodType = methodType,
                             zone = i,
-                            lowerZoneBound = LIST_OF_HR_ZONE_BOUNDS[i].toString(),
-                            upperZoneBound = LIST_OF_HR_ZONE_BOUNDS[i + 1].toString(),
-                            lowerHeartRateRange = lowerPaceBoundValue,
-                            upperHeartRateRange = upperPaceBoundValue
+                            lowerZoneBound = boundsList[i],
+                            upperZoneBound = boundsList[i + 1],
+                            lowerRange = lowerBoundValue,
+                            upperRange = upperBoundValue
                         )
                     )
 
                 }
                 else -> {
-                    heartRateZones.add(
-                        i, HeartRateZones(
+                    zonesList.add(
+                        i, getZoneModel(
+                            methodType = methodType,
                             zone = i,
-                            lowerZoneBound = LIST_OF_HR_ZONE_BOUNDS[i].toString(),
-                            upperZoneBound = ZONE_SEVEN_UPPER_ZONE_RANGE,
-                            lowerHeartRateRange = lowerPaceBoundValue,
-                            upperHeartRateRange = ZONE_SEVEN_POWER_UPPER_ZONE_RANGE
+                            lowerZoneBound = boundsList[i],
+                            upperZoneBound = ZONE_MAX_UPPER_ZONE,
+                            lowerRange = lowerBoundValue,
+                            upperRange = ZONE_MAX_UPPER_ZONE
                         )
                     )
                 }
-
             }
+
+
         }
-        return heartRateZones
+        return zonesList
+    }
+
+
+    private fun getZoneModel(
+        methodType: Int,
+        zone: Int,
+        lowerZoneBound: Int,
+        upperZoneBound: Int,
+        lowerRange: Int,
+        upperRange: Int
+    ): Zones {
+        return when (methodType) {
+            SWIM_PACE -> {
+                PaceZones(
+                    zone = zone,
+                    lowerZoneBound = lowerZoneBound,
+                    upperZoneBound = upperZoneBound,
+                    lowerPaceRange = generatePaceListOfStrings(lowerRange),
+                    upperPaceRange = generatePaceListOfStrings(upperRange)
+                )
+            }
+            BIKE_POWER, RUN_POWER -> {
+                PowerZones(
+                    zone = zone,
+                    lowerZoneBound = lowerZoneBound,
+                    upperZoneBound = upperZoneBound,
+                    lowerPowerRange = lowerRange,
+                    upperPowerRange = upperRange
+                )
+            }
+            LTHR -> {
+                HeartRateZones(
+                    zone = zone,
+                    lowerZoneBound = lowerZoneBound,
+                    upperZoneBound = upperZoneBound,
+                    lowerHeartRateRange = lowerRange,
+                    upperHeartRateRange = upperRange
+                )
+            }
+
+            else -> throw IllegalArgumentException("The method type: $methodType, is not supported.")
+        }
     }
 
 
     private fun calculateZoneBound(zoneBound: Int, activity: Int): Int {
         return when (activity) {
-            SWIM -> {
-                zoneBoundCalcHelper(swimCSSValue.toInt(), zoneBound, true)
+            SWIM_PACE -> {
+                zoneBoundCalculationHelper(swimCSSValue.toInt(), zoneBound, true)
             }
-            BIKE -> {
-                zoneBoundCalcHelper(bikeFTP, zoneBound)
+            BIKE_POWER -> {
+                zoneBoundCalculationHelper(bikeFTP, zoneBound)
             }
-            RUN -> {
-                zoneBoundCalcHelper(runFTP, zoneBound)
+            RUN_POWER -> {
+                zoneBoundCalculationHelper(runFTP, zoneBound)
             }
-            RUN_BIKE_HR -> {
-                zoneBoundCalcHelper(lthr, zoneBound)
+            LTHR -> {
+                zoneBoundCalculationHelper(lthr, zoneBound)
             }
-            else -> throw InvalidParameterException("The activity $activity is not supported.")
+            else -> throw InvalidParameterException("The activity: $activity, is not supported.")
         }
 
     }
 
-    private fun zoneBoundCalcHelper(metric: Int, zoneBound: Int, isSwim: Boolean = false): Int {
+    private fun zoneBoundCalculationHelper(
+        metric: Int,
+        zoneBound: Int,
+        isSwim: Boolean = false
+    ): Int {
         return when (isSwim) {
             true -> {
                 (metric / (zoneBound / 100f)).toInt()
@@ -237,9 +214,10 @@ class ZonesCalculatorHelper : CalculatorHelper() {
         private const val SWIM_ZONE_FIVE_UPPER_ZONE_BOUND = 102
         private const val SWIM_ZONE_SIX_UPPER_ZONE_BOUND = 106
 
-        private const val ZONE_SEVEN_UPPER_ZONE_BOUND = "<"
-        private const val ZONE_SEVEN_UPPER_ZONE_RANGE = "+"
-        private const val ZONE_SEVEN_POWER_UPPER_ZONE_RANGE = 999
+
+        //Char number 60 or 62 -> < or >
+        //Char number 43 -> +
+        private const val ZONE_MAX_UPPER_ZONE = 1000
 
         private val LIST_OF_SWIM_ZONE_BOUNDS =
             listOf(
@@ -253,12 +231,12 @@ class ZonesCalculatorHelper : CalculatorHelper() {
             )
 
         private const val BIKE_POWER_ZONE_ONE_LOWER_ZONE_BOUND = 50
-        private const val BIKE_POWER_ZONE_ONE_UPPER_ZONE_BOUND = 70
-        private const val BIKE_POWER_ZONE_TWO_UPPER_ZONE_BOUND = 83
-        private const val BIKE_POWER_ZONE_THREE_UPPER_ZONE_BOUND = 91
-        private const val BIKE_POWER_ZONE_FOUR_UPPER_ZONE_BOUND = 102
-        private const val BIKE_POWER_ZONE_FIVE_UPPER_ZONE_BOUND = 110
-        private const val BIKE_POWER_ZONE_SIX_UPPER_ZONE_BOUND = 115
+        private const val BIKE_POWER_ZONE_ONE_UPPER_ZONE_BOUND = 55
+        private const val BIKE_POWER_ZONE_TWO_UPPER_ZONE_BOUND = 75
+        private const val BIKE_POWER_ZONE_THREE_UPPER_ZONE_BOUND = 90
+        private const val BIKE_POWER_ZONE_FOUR_UPPER_ZONE_BOUND = 105
+        private const val BIKE_POWER_ZONE_FIVE_UPPER_ZONE_BOUND = 120
+        private const val BIKE_POWER_ZONE_SIX_UPPER_ZONE_BOUND = 125
 
         private val LIST_OF_BIKE_POWER_ZONE_BOUNDS =
             listOf(
@@ -272,11 +250,11 @@ class ZonesCalculatorHelper : CalculatorHelper() {
             )
 
         private const val RUN_POWER_ZONE_ONE_LOWER_ZONE_BOUND = 50
-        private const val RUN_POWER_ZONE_ONE_UPPER_ZONE_BOUND = 76
+        private const val RUN_POWER_ZONE_ONE_UPPER_ZONE_BOUND = 78
         private const val RUN_POWER_ZONE_TWO_UPPER_ZONE_BOUND = 88
-        private const val RUN_POWER_ZONE_THREE_UPPER_ZONE_BOUND = 94
-        private const val RUN_POWER_ZONE_FOUR_UPPER_ZONE_BOUND = 103
-        private const val RUN_POWER_ZONE_FIVE_UPPER_ZONE_BOUND = 120
+        private const val RUN_POWER_ZONE_THREE_UPPER_ZONE_BOUND = 95
+        private const val RUN_POWER_ZONE_FOUR_UPPER_ZONE_BOUND = 102
+        private const val RUN_POWER_ZONE_FIVE_UPPER_ZONE_BOUND = 115
         private const val RUN_POWER_ZONE_SIX_UPPER_ZONE_BOUND = 125
 
         private val LIST_OF_RUN_POWER_ZONE_BOUNDS =
@@ -291,10 +269,10 @@ class ZonesCalculatorHelper : CalculatorHelper() {
             )
 
         private const val HR_ZONE_ONE_LOWER_ZONE_BOUND = 72
-        private const val HR_ZONE_ONE_UPPER_ZONE_BOUND = 81
+        private const val HR_ZONE_ONE_UPPER_ZONE_BOUND = 85
         private const val HR_ZONE_TWO_UPPER_ZONE_BOUND = 90
-        private const val HR_ZONE_THREE_UPPER_ZONE_BOUND = 100
-        private const val HR_ZONE_FOUR_UPPER_ZONE_BOUND = 105
+        private const val HR_ZONE_THREE_UPPER_ZONE_BOUND = 95
+        private const val HR_ZONE_FOUR_UPPER_ZONE_BOUND = 100
 
         private val LIST_OF_HR_ZONE_BOUNDS =
             listOf(

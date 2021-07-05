@@ -4,22 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiLayoutDropDownSport"
-        style="@style/DropDownInputLayoutTheme"
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:id="@+id/tvLthrLabel"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:text="LTHR:"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tiLayoutBPM">
-
-        <AutoCompleteTextView
-            android:id="@+id/dropDownSportSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toTopOf="@id/tiLayoutBPM"
+        app:layout_constraintBottom_toBottomOf="@id/tiLayoutBPM"
+        app:layout_constraintEnd_toStartOf="@id/tiLayoutBPM"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiLayoutBPM"
@@ -29,15 +25,15 @@
         android:layout_marginStart="@dimen/dimen_8"
         android:hint="@string/bpm_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tiLayoutDropDownSport"
-        app:layout_constraintTop_toTopOf="@id/tiLayoutDropDownSport">
+        app:layout_constraintBottom_toBottomOf="@id/tvLthrLabel"
+        app:layout_constraintStart_toEndOf="@id/tvLthrLabel"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiBPM"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="number"
-            android:maxLength="3"
+           style="@style/BpmInputTextAppearance"
             android:textAlignment="center" />
     </com.google.android.material.textfield.TextInputLayout>
 

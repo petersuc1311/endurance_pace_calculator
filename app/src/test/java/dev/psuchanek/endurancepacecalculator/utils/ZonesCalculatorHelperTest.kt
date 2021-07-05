@@ -25,7 +25,7 @@ class ZonesCalculatorHelperTest {
         val swimPaceValueFor200Meters = 180f
         val expectedPace = "01:30"
         //When
-        zonesCalculatorHelper.generateCriticalSwimSpeedPace(
+        zonesCalculatorHelper.generateCriticalSwimSpeedPaceZones(
             swimPaceValueFor400Meters,
             swimPaceValueFor200Meters
         )
@@ -44,11 +44,10 @@ class ZonesCalculatorHelperTest {
 
 
         //When
-        zonesCalculatorHelper.generateCriticalSwimSpeedPace(
+        zonesCalculatorHelper.generateCriticalSwimSpeedPaceZones(
             swimPaceValueFor400Meters,
             swimPaceValueFor200Meters
         )
-        zonesCalculatorHelper.generateZonesForCriticalSwimSpeed()
         val result = zonesCalculatorHelper.getCSSZones()
 
         //Then
@@ -66,11 +65,10 @@ class ZonesCalculatorHelperTest {
 
 
         //When
-        zonesCalculatorHelper.generateCriticalSwimSpeedPace(
+        zonesCalculatorHelper.generateCriticalSwimSpeedPaceZones(
             swimPaceValueFor400Meters,
             swimPaceValueFor200Meters
         )
-        zonesCalculatorHelper.generateZonesForCriticalSwimSpeed()
         val result = zonesCalculatorHelper.getCSSZones()
 
         val lowerBound = "${result[1].lowerPaceRange[0]}:${result[1].lowerPaceRange[1]}"
@@ -86,9 +84,9 @@ class ZonesCalculatorHelperTest {
     fun`generate bike power zones from functional threshold power and return zone one`() {
         //Given
         val bikeFTP = 250
-        val expectedResult = "125->175"
+        val expectedResult = "125->137"
         //When
-        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE)
+        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE_POWER)
         val result = zonesCalculatorHelper.getBikePowerZones()
 
         //Then
@@ -105,9 +103,9 @@ class ZonesCalculatorHelperTest {
     fun`generate bike power zones from functional threshold power and return zone seven`() {
         //Given
         val bikeFTP = 250
-        val expectedResult = "287->999"
+        val expectedResult = "312->1000"
         //When
-        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE)
+        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE_POWER)
         val result = zonesCalculatorHelper.getBikePowerZones()
 
         //Then
@@ -124,9 +122,9 @@ class ZonesCalculatorHelperTest {
     fun`generate run power zones from functional threshold power and return zone one`() {
         //Given
         val runFTP = 250
-        val expectedResult = "125->190"
+        val expectedResult = "125->195"
         //When
-        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN)
+        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN_POWER)
         val result = zonesCalculatorHelper.getRunPowerZones()
 
         //Then
@@ -143,9 +141,9 @@ class ZonesCalculatorHelperTest {
     fun`generate run power zones from functional threshold power and return zone seven`() {
         //Given
         val runFTP = 250
-        val expectedResult = "312->999"
+        val expectedResult = "312->1000"
         //When
-        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN)
+        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN_POWER)
         val result = zonesCalculatorHelper.getRunPowerZones()
 
         //Then
@@ -162,14 +160,14 @@ class ZonesCalculatorHelperTest {
     fun`generate heart rate zones from lactate threshold and return zone one`() {
         //Given
         val lthr = 170
-        val expectedResult = "122->137"
+        val expectedResult = "122->144"
         //When
         zonesCalculatorHelper.generateHeartRateZones(lthr)
         val result = zonesCalculatorHelper.getHeartRateZones()
 
         //Then
-        val lowerBound = "${result[0].lowerHeartRateRange}"
-        val upperBound = "${result[0].upperHeartRateRange}"
+        val lowerBound = "${result[0].lowerRange}"
+        val upperBound = "${result[0].upperRange}"
 
         //Then
         assertThat("$lowerBound->$upperBound").isEqualTo(
@@ -181,14 +179,14 @@ class ZonesCalculatorHelperTest {
     fun`generate heart rate zones from lactate threshold and return zone five`() {
         //Given
         val lthr = 170
-        val expectedResult = "178->999"
+        val expectedResult = "170->1000"
         //When
         zonesCalculatorHelper.generateHeartRateZones(lthr)
         val result = zonesCalculatorHelper.getHeartRateZones()
 
         //Then
-        val lowerBound = "${result[4].lowerHeartRateRange}"
-        val upperBound = "${result[4].upperHeartRateRange}"
+        val lowerBound = "${result[4].lowerRange}"
+        val upperBound = "${result[4].upperRange}"
 
         //Then
         assertThat("$lowerBound->$upperBound").isEqualTo(

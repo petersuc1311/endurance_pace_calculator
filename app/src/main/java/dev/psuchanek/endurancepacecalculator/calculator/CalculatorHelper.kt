@@ -36,7 +36,12 @@ open class CalculatorHelper {
     companion object {
         val DEFAULT_PACE = listOf("00", "00")
         val DEFAULT_DURATION = listOf("00", "00", "00")
-        const val RUN_BIKE_HR = 6
+
+        const val RUN_POWER = 101
+        const val BIKE_POWER = 102
+        const val LTHR = 103
+        const val SWIM_PACE = 104
+        const val RUN_PACE = 105
 
         const val SWIM_UNIT_COEF = 100
         const val SECONDS_IN_ONE_HOUR = 3600
@@ -47,16 +52,16 @@ open class CalculatorHelper {
         const val RUN_HALF_MARATHON = 21.097f
         const val RUN_FULL_MARATHON = 42.195f
 
-        const val SWIM = 1
-        const val T1 = 2
-        const val BIKE = 3
-        const val T2 = 4
-        const val RUN = 5
+        const val SWIM = 111
+        const val T1 = 222
+        const val BIKE = 333
+        const val T2 = 444
+        const val RUN = 555
 
-        const val SPRINT_TRI = 1
-        const val OLYMPIC_TRI = 2
-        const val HALF_DISTANCE_TRI = 3
-        const val FULL_DISTANCE_TRI = 4
+        const val SPRINT_TRI = 11
+        const val OLYMPIC_TRI = 22
+        const val HALF_DISTANCE_TRI = 33
+        const val FULL_DISTANCE_TRI = 44
 
         const val SPRINT_SWIM_METRIC = 750
         const val SPRINT_BIKE_METRIC = 20

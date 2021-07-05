@@ -4,19 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import dev.psuchanek.endurancepacecalculator.R
 import dev.psuchanek.endurancepacecalculator.databinding.CalculatorBaseLayoutBinding
 import dev.psuchanek.endurancepacecalculator.utils.SPORTS_PRESET_VALUE
 import dev.psuchanek.endurancepacecalculator.utils.ZONES_PRESET_VALUE
+import dev.psuchanek.endurancepacecalculator.utils.ZoneActivity
+import dev.psuchanek.endurancepacecalculator.utils.ZoneMethodType
 
 @AndroidEntryPoint
 class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
     private lateinit var binding: CalculatorBaseLayoutBinding
+    private val zonesViewModel: ZonesViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -44,6 +49,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
         initMethodAdapter()
         initSportAdapter()
+        setupSpinnerListener()
     }
 
     private fun initMethodAdapter() {
@@ -60,16 +66,52 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     }
 
     private fun initSportAdapter() {
-        val sportsAdapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1,
-            resources.getStringArray(R.array.sports)
-        )
-        binding.layoutZonesCalculator.layoutHeartRateZones.layoutZonesBase.dropDownSportSpinner.apply {
-            setAdapter(
-                sportsAdapter
-            )
-            setText(SPORTS_PRESET_VALUE, false)
-        }
+//        val sportsAdapter = ArrayAdapter(
+//            requireContext(),
+//            android.R.layout.simple_list_item_1,
+//            resources.getStringArray(R.array.sports)
+//        )
+//        binding.layoutZonesCalculator.layoutHeartRateZones.layoutZonesBase.dropDownSportSpinner.apply {
+//            setAdapter(
+//                sportsAdapter
+//            )
+//            setText(SPORTS_PRESET_VALUE, false)
+//        }
     }
+
+    private fun setupSpinnerListener() {
+        binding.dropDownBaseSpinner.onItemClickListener = methodSpinnerOnItemClickListener()
+//        binding.layoutZonesCalculator.layoutHeartRateZones.layoutZonesBase.dropDownSportSpinner.onItemClickListener =
+//            zoneActivitySpinnerOnItemClickListener()
+    }
+
+    private fun methodSpinnerOnItemClickListener() =
+        AdapterView.OnItemClickListener { _, _, position, _ ->
+            when (position) {
+                0 -> {
+                    zonesViewModel.setZoneMethodType(ZoneMethodType.LTHR)
+                }
+                1 -> {
+                    zonesViewModel.setZoneMethodType(ZoneMethodType.POWER)
+                }
+                2 -> {
+                    zonesViewModel.setZoneMethodType(ZoneMethodType.RUN_PACE)
+                }
+                3 -> {
+                    zonesViewModel.setZoneMethodType(ZoneMethodType.SWIM_PACE)
+                }
+            }
+        }
+
+    private fun zoneActivitySpinnerOnItemClickListener() =
+        AdapterView.OnItemClickListener { _, _, position, _ ->
+            when (position) {
+                0 -> {
+                    zonesViewModel.setZoneActivity(ZoneActivity.BIKE)
+                }
+                1 -> {
+                    zonesViewModel.setZoneActivity(ZoneActivity.RUN)
+                }
+            }
+        }
 }

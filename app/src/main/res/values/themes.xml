@@ -40,6 +40,10 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="BpmInputTextAppearance" parent="TimeInputTextAppearance">
+        <item name="android:maxLength">3</item>
+    </style>
+
     <style name="PaceTextViewAppearance" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textAlignment">center</item>
     </style>
