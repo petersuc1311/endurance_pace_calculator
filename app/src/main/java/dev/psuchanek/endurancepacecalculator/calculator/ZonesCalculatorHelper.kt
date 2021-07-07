@@ -11,14 +11,10 @@ class ZonesCalculatorHelper : CalculatorHelper() {
 
     private var swimCSSValue: Float = 0f
     private var criticalSwimSpeedPaceValues = emptyList<String>()
-    private var criticalSwimSpeedPaceZones = emptyList<PaceZones>()
-
     private var bikeFTP: Int = 0
-    private var bikePowerZones = emptyList<PowerZones>()
     private var runFTP: Int = 0
-    private var runPowerZones = emptyList<PowerZones>()
-
     private var lthr: Int = 0
+
     private var zones = emptyList<Zones>()
 
     fun getCSSPace() = criticalSwimSpeedPaceValues
