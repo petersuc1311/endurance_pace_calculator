@@ -9,6 +9,8 @@ const val ZONES_PRESET_VALUE = "Lactate Threshold Heart Rate"
 const val SPORTS_PRESET_VALUE = "Run"
 
 const val DEFAULT_TIME_VALUE = "00"
+const val DEFAULT_400 = "8:00"
+const val DEFAULT_200 = "4:00"
 
 
 

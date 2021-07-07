@@ -4,21 +4,58 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include
-        android:id="@+id/layoutRunning"
-        layout="@layout/layout_pace_running"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewPace"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
-       />
+        app:cardCornerRadius="10dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <include
-        android:id="@+id/layoutTriathlon"
-        android:visibility="gone"
-        layout="@layout/layout_pace_triathlon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
-        />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dimen_8">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiLayoutDropDownPaceChoice"
+                style="@style/DropDownInputLayoutTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <AutoCompleteTextView
+                    android:id="@+id/dropDownPaceChoiceSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <include
+                android:id="@+id/layoutRunning"
+                layout="@layout/layout_pace_running"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:layout_constraintTop_toBottomOf="@id/tiLayoutDropDownPaceChoice"
+
+                />
+
+            <include
+                android:id="@+id/layoutTriathlon"
+                android:visibility="gone"
+                layout="@layout/layout_pace_triathlon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8"
+                app:layout_constraintTop_toBottomOf="@id/tiLayoutDropDownPaceChoice"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

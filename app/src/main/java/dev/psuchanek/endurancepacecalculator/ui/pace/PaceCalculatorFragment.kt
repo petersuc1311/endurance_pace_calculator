@@ -14,7 +14,7 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.psuchanek.endurancepacecalculator.R
-import dev.psuchanek.endurancepacecalculator.databinding.CalculatorBaseLayoutBinding
+import dev.psuchanek.endurancepacecalculator.databinding.LayoutPaceCalculatorBinding
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
-    private lateinit var binding: CalculatorBaseLayoutBinding
+    private lateinit var binding: LayoutPaceCalculatorBinding
     private val paceViewModel: PaceViewModel by viewModels()
 
 
@@ -47,7 +47,7 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = CalculatorBaseLayoutBinding.inflate(layoutInflater, container, false)
+        binding = LayoutPaceCalculatorBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -64,14 +64,14 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
 
     private fun initUI() {
-        binding.layoutPaceCalculator.layoutRunning.layoutRunningTime.apply {
+        binding.layoutRunning.layoutRunningTime.apply {
             this@PaceCalculatorFragment.tvRunDurationHours = tvDurationHours
             this@PaceCalculatorFragment.tvRunDurationMinutes = tvDurationMinutes
             this@PaceCalculatorFragment.tvRunDurationSeconds = tvDurationSeconds
         }
-        sliderRunPace = binding.layoutPaceCalculator.layoutRunning.sliderRunPace
+        sliderRunPace = binding.layoutRunning.sliderRunPace
 
-        binding.layoutPaceCalculator.layoutTriathlon.apply {
+        binding.layoutTriathlon.apply {
             sliderSwim = swimSlider
             sliderTransitionOne = transitionOneSlider
             sliderBike = bikeSlider
@@ -87,12 +87,12 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     }
 
     private fun setupSlidersTouchListeners() {
-        sliderSwim.addOnChangeListener(addOnSliderValueChangeListener())
-        sliderTransitionOne.addOnChangeListener(addOnSliderValueChangeListener())
-        sliderBike.addOnChangeListener(addOnSliderValueChangeListener())
-        sliderTransitionTwo.addOnChangeListener(addOnSliderValueChangeListener())
-        sliderRun.addOnChangeListener(addOnSliderValueChangeListener())
-        sliderRunPace.addOnChangeListener(addOnSliderValueChangeListener())
+        sliderSwim.addOnChangeListener(addSliderOnValueChangeListener())
+        sliderTransitionOne.addOnChangeListener(addSliderOnValueChangeListener())
+        sliderBike.addOnChangeListener(addSliderOnValueChangeListener())
+        sliderTransitionTwo.addOnChangeListener(addSliderOnValueChangeListener())
+        sliderRun.addOnChangeListener(addSliderOnValueChangeListener())
+        sliderRunPace.addOnChangeListener(addSliderOnValueChangeListener())
     }
 
     private fun setupObservers() {
@@ -110,32 +110,32 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
         lifecycleScope.launch {
             paceViewModel.triSwimPaceValue.collect {
-                binding.layoutPaceCalculator.layoutTriathlon.tiSwimPace.text = it
+                binding.layoutTriathlon.tiSwimPace.text = it
             }
         }
 
         lifecycleScope.launch {
             paceViewModel.transitionOneValue.collect {
-                binding.layoutPaceCalculator.layoutTriathlon.tiTransitionOneTime.text = it
+                binding.layoutTriathlon.tiTransitionOneTime.text = it
             }
         }
 
         lifecycleScope.launch {
             paceViewModel.triBikePaceValue.collect {
-                binding.layoutPaceCalculator.layoutTriathlon.tiBikePace.text = it
+                binding.layoutTriathlon.tiBikePace.text = it
             }
         }
 
         lifecycleScope.launch {
             paceViewModel.transitionTwoValue.collect {
-                binding.layoutPaceCalculator.layoutTriathlon.tiTransitionTwoTime.text = it
+                binding.layoutTriathlon.tiTransitionTwoTime.text = it
             }
 
         }
 
         lifecycleScope.launch {
             paceViewModel.triRunPaceValue.collect {
-                binding.layoutPaceCalculator.layoutTriathlon.tiRunPace.text = it
+                binding.layoutTriathlon.tiRunPace.text = it
             }
         }
 
@@ -148,7 +148,7 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
 
     private fun updatePaceUI(paceList: List<String>) {
-        binding.layoutPaceCalculator.layoutRunning.layoutRunningPace.apply {
+        binding.layoutRunning.layoutRunningPace.apply {
             tvRunPaceMinutes.text = paceList[0]
             tvRunPaceSeconds.text = paceList[1]
         }
@@ -177,16 +177,16 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
             android.R.layout.simple_list_item_1,
             resources.getStringArray(R.array.activities_for_pace_calculator)
         )
-        binding.dropDownBaseSpinner.apply {
+        binding.dropDownPaceChoiceSpinner.apply {
             setAdapter(activityAdapter)
             setText(ACTIVITY_PRESET_VALUE, false)
         }
-        binding.tiLayoutDropDownBase.hint = resources.getString(R.string.activities_label)
+        binding.tiLayoutDropDownPaceChoice.hint = resources.getString(R.string.activities_label)
 
     }
 
-    private fun addOnSliderValueChangeListener() =
-        Slider.OnChangeListener { slider, value, fromUser ->
+    private fun addSliderOnValueChangeListener() =
+        Slider.OnChangeListener { slider, value, _ ->
             when (slider.id) {
                 sliderSwim.id -> {
                     submitTriathlonStagePaceToViewModel(value, TriStage.SWIM)
@@ -218,7 +218,7 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     }
 
     private fun setupSpinnerListeners() {
-        binding.dropDownBaseSpinner.onItemClickListener = activitySpinnerOnItemClickListener()
+        binding.dropDownPaceChoiceSpinner.onItemClickListener = activitySpinnerOnItemClickListener()
     }
 
     private fun activitySpinnerOnItemClickListener() =
@@ -237,8 +237,8 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         }
 
     private fun switchRunAndTriathlonCalculatorVisibility(visibility: Boolean = true) {
-        binding.layoutPaceCalculator.layoutRunning.root.isVisible = visibility
-        binding.layoutPaceCalculator.layoutTriathlon.root.isVisible = !visibility
+        binding.layoutRunning.root.isVisible = visibility
+        binding.layoutTriathlon.root.isVisible = !visibility
     }
 
     private fun Int.setActivityTypeFromPosition() {

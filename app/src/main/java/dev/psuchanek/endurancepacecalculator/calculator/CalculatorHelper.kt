@@ -24,13 +24,20 @@ open class CalculatorHelper {
         )
     }
 
-    private fun Int.convertToDoubleDigitStringFormat(): String = when(this.toString().length) {
+    fun generatePaceString(paceInSeconds: Int): String {
+        val minutes = paceInSeconds / SECONDS_IN_ONE_MINUTE
+        val seconds = paceInSeconds - minutes * SECONDS_IN_ONE_MINUTE
+        return "${minutes.convertToDoubleDigitStringFormat()}:${seconds.convertToDoubleDigitStringFormat()}"
+    }
+
+    private fun Int.convertToDoubleDigitStringFormat(): String = when (this.toString().length) {
         1 -> {
             "0${this}"
         }
-        else -> { this.toString()}
+        else -> {
+            this.toString()
+        }
     }
-
 
 
     companion object {

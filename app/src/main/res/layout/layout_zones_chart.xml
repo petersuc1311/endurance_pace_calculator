@@ -7,7 +7,7 @@
 
     <include
         layout="@layout/layout_heart_rate_zones_header"
-        android:id="@+id/layoutHeartRateZonesHeader"
+        android:id="@+id/layoutZonesHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -17,7 +17,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/dimen_4"
         android:backgroundTint="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/layoutHeartRateZonesHeader" />
+        app:layout_constraintTop_toBottomOf="@id/layoutZonesHeader" />
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@id/separator"

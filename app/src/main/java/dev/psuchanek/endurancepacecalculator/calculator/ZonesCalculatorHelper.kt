@@ -94,7 +94,7 @@ class ZonesCalculatorHelper : CalculatorHelper() {
                     zonesList.add(
                         i, getZoneModel(
                             methodType = methodType,
-                            zone = i,
+                            zone = i+1,
                             lowerZoneBound = boundsList[i],
                             upperZoneBound = boundsList[i + 1],
                             lowerRange = lowerBoundValue,
@@ -107,7 +107,7 @@ class ZonesCalculatorHelper : CalculatorHelper() {
                     zonesList.add(
                         i, getZoneModel(
                             methodType = methodType,
-                            zone = i,
+                            zone = i+1,
                             lowerZoneBound = boundsList[i],
                             upperZoneBound = ZONE_MAX_UPPER_ZONE,
                             lowerRange = lowerBoundValue,

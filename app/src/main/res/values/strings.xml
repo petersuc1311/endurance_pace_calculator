@@ -47,5 +47,8 @@
     <string name="run_unit_label">/km</string>
     <string name="faster_label">Faster</string>
     <string name="slower_label">Slower</string>
+    <string name="ftp_label">FTP</string>
+    <string name="swim_pace_for_400_label">Pace for 400m</string>
+    <string name="swim_pace_for_200_label">Pace for 200m</string>
 
 </resources>

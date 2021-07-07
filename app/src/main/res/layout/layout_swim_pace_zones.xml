@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSwimPaceFor400Label"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/swim_pace_for_400_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/layoutSwimPace400"
+        layout="@layout/layout_minutes_seconds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        app:layout_constraintTop_toBottomOf="@id/tvSwimPaceFor400Label" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderSwimPace400"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:stepSize="1"
+        android:value="480"
+        android:valueFrom="240"
+        android:valueTo="720"
+        app:labelBehavior="gone"
+        app:layout_constraintTop_toBottomOf="@id/layoutSwimPace400" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSwimPaceFor200Label"
+        style="@style/LabelsTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="@string/swim_pace_for_200_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sliderSwimPace400" />
+
+    <include
+        android:id="@+id/layoutSwimPace200"
+        layout="@layout/layout_minutes_seconds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        app:layout_constraintTop_toBottomOf="@id/tvSwimPaceFor200Label" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderSwimPace200"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:stepSize="1"
+        android:value="240"
+        android:valueFrom="120"
+        android:valueTo="360"
+        app:labelBehavior="gone"
+        app:layout_constraintTop_toBottomOf="@id/layoutSwimPace200" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSwimCSS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sliderSwimPace200"
+        tools:text="2:00" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
