@@ -65,7 +65,7 @@
 
     <include
         android:layout_marginTop="@dimen/dimen_8"
-        android:id="@+id/layoutZonesChartInBase"
+        android:id="@+id/layoutZonesChart"
         layout="@layout/layout_zones_chart"
         android:layout_width="match_parent"
         android:layout_height="0dp"

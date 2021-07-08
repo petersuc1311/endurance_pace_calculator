@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="zoneItem"
+            type="dev.psuchanek.endurancepacecalculator.models.Zones" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +19,7 @@
             style="@style/LabelsTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="@{zoneItem.getZone}"
             app:layout_constraintEnd_toEndOf="@id/guidelineZonesFirst"
             app:layout_constraintStart_toStartOf="@id/guidelineZonesFirst"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +36,7 @@
             style="@style/LabelsTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="@{zoneItem.getZoneBounds}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,7 +53,7 @@
             style="@style/LabelsTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0:00"
+            android:text="@{zoneItem.getZoneRange}"
             app:layout_constraintEnd_toEndOf="@id/guidelineZonesSecond"
             app:layout_constraintStart_toStartOf="@id/guidelineZonesSecond"
             app:layout_constraintTop_toTopOf="parent" />

@@ -12,17 +12,18 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.psuchanek.endurancepacecalculator.R
+import dev.psuchanek.endurancepacecalculator.adapters.ZonesListAdapter
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutMinutesSecondsBinding
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesCalculatorBinding
-import dev.psuchanek.endurancepacecalculator.utils.SPORTS_PRESET_VALUE
-import dev.psuchanek.endurancepacecalculator.utils.ZONES_PRESET_VALUE
-import dev.psuchanek.endurancepacecalculator.utils.ZoneActivity
-import dev.psuchanek.endurancepacecalculator.utils.ZoneMethodType
+import dev.psuchanek.endurancepacecalculator.models.HeartRateZones
+import dev.psuchanek.endurancepacecalculator.models.Zones
+import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -31,6 +32,7 @@ import timber.log.Timber
 class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
     private lateinit var binding: LayoutZonesCalculatorBinding
+    private lateinit var zonesAdapter: ZonesListAdapter
     private val zonesViewModel: ZonesViewModel by viewModels()
 
     private lateinit var sliderSwimPace400: Slider
@@ -46,7 +48,17 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         savedInstanceState: Bundle?
     ): View {
         binding = LayoutZonesCalculatorBinding.inflate(layoutInflater, container, false)
+        setupListAdapter()
         return binding.root
+    }
+
+    private fun setupListAdapter() {
+        zonesAdapter = ZonesListAdapter()
+        binding.layoutZonesChart.zonesRecyclerView.apply {
+            adapter = zonesAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,16 +84,16 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     private fun setupSliderListeners() {
         sliderSwimPace400.addOnChangeListener(addSliderOnChangeValueListener())
         sliderSwimPace200.addOnChangeListener(addSliderOnChangeValueListener())
-        zonesViewModel.submitSwimPaceValue(sliderSwimPace400.value, sliderSwimPace200.value)
+
     }
 
     private fun addSliderOnChangeValueListener() = Slider.OnChangeListener { slider, value, _ ->
         when (slider.id) {
             sliderSwimPace400.id -> {
-                zonesViewModel.submitSwimPaceValue(value, sliderSwimPace200.value)
+                submitSwimPaceValuesToViewModel(value, sliderSwimPace200.value)
             }
             sliderSwimPace200.id -> {
-                zonesViewModel.submitSwimPaceValue(sliderSwimPace400.value, value)
+                submitSwimPaceValuesToViewModel(sliderSwimPace400.value, value)
             }
         }
     }
@@ -129,19 +141,34 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         AdapterView.OnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> {
+                    clearAdapterList()
                     zonesViewModel.setZoneMethodType(ZoneMethodType.LTHR)
+
                 }
                 1 -> {
+                    clearAdapterList()
                     zonesViewModel.setZoneMethodType(ZoneMethodType.POWER)
                 }
                 2 -> {
+                    clearAdapterList()
                     zonesViewModel.setZoneMethodType(ZoneMethodType.RUN_PACE)
                 }
                 3 -> {
                     zonesViewModel.setZoneMethodType(ZoneMethodType.SWIM_PACE)
+                    submitSwimPaceValuesToViewModel(
+                        sliderSwimPace400.value,
+                        sliderSwimPace200.value
+                    )
                 }
             }
         }
+
+    private fun submitSwimPaceValuesToViewModel(paceValue400: Float, paceValue200: Float) {
+        zonesViewModel.submitSwimPaceValue(
+            paceValue400,
+            paceValue200
+        )
+    }
 
     private fun zoneActivitySpinnerOnItemClickListener() =
         AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -195,6 +222,20 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
     private fun setupObservers() {
         lifecycleScope.launch {
+            zonesViewModel.inputStatus.collect{ inputStatus ->
+                when(inputStatus) {
+                    InputCheckStatus.LENGTH_ERROR -> {
+                        binding.layoutPowerZones.tiLayoutFTP.error = "Min. 3 digits"
+                    }
+                    InputCheckStatus.PASS -> binding.layoutPowerZones.tiLayoutFTP.error = null
+                    InputCheckStatus.VALUE_ERROR -> {
+
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             zonesViewModel.zoneMethodType.collect { zoneType ->
                 setLayoutForZoneType(zoneType)
             }
@@ -202,41 +243,55 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
         lifecycleScope.launch {
             zonesViewModel.lthrZones.collect { zones ->
-                Timber.d("DEBUG: lthr zones: $zones")
+                submitListToZonesAdapter(zones)
             }
         }
 
         lifecycleScope.launch {
             zonesViewModel.powerZones.collect { zones ->
-                Timber.d("DEBUG: power zones: $zones")
+                submitListToZonesAdapter(zones)
             }
         }
 
         lifecycleScope.launch {
             zonesViewModel.swimCSS.collect { listOfPaceValues ->
-                val cssPaceValue = "${listOfPaceValues[0]}:${listOfPaceValues[1]}"
-                binding.layoutSwimPaceZones.tvSwimCSS.text = cssPaceValue
+                if (listOfPaceValues.isNotEmpty()) {
+                    val cssPaceValue = "${listOfPaceValues[0]}:${listOfPaceValues[1]}"
+                    binding.layoutSwimPaceZones.tvSwimCSS.text = cssPaceValue
+                }
+
+
             }
         }
 
         lifecycleScope.launch {
             zonesViewModel.sliderSwimPace400.collect { paceList ->
-                binding.layoutSwimPaceZones.layoutSwimPace400.updateMinutesSecondsUI(paceList)
+                if (paceList.isNotEmpty()) {
+                    binding.layoutSwimPaceZones.layoutSwimPace400.updateMinutesSecondsUI(paceList)
+                }
+
             }
         }
 
         lifecycleScope.launch {
             zonesViewModel.sliderSwimPace200.collect { paceList ->
-                binding.layoutSwimPaceZones.layoutSwimPace200.updateMinutesSecondsUI(paceList)
+                if (paceList.isNotEmpty()) {
+                    binding.layoutSwimPaceZones.layoutSwimPace200.updateMinutesSecondsUI(paceList)
+                }
+
             }
         }
 
         lifecycleScope.launch {
             zonesViewModel.swimZones.collect { zones ->
-                Timber.d("DEBUG: swim zones: $zones")
+                submitListToZonesAdapter(zones)
             }
         }
 
+    }
+
+    private fun <T : Zones> submitListToZonesAdapter(zones: List<T>) {
+        zonesAdapter.submitList(zones)
     }
 
     private fun LayoutMinutesSecondsBinding.updateMinutesSecondsUI(list: List<String>) {
@@ -260,6 +315,10 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
             }
         }
 
+    }
+
+    private fun clearAdapterList() {
+        zonesAdapter.submitList(emptyList())
     }
 
     private fun changeLayoutVisibility(lthr: Boolean, power: Boolean, swimPace: Boolean) {

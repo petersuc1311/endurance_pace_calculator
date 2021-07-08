@@ -34,9 +34,6 @@ class SplitsCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     }
 
     private fun initUI() {
-        binding.layoutPaceCalculator.root.isVisible = false
-        binding.layoutSplitsRecyclerViewInBase.root.isVisible = true
-        binding.layoutSplitsCalculator.root.isVisible = true
 
     }
 

@@ -210,9 +210,6 @@ class ZonesCalculatorHelper : CalculatorHelper() {
         private const val SWIM_ZONE_FIVE_UPPER_ZONE_BOUND = 102
         private const val SWIM_ZONE_SIX_UPPER_ZONE_BOUND = 106
 
-
-        //Char number 60 or 62 -> < or >
-        //Char number 43 -> +
         private const val ZONE_MAX_UPPER_ZONE = 1000
 
         private val LIST_OF_SWIM_ZONE_BOUNDS =

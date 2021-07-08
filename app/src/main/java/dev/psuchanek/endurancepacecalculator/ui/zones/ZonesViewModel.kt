@@ -66,10 +66,12 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
     fun submitFTP(ftp: String) {
 
         when {
-            ftp.length > 3 || ftp.length < 2 -> {
+            ftp.length > 3 || ftp.length <= 2 -> {
                 _inputStatus.value = InputCheckStatus.LENGTH_ERROR
+                return
             }
         }
+        _inputStatus.value = InputCheckStatus.PASS
 
         when (_powerZoneActivity.value) {
             ZoneActivity.BIKE -> {
@@ -85,8 +87,10 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
 
     fun submitSwimPaceValue(paceValue400: Float, paceValue200: Float) {
         zonesCalculatorHelper.generateCriticalSwimSpeedPaceZones(paceValue400, paceValue200)
-        _sliderSwimPace400.value = zonesCalculatorHelper.generatePaceListOfStrings(paceValue400.toInt())
-        _sliderSwimPace200.value = zonesCalculatorHelper.generatePaceListOfStrings(paceValue200.toInt())
+        _sliderSwimPace400.value =
+            zonesCalculatorHelper.generatePaceListOfStrings(paceValue400.toInt())
+        _sliderSwimPace200.value =
+            zonesCalculatorHelper.generatePaceListOfStrings(paceValue200.toInt())
         _swimCSS.value = zonesCalculatorHelper.getCSSPace()
         _swimZones.value = zonesCalculatorHelper.getCSSZones()
     }
