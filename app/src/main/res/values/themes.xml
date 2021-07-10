@@ -33,6 +33,9 @@
         <item name="alpha">0.8</item>
     </style>
 
+    <style name="ZonesListTheme" parent="TextAppearance.MaterialComponents.Headline5">
+    </style>
+
 
     <style name="TimeInputTextAppearance">
         <item name="android:inputType">number</item>

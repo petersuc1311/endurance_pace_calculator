@@ -33,10 +33,10 @@ class ZonesViewModelTest {
     }
 
     @Test
-    fun`submit beats per minutes with long input then expect error`() = runBlocking {
+    fun`submit beats per minutes with correcnt input then expect pass`() = runBlocking {
         //Given
-        val bpm = "1700"
-        val expectedError = InputCheckStatus.LENGTH_ERROR
+        val bpm = "170"
+        val expectedError = InputCheckStatus.PASS
 
         //When
         zonesViewModel.submitBPM(bpm)

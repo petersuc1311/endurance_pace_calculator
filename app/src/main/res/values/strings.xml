@@ -38,7 +38,7 @@
     <string name="instructions_label">Test and calculate each activity separately.</string>
     <string name="zone_label">Zone</string>
     <string name="lthr_percentage_label">% LTHR</string>
-    <string name="zone_range_label">Range (BPM)</string>
+    <string name="heart_rate_range_label">Range (BPM)</string>
     <string name="total_duration_label">Total Duration</string>
     <string name="transition_one_label">T1</string>
     <string name="transition_two_label">T2</string>
@@ -50,5 +50,10 @@
     <string name="ftp_label">FTP</string>
     <string name="swim_pace_for_400_label">Pace for 400m</string>
     <string name="swim_pace_for_200_label">Pace for 200m</string>
+    <string name="css_label">CSS:</string>
+    <string name="ftp_percentage_label">% FTP</string>
+    <string name="power_range_label">Range (Watts)</string>
+    <string name="swim_pace_percentage_label">%CV</string>
+    <string name="swim_pace_range_label">Range (per 100m)</string>
 
 </resources>

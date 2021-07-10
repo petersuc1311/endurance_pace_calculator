@@ -65,6 +65,18 @@
         app:layout_constraintTop_toBottomOf="@id/layoutSwimPace200" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvCSSLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_marginEnd="@dimen/dimen_8"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSwimCSS"
+        app:layout_constraintEnd_toStartOf="@+id/tvSwimCSS"
+        app:layout_constraintTop_toTopOf="@+id/tvSwimCSS"
+        tools:text="@string/css_label" />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSwimCSS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

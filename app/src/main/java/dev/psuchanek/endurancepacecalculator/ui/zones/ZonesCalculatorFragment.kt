@@ -1,13 +1,20 @@
 package dev.psuchanek.endurancepacecalculator.ui.zones
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,13 +22,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import dev.psuchanek.endurancepacecalculator.R
 import dev.psuchanek.endurancepacecalculator.adapters.ZonesListAdapter
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutMinutesSecondsBinding
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesCalculatorBinding
-import dev.psuchanek.endurancepacecalculator.models.HeartRateZones
 import dev.psuchanek.endurancepacecalculator.models.Zones
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
@@ -74,12 +79,27 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
     private fun initUI() {
         textInputBPM = binding.layoutHeartRateZones.tiBPM
+        textInputBPM.setOnEditorActionListener(editor)
         textInputFTP = binding.layoutPowerZones.tiFTP
+        textInputFTP.setOnEditorActionListener(editor)
         binding.layoutSwimPaceZones.apply {
             this@ZonesCalculatorFragment.sliderSwimPace400 = sliderSwimPace400
             this@ZonesCalculatorFragment.sliderSwimPace200 = sliderSwimPace200
         }
     }
+
+    private val editor =
+        TextView.OnEditorActionListener { view, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE, EditorInfo.IME_ACTION_SEND, EditorInfo.IME_ACTION_NEXT -> {
+                    handleSoftKeyboard(requireContext(), view)
+                    view.clearFocus()
+                    true
+                }
+                else -> false
+            }
+        }
+
 
     private fun setupSliderListeners() {
         sliderSwimPace400.addOnChangeListener(addSliderOnChangeValueListener())
@@ -146,8 +166,8 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
                 }
                 1 -> {
-                    clearAdapterList()
                     zonesViewModel.setZoneMethodType(ZoneMethodType.POWER)
+                    submitPowerToViewModel(textInputFTP.text.toString())
                 }
                 2 -> {
                     clearAdapterList()
@@ -222,14 +242,17 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
 
     private fun setupObservers() {
         lifecycleScope.launch {
-            zonesViewModel.inputStatus.collect{ inputStatus ->
-                when(inputStatus) {
+            zonesViewModel.inputStatus.collect { inputStatus ->
+                when (inputStatus) {
                     InputCheckStatus.LENGTH_ERROR -> {
-                        binding.layoutPowerZones.tiLayoutFTP.error = "Min. 3 digits"
+                        showOrHideErrorMessageForInputText(true)
                     }
-                    InputCheckStatus.PASS -> binding.layoutPowerZones.tiLayoutFTP.error = null
+                    InputCheckStatus.PASS -> {
+                        showOrHideErrorMessageForInputText()
+                    }
                     InputCheckStatus.VALUE_ERROR -> {
-
+                        showOrHideErrorMessageForInputText()
+                        clearAdapterList()
                     }
                 }
             }
@@ -302,13 +325,13 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     private fun setLayoutForZoneType(zoneType: ZoneMethodType) {
         when (zoneType) {
             ZoneMethodType.LTHR -> {
-                changeLayoutVisibility(lthr = true, power = false, swimPace = false)
+                changeZonesLayoutVisibility(lthr = true, power = false, swimPace = false)
             }
             ZoneMethodType.POWER -> {
-                changeLayoutVisibility(lthr = false, power = true, swimPace = false)
+                changeZonesLayoutVisibility(lthr = false, power = true, swimPace = false)
             }
             ZoneMethodType.SWIM_PACE -> {
-                changeLayoutVisibility(lthr = false, power = false, swimPace = true)
+                changeZonesLayoutVisibility(lthr = false, power = false, swimPace = true)
             }
             ZoneMethodType.RUN_PACE -> {
 
@@ -321,9 +344,33 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         zonesAdapter.submitList(emptyList())
     }
 
-    private fun changeLayoutVisibility(lthr: Boolean, power: Boolean, swimPace: Boolean) {
+    private fun changeZonesLayoutVisibility(lthr: Boolean, power: Boolean, swimPace: Boolean) {
         binding.layoutHeartRateZones.root.isVisible = lthr
         binding.layoutPowerZones.root.isVisible = power
         binding.layoutSwimPaceZones.root.isVisible = swimPace
+        changeZonesListHeaderVisibility(lthr, power, swimPace)
     }
+
+    private fun changeZonesListHeaderVisibility(lthr: Boolean, power: Boolean, swimPace: Boolean) {
+        binding.layoutZonesChart.apply {
+            layoutHRZonesHeader.root.isVisible = lthr
+            layoutPowerZonesHeader.root.isVisible = power
+            layoutSwimPaceZonesHeader.root.isVisible = swimPace
+        }
+    }
+
+    private fun showOrHideErrorMessageForInputText(showError: Boolean = false) {
+        when (showError) {
+            true -> {
+                binding.layoutPowerZones.tiLayoutFTP.error = "Min. 3 digits"
+                binding.layoutHeartRateZones.tiLayoutBPM.error = "Min. 3 digits"
+            }
+            false -> {
+                binding.layoutPowerZones.tiLayoutFTP.error = null
+                binding.layoutHeartRateZones.tiLayoutBPM.error = null
+            }
+        }
+    }
+
+
 }

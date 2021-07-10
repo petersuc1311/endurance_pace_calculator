@@ -5,17 +5,16 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvLthrLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tvLthrLabel"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:text="LTHR:"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tiLayoutBPM"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintBottom_toBottomOf="@id/tiLayoutBPM"
         app:layout_constraintEnd_toStartOf="@id/tiLayoutBPM"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tiLayoutBPM" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiLayoutBPM"
@@ -24,17 +23,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_8"
         android:hint="@string/bpm_label"
-
-        app:layout_constraintEnd_toEndOf="parent"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="@id/tvLthrLabel"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvLthrLabel"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiBPM"
+            style="@style/BpmInputTextAppearance"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/BpmInputTextAppearance"
             android:textAlignment="center" />
     </com.google.android.material.textfield.TextInputLayout>
 

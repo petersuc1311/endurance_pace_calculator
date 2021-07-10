@@ -10,6 +10,7 @@ import dev.psuchanek.endurancepacecalculator.models.PowerZones
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,12 +53,18 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
     }
 
     fun submitBPM(bpm: String) {
+        Timber.d("DEBUG:  this is the length of input: ${bpm.length}")
         when {
-            bpm.length > 3 || bpm.length <= 2 -> {
+            bpm.length in 1..2 -> {
                 _inputStatus.value = InputCheckStatus.LENGTH_ERROR
                 return
             }
+            bpm.isBlank() -> {
+                _inputStatus.value = InputCheckStatus.VALUE_ERROR
+                return
+            }
         }
+        _inputStatus.value = InputCheckStatus.PASS
 
         zonesCalculatorHelper.generateHeartRateZones(bpm.toInt())
         _lthrZones.value = zonesCalculatorHelper.getHeartRateZones()
@@ -66,8 +73,12 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
     fun submitFTP(ftp: String) {
 
         when {
-            ftp.length > 3 || ftp.length <= 2 -> {
+            ftp.length in 1..2 -> {
                 _inputStatus.value = InputCheckStatus.LENGTH_ERROR
+                return
+            }
+            ftp.isBlank() -> {
+                _inputStatus.value = InputCheckStatus.VALUE_ERROR
                 return
             }
         }

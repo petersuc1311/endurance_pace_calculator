@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineZonesSecond"
+            android:id="@+id/guidelineZonesThird"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -52,8 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time_label"
-            app:layout_constraintEnd_toEndOf="@id/guidelineZonesSecond"
-            app:layout_constraintStart_toStartOf="@id/guidelineZonesSecond"
+            app:layout_constraintEnd_toEndOf="@id/guidelineZonesThird"
+            app:layout_constraintStart_toStartOf="@id/guidelineZonesThird"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/separator"
             android:id="@+id/splitsRecyclerView"
-            tools:listitem="@layout/splits_and_zones_list_item" />
+            tools:listitem="@layout/layout_zones_list_item" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

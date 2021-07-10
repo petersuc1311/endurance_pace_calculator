@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.psuchanek.endurancepacecalculator.databinding.SplitsAndZonesListItemBinding
+import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesListItemBinding
 import dev.psuchanek.endurancepacecalculator.models.Zones
-import timber.log.Timber
 
 class ZonesListAdapter : ListAdapter<Zones, ZonesListAdapter.ZonesViewHolder>(diffUtil) {
 
-    class ZonesViewHolder(private val binding: SplitsAndZonesListItemBinding) :
+    class ZonesViewHolder(private val binding: LayoutZonesListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(zoneItem: Zones) {
@@ -22,7 +21,7 @@ class ZonesListAdapter : ListAdapter<Zones, ZonesListAdapter.ZonesViewHolder>(di
 
         companion object {
             fun from(parent: ViewGroup): ZonesViewHolder {
-                val binding = SplitsAndZonesListItemBinding.inflate(
+                val binding = LayoutZonesListItemBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false

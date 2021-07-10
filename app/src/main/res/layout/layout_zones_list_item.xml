@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -14,9 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineZonesFirst"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvZoneLabel"
-            style="@style/LabelsTheme"
+            style="@style/ZonesListTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{zoneItem.getZone}"
@@ -25,37 +33,39 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineZonesFirst"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.25" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvPercentageLabel"
-            style="@style/LabelsTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{zoneItem.getZoneBounds}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineZonesSecond"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.75" />
+            app:layout_constraintGuide_percent="0.40" />
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvPercentageLabel"
+            style="@style/ZonesListTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{zoneItem.getZoneBounds}"
+            app:layout_constraintEnd_toEndOf="@id/guidelineZonesSecond"
+            app:layout_constraintStart_toStartOf="@id/guidelineZonesSecond"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineZonesThird"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.80" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvRangeLabel"
-            style="@style/LabelsTheme"
+            style="@style/ZonesListTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{zoneItem.getZoneRange}"
-            app:layout_constraintEnd_toEndOf="@id/guidelineZonesSecond"
-            app:layout_constraintStart_toStartOf="@id/guidelineZonesSecond"
+            app:layout_constraintEnd_toEndOf="@id/guidelineZonesThird"
+            app:layout_constraintStart_toStartOf="@id/guidelineZonesThird"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

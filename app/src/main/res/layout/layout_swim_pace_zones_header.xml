@@ -34,7 +34,7 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lthr_percentage_label"
+        android:text="@string/swim_pace_percentage_label"
         app:layout_constraintEnd_toEndOf="@id/guidelineZonesSecond"
         app:layout_constraintStart_toStartOf="@id/guidelineZonesSecond"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/heart_rate_range_label"
+        android:text="@string/swim_pace_range_label"
         app:layout_constraintEnd_toEndOf="@id/guidelineZonesThird"
         app:layout_constraintStart_toStartOf="@id/guidelineZonesThird"
         app:layout_constraintTop_toTopOf="parent" />

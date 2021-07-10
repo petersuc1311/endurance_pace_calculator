@@ -6,24 +6,40 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/layoutZonesHeader"
+        android:id="@+id/layoutHRZonesHeader"
         layout="@layout/layout_heart_rate_zones_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <include
+        android:visibility="gone"
+        android:id="@+id/layoutPowerZonesHeader"
+        layout="@layout/layout_power_zones_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:visibility="gone"
+        android:id="@+id/layoutSwimPaceZonesHeader"
+        layout="@layout/layout_swim_pace_zones_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <View
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/dimen_4"
-        android:backgroundTint="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/layoutZonesHeader" />
+        android:background="@android:color/darker_gray"
+        android:layout_marginVertical="@dimen/dimen_24" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/zonesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/separator"
-        tools:listitem="@layout/splits_and_zones_list_item" />
+        tools:listitem="@layout/layout_zones_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
