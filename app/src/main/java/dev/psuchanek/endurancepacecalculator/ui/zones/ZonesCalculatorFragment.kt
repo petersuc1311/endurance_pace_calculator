@@ -30,6 +30,7 @@ import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesCalculatorBi
 import dev.psuchanek.endurancepacecalculator.models.Zones
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -161,11 +162,13 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         AdapterView.OnItemClickListener { _, _, position, _ ->
             when (position) {
                 0 -> {
-                    clearAdapterList()
+
                     zonesViewModel.setZoneMethodType(ZoneMethodType.LTHR)
+                    submitBpmToViewModel(textInputBPM.text.toString())
 
                 }
                 1 -> {
+
                     zonesViewModel.setZoneMethodType(ZoneMethodType.POWER)
                     submitPowerToViewModel(textInputFTP.text.toString())
                 }
@@ -174,6 +177,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
                     zonesViewModel.setZoneMethodType(ZoneMethodType.RUN_PACE)
                 }
                 3 -> {
+                    clearAdapterList()
                     zonesViewModel.setZoneMethodType(ZoneMethodType.SWIM_PACE)
                     submitSwimPaceValuesToViewModel(
                         sliderSwimPace400.value,
@@ -183,12 +187,6 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
             }
         }
 
-    private fun submitSwimPaceValuesToViewModel(paceValue400: Float, paceValue200: Float) {
-        zonesViewModel.submitSwimPaceValue(
-            paceValue400,
-            paceValue200
-        )
-    }
 
     private fun zoneActivitySpinnerOnItemClickListener() =
         AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -204,8 +202,19 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
             submitPowerToViewModel(textInputFTP.text.toString())
         }
 
+    private fun submitBpmToViewModel(bpm: String) {
+        zonesViewModel.submitBPM(bpm)
+    }
+
     private fun submitPowerToViewModel(ftp: String) {
         zonesViewModel.submitFTP(ftp)
+    }
+
+    private fun submitSwimPaceValuesToViewModel(paceValue400: Float, paceValue200: Float) {
+        zonesViewModel.submitSwimPaceValue(
+            paceValue400,
+            paceValue200
+        )
     }
 
     private fun setupTextInputListeners() {
@@ -225,7 +234,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             when (id) {
                 textInputBPM.id -> {
-                    zonesViewModel.submitBPM(textInputBPM.text.toString())
+                    submitBpmToViewModel(textInputBPM.text.toString())
 
                 }
                 textInputFTP.id -> {
