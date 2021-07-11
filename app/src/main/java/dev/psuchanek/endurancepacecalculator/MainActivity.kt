@@ -34,13 +34,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (currentFocus != null) {
-                handleSoftKeyboard(this, currentFocus!!)
+            handleSoftKeyboard(this, currentFocus!!)
+            currentFocus!!.clearFocus()
 
         }
         return super.dispatchTouchEvent(ev)
     }
-
-
 
 
 }
