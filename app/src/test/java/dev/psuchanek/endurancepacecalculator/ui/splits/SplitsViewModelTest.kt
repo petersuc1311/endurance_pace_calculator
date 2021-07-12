@@ -3,7 +3,6 @@ package dev.psuchanek.endurancepacecalculator.ui.splits
 import com.google.common.truth.Truth.assertThat
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
 import dev.psuchanek.endurancepacecalculator.calculator.SplitsCalculatorHelper
-import dev.psuchanek.endurancepacecalculator.models.Split
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -27,7 +26,7 @@ class SplitsViewModelTest {
 
         //When
         splitsViewModel.submitDuration(duration)
-        val result = splitsViewModel.duration.first()
+        val result = splitsViewModel.durationValuesList.first()
 
         //Then
         assertThat(result).isEqualTo(expectedResult)
@@ -67,5 +66,21 @@ class SplitsViewModelTest {
         println(result.size)
         println(result)
         assertThat(result[result.size - 1].splitDistance).isEqualTo(expectedResult)
+    }
+
+    @Test
+    fun`set new distance then observe and collect new slider values`() = runBlocking {
+        //Given
+        val distance = CalculatorHelper.LIST_OF_RUN_DISTANCES[2]
+        val expectedValues = listOf(600f, 2700f, 1650f)
+
+    //When
+        println(splitsViewModel.sliderValues.first())
+        splitsViewModel.setDistance(distance)
+        val result = splitsViewModel.sliderValues.first()
+        println(splitsViewModel.sliderValues.first())
+
+        //Then
+        assertThat(result).isEqualTo(expectedValues)
     }
 }

@@ -1,20 +1,15 @@
 package dev.psuchanek.endurancepacecalculator.ui.zones
 
-import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,9 +25,7 @@ import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesCalculatorBi
 import dev.psuchanek.endurancepacecalculator.models.Zones
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
@@ -72,7 +65,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
         initUI()
         setupSliderListeners()
         initAdapter()
-        setupSpinnerListener()
+        setupSpinnerListeners()
         setupTextInputListeners()
         setupObservers()
     }
@@ -151,7 +144,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
         }
     }
 
-    private fun setupSpinnerListener() {
+    private fun setupSpinnerListeners() {
         binding.dropDownZonesSpinner.onItemClickListener = methodSpinnerOnItemClickListener()
         binding.layoutPowerZones.dropDownSportChoiceSpinner.onItemClickListener =
             zoneActivitySpinnerOnItemClickListener()

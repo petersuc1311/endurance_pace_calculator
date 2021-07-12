@@ -1,15 +1,29 @@
 package dev.psuchanek.endurancepacecalculator.calculator
 
 import dev.psuchanek.endurancepacecalculator.models.Split
-import java.lang.IllegalArgumentException
-import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class SplitsCalculatorHelper : CalculatorHelper() {
 
     private var _splitList: List<Split> = emptyList()
 
+    private val _durationsFastestSlowestBoundaries: HashMap<Float, List<Float>> = hashMapOf(
+        Pair(RUN_1500, listOf(DURATION_FASTEST_1500, DURATION_SLOWEST_1500)),
+        Pair(RUN_3K, listOf(DURATION_FASTEST_3K, DURATION_SLOWEST_3K)),
+        Pair(RUN_5K, listOf(DURATION_FASTEST_5K, DURATION_SLOWEST_5K)),
+        Pair(RUN_10K, listOf(DURATION_FASTEST_10K, DURATION_SLOWEST_10K)),
+        Pair(
+            RUN_HALF_MARATHON,
+            listOf(DURATION_FASTEST_HALF_MARATHON, DURATION_SLOWEST_HALF_MARATHON)
+        ),
+        Pair(
+            RUN_FULL_MARATHON,
+            listOf(DURATION_FASTEST_FULL_MARATHON, DURATION_SLOWEST_FULL_MARATHON)
+        )
+    )
+
     fun getSplitsList() = _splitList
+
+    fun getDurationMapValues(distance: Float) = _durationsFastestSlowestBoundaries[distance]
 
 
     fun generateSplits(distance: Float, frequency: Float, durationInSeconds: Float) {
@@ -81,5 +95,25 @@ class SplitsCalculatorHelper : CalculatorHelper() {
         const val SPLIT_FREQUENCY_3KM = 3f
         const val SPLIT_FREQUENCY_5KM = 5f
         const val SPLIT_FREQUENCY_10KM = 10f
+
+        val LIST_OF_SPLIT_FREQUENCIES = listOf(SPLIT_FREQUENCY_100M, SPLIT_FREQUENCY_400M, SPLIT_FREQUENCY_1KM, SPLIT_FREQUENCY_3KM, SPLIT_FREQUENCY_5KM, SPLIT_FREQUENCY_10KM)
+
+        private const val DURATION_SLOWEST_1500 = 810f
+        private const val DURATION_FASTEST_1500 = 180f
+
+        private const val DURATION_SLOWEST_3K = 1620f
+        private const val DURATION_FASTEST_3K = 360f
+
+        private const val DURATION_SLOWEST_5K = 2700f
+        private const val DURATION_FASTEST_5K = 600f
+
+        private const val DURATION_SLOWEST_10K = 5400f
+        private const val DURATION_FASTEST_10K = 1200f
+
+        private const val DURATION_SLOWEST_HALF_MARATHON = 11400f
+        private const val DURATION_FASTEST_HALF_MARATHON = 2530f
+
+        private const val DURATION_SLOWEST_FULL_MARATHON = 22790f
+        private const val DURATION_FASTEST_FULL_MARATHON = 5060f
     }
 }

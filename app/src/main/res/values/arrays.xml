@@ -20,10 +20,10 @@
     </string-array>
 
     <string-array name="distances_for_splits_calculator">
-        <item>1500m</item>
-        <item>3K</item>
-        <item>5K</item>
-        <item>10K</item>
+        <item>1500 meters</item>
+        <item>3 km</item>
+        <item>5 km</item>
+        <item>10 km</item>
         <item>Half Marathon</item>
         <item>Full Marathon</item>
     </string-array>

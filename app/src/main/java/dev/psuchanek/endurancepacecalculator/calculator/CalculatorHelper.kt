@@ -6,6 +6,7 @@ import java.text.DecimalFormat
 
 open class CalculatorHelper {
 
+
     fun generateDurationListOfStrings(durationInSeconds: Float): List<String> {
         val hoursOutput = (durationInSeconds / SECONDS_IN_ONE_HOUR).toInt()
         val minutesOutput =
@@ -110,6 +111,9 @@ open class CalculatorHelper {
         const val RUN_HALF_MARATHON = 21.097f
         const val RUN_FULL_MARATHON = 42.195f
 
+        val LIST_OF_RUN_DISTANCES =
+            listOf(RUN_1500, RUN_3K, RUN_5K, RUN_10K, RUN_HALF_MARATHON, RUN_FULL_MARATHON)
+
         const val SWIM = 111
         const val T1 = 222
         const val BIKE = 333
@@ -136,5 +140,7 @@ open class CalculatorHelper {
         const val FULL_DISTANCE_SWIM_METRIC = 3800
         const val FULL_DISTANCE_BIKE_METRIC = 180f
         const val FULL_DISTANCE_RUN_METRIC = 42.2f
+
+
     }
 }
