@@ -4,41 +4,33 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvDurationLabel"
-        style="@style/LabelsTheme"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tiLayoutDropDownSplitDistance"
+        style="@style/DropDownInputLayoutTheme"
+        android:hint="@string/distance_label"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/duration_label"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <include layout="@layout/layout_hour_minutes_seconds"
-        android:layout_marginTop="@dimen/dimen_8"
-        android:id="@+id/layoutDurationTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvDurationLabel"/>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_marginTop="@dimen/dimen_8"
-        android:id="@+id/tvFrequencyLabel"
-        style="@style/LabelsTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layoutDurationTime"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/frequency_label"/>
+        <AutoCompleteTextView
+            android:id="@+id/dropDownSplitDistanceSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiLayoutDropDownFrequency"
         style="@style/DropDownInputLayoutTheme"
         android:layout_marginTop="@dimen/dimen_8"
         android:layout_width="0dp"
+        android:hint="@string/frequency_label"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFrequencyLabel">
+        app:layout_constraintTop_toBottomOf="@id/tiLayoutDropDownSplitDistance">
 
         <AutoCompleteTextView
             android:id="@+id/dropDownFrequencySpinner"
@@ -47,15 +39,26 @@
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <include
+        android:layout_marginTop="@dimen/dimen_8"
+        layout="@layout/layout_textviews_hour_minutes_seconds"
+        android:id="@+id/layoutSplitsDuration"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiLayoutDropDownFrequency"/>
+
     <com.google.android.material.slider.Slider
         style="@style/SliderTheme"
         android:value="@string/slide_start_value"
-        android:id="@+id/splitsSlider"
+        android:stepSize="5.0"
+        android:id="@+id/splitsDurationSlider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tiLayoutDropDownFrequency"
+        app:layout_constraintTop_toBottomOf="@id/layoutSplitsDuration"
         android:layout_marginTop="@dimen/dimen_8"/>
 
 

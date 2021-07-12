@@ -40,7 +40,7 @@ class PaceViewModelTest {
         val paceValue = 330f
 
         //When
-        paceViewModel.setActivityType(ActivityType.FIVE_KM)
+        paceViewModel.setActivityType(ActivityType.RUN_FIVE_KM)
         paceViewModel.submitRunPaceValue(paceValue)
         val result = paceViewModel.runDurationValues.first()
 

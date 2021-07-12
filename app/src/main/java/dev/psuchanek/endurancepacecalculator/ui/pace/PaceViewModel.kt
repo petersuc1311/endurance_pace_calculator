@@ -19,7 +19,7 @@ class PaceViewModel @Inject constructor() :
 
     private val _unitsType = MutableStateFlow(Units.METRIC)
 
-    private val _activityType = MutableStateFlow(ActivityType.FIVE_KM)
+    private val _activityType = MutableStateFlow(ActivityType.RUN_FIVE_KM)
 
     private val _runPaceValues = MutableStateFlow(DEFAULT_PACE)
     val runPaceValues: StateFlow<List<String>> = _runPaceValues
@@ -132,10 +132,10 @@ class PaceViewModel @Inject constructor() :
     }
 
     private fun getRunDistance(): Float = when (_activityType.value) {
-        ActivityType.FIVE_KM -> CalculatorHelper.RUN_5K
-        ActivityType.TEN_KM -> CalculatorHelper.RUN_10K
-        ActivityType.HALF_MARATHON -> CalculatorHelper.RUN_HALF_MARATHON
-        ActivityType.FULL_MARATHON -> CalculatorHelper.RUN_FULL_MARATHON
+        ActivityType.RUN_FIVE_KM -> CalculatorHelper.RUN_5K
+        ActivityType.RUN_TEN_KM -> CalculatorHelper.RUN_10K
+        ActivityType.RUN_HALF_MARATHON -> CalculatorHelper.RUN_HALF_MARATHON
+        ActivityType.RUN_FULL_MARATHON -> CalculatorHelper.RUN_FULL_MARATHON
         else -> -1f
     }
 }

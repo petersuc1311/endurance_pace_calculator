@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
+class PaceCalculatorFragment : Fragment(R.layout.layout_pace_calculator) {
 
     private lateinit var binding: LayoutPaceCalculatorBinding
     private val paceViewModel: PaceViewModel by viewModels()
@@ -244,16 +244,16 @@ class PaceCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
     private fun Int.setActivityTypeFromPosition() {
         when (this) {
             0 -> {
-                ActivityType.FIVE_KM.setActivityTypeInViewModel()
+                ActivityType.RUN_FIVE_KM.setActivityTypeInViewModel()
             }
             1 -> {
-                ActivityType.TEN_KM.setActivityTypeInViewModel()
+                ActivityType.RUN_TEN_KM.setActivityTypeInViewModel()
             }
             2 -> {
-                ActivityType.HALF_MARATHON.setActivityTypeInViewModel()
+                ActivityType.RUN_HALF_MARATHON.setActivityTypeInViewModel()
             }
             3 -> {
-                ActivityType.FULL_MARATHON.setActivityTypeInViewModel()
+                ActivityType.RUN_FULL_MARATHON.setActivityTypeInViewModel()
             }
             4 -> {
                 ActivityType.SPRINT.setActivityTypeInViewModel()

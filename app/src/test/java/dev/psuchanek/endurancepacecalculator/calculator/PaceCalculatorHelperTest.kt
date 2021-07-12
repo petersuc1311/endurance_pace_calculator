@@ -1,4 +1,4 @@
-package dev.psuchanek.endurancepacecalculator.utils
+package dev.psuchanek.endurancepacecalculator.calculator
 
 import com.google.common.truth.Truth.assertThat
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.BIKE
@@ -14,7 +14,6 @@ import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Compani
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.SWIM
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.T1
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.T2
-import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper
 import org.junit.Before
 import org.junit.Test
 

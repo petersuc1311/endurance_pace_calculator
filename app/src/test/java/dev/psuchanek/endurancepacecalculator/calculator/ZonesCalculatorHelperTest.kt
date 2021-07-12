@@ -1,4 +1,4 @@
-package dev.psuchanek.endurancepacecalculator.utils
+package dev.psuchanek.endurancepacecalculator.calculator
 
 
 import com.google.common.truth.Truth.assertThat

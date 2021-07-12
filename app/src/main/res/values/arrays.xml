@@ -42,65 +42,9 @@
         <item>Split each 100m</item>
         <item>Split each 400m</item>
         <item>Split each 1km</item>
+        <item>Split each 3km</item>
         <item>Split each 5km</item>
         <item>Split each 10km</item>
-    </string-array>
-
-    <string-array name="five_zones">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
-
-    <string-array name="five_zones_lthr">
-        <item>72 – 90</item>
-        <item>90 – 95</item>
-        <item>95 – 100</item>
-        <item>100 – 105</item>
-        <item>≥ 105</item>
-    </string-array>
-
-
-    <string-array name="seven_zones_lthr">
-        <item>72 – 81</item>
-        <item>81 – 90</item>
-        <item>90 – 95</item>
-        <item>95 – 100</item>
-        <item>100 – 102</item>
-        <item>102 – 105</item>
-        <item>≥ 105</item>
-    </string-array>
-
-    <string-array name="seven_zones">
-        <item>1</item>
-        <item>2</item>
-        <item>X</item>
-        <item>3</item>
-        <item>Y</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
-
-    <string-array name="seven_zones_run_power">
-        <item>50 – 76</item>
-        <item>76 – 88</item>
-        <item>88 – 94</item>
-        <item>94 – 100</item>
-        <item>100 – 103</item>
-        <item>103 – 120</item>
-        <item>≥ 120</item>
-    </string-array>
-
-    <string-array name="seven_zones_bike_power">
-        <item>50 – 70</item>
-        <item>70 – 83</item>
-        <item>83 – 91</item>
-        <item>91 – 100</item>
-        <item>100 – 102</item>
-        <item>102 – 110</item>
-        <item>≥ 110</item>
     </string-array>
 
 </resources>

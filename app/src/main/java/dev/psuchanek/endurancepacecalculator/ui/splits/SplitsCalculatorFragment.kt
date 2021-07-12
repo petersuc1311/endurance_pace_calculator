@@ -9,13 +9,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import dev.psuchanek.endurancepacecalculator.R
-import dev.psuchanek.endurancepacecalculator.databinding.CalculatorBaseLayoutBinding
+import dev.psuchanek.endurancepacecalculator.databinding.LayoutSplitsCalculatorBinding
 import dev.psuchanek.endurancepacecalculator.utils.FREQUENCY_PRESET_VALUE
 
 @AndroidEntryPoint
-class SplitsCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
+class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
 
-    private lateinit var binding: CalculatorBaseLayoutBinding
+    private lateinit var binding: LayoutSplitsCalculatorBinding
 
 
     override fun onCreateView(
@@ -23,7 +23,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = CalculatorBaseLayoutBinding.inflate(layoutInflater, container, false)
+        binding = LayoutSplitsCalculatorBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -49,8 +49,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
             android.R.layout.simple_list_item_1,
             resources.getStringArray(R.array.distances_for_splits_calculator)
         )
-        binding.dropDownBaseSpinner.setAdapter(distanceAdapter)
-        binding.tiLayoutDropDownBase.hint = resources.getString(R.string.distance_label)
+        binding.dropDownSplitDistanceSpinner.setAdapter(distanceAdapter)
     }
 
     private fun setupDistanceAdapter() {
@@ -59,7 +58,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
             android.R.layout.simple_list_item_1,
             resources.getStringArray(R.array.splits_frequency)
         )
-        binding.layoutSplitsCalculator.dropDownFrequencySpinner.apply {
+        binding.dropDownFrequencySpinner.apply {
             setAdapter(frequencyAdapter)
             setText(FREQUENCY_PRESET_VALUE, false)
         }

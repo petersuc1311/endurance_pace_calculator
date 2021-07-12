@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class ZonesCalculatorFragment : Fragment(R.layout.calculator_base_layout) {
+class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
 
     private lateinit var binding: LayoutZonesCalculatorBinding
     private lateinit var zonesAdapter: ZonesListAdapter
