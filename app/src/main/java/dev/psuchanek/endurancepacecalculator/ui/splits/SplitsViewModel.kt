@@ -58,11 +58,17 @@ class SplitsViewModel @Inject constructor() : ViewModel() {
         updateSplits()
     }
 
-    fun submitDuration(duration: Float) {
+    fun setDurationValue(duration:Float) {
         _duration.value = duration
-        _durationValuesList.value = splitsCalculatorHelper.generateDurationListOfStringsInHoursMinutesSeconds(duration)
-        updateSplits()
+        setDurationValuesList(duration)
+    }
 
+    private fun setDurationValuesList(duration:Float) {
+        _durationValuesList.value = splitsCalculatorHelper.generateDurationListOfStringsInHoursMinutesSeconds(duration)
+    }
+
+    fun updateSplitsUI() {
+        updateSplits()
     }
 
     private fun updateSplits() {

@@ -126,7 +126,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
         )
         binding.dropDownZonesSpinner.apply {
             setAdapter(zoneMethodAdapter)
-            setText(ZONES_PRESET_VALUE, false)
+            setText(ZONES_SPINNER_PRESET_VALUE, false)
         }
         binding.tiLayoutDropDownZones.hint = resources.getString(R.string.zones_label)
     }
@@ -141,7 +141,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
             setAdapter(
                 sportsAdapter
             )
-            setText(SPORTS_PRESET_VALUE, false)
+            setText(SPORTS_SPINNER_PRESET_VALUE, false)
         }
     }
 

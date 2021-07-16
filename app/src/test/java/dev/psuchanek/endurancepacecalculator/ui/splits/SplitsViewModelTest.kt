@@ -25,7 +25,7 @@ class SplitsViewModelTest {
         val expectedResult = listOf("00", "07", "30")
 
         //When
-        splitsViewModel.submitDuration(duration)
+        splitsViewModel.setDurationValue(duration)
         val result = splitsViewModel.durationValuesList.first()
 
         //Then
@@ -39,7 +39,7 @@ class SplitsViewModelTest {
         val expectedResult = "25:00"
 
         //When
-        splitsViewModel.submitDuration(duration)
+        splitsViewModel.updateSplitsUI(duration)
         val result = splitsViewModel.splits.first()
 
         //Then
@@ -59,7 +59,7 @@ class SplitsViewModelTest {
         //When
         splitsViewModel.setDistance(distance)
         splitsViewModel.setFrequency(frequency)
-        splitsViewModel.submitDuration(duration)
+        splitsViewModel.updateSplitsUI(duration)
         val result = splitsViewModel.splits.first()
 
         //Then

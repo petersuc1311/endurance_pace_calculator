@@ -21,7 +21,6 @@ import dev.psuchanek.endurancepacecalculator.utils.DISTANCE_PRESET_VALUE
 import dev.psuchanek.endurancepacecalculator.utils.FREQUENCY_PRESET_VALUE
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
@@ -58,6 +57,8 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
         initAdapters()
         setupSpinnerListeners()
         setupObservers()
+        updateSplitsInViewModel()
+
     }
 
 
@@ -68,10 +69,30 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
 
     private fun setupSliderListener() {
         sliderDuration.addOnChangeListener(sliderOnChangeListener)
+        sliderDuration.addOnSliderTouchListener(sliderOnTouchListener)
+    }
+
+    private val sliderOnTouchListener = object : Slider.OnSliderTouchListener {
+        override fun onStartTrackingTouch(slider: Slider) {
+
+        }
+
+        override fun onStopTrackingTouch(slider: Slider) {
+            updateSplitsInViewModel()
+        }
+
     }
 
     private val sliderOnChangeListener =
-        Slider.OnChangeListener { _, value, _ -> submitDurationToViewModel(value) }
+        Slider.OnChangeListener { _, value, _ ->
+            setDurationInViewModel(value)
+        }
+
+
+    private fun updateSplitsInViewModel() {
+        splitsViewModel.updateSplitsUI()
+    }
+
 
     private fun initAdapters() {
         setupDistanceAdapter()
@@ -141,8 +162,8 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
         splitsViewModel.setFrequency(frequency)
     }
 
-    private fun submitDurationToViewModel(duration: Float) {
-        splitsViewModel.submitDuration(duration)
+    private fun setDurationInViewModel(value: Float) {
+        splitsViewModel.setDurationValue(value)
     }
 
     private fun setupObservers() {
@@ -173,7 +194,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
         sliderDuration.valueFrom = valuesList[0]
         sliderDuration.valueTo = valuesList[1]
         sliderDuration.value = valuesList[2]
-        submitDurationToViewModel(sliderDuration.value)
+        setDurationInViewModel(sliderDuration.value)
     }
 
 
