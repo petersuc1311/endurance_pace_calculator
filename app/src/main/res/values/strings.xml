@@ -55,5 +55,8 @@
     <string name="power_range_label">Range (Watts)</string>
     <string name="swim_pace_percentage_label">%CV</string>
     <string name="swim_pace_range_label">Range (per 100m)</string>
+    <string name="split_time_label">Split time</string>
+    <string name="total_distance_label">Total distance</string>
+    <string name="total_time_label">Total time</string>
 
 </resources>

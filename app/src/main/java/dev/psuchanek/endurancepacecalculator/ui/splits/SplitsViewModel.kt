@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
 import dev.psuchanek.endurancepacecalculator.calculator.SplitsCalculatorHelper
 import dev.psuchanek.endurancepacecalculator.models.Split
+import dev.psuchanek.endurancepacecalculator.models.UIModel
 import dev.psuchanek.endurancepacecalculator.utils.DEFAULT_SPLITS_DURATION
 import dev.psuchanek.endurancepacecalculator.utils.DEFAULT_SPLITS_SLIDER_VALUES
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,16 +27,17 @@ class SplitsViewModel @Inject constructor() : ViewModel() {
     private val _sliderValues = MutableStateFlow(DEFAULT_SPLITS_SLIDER_VALUES)
     val sliderValues: StateFlow<List<Float>> = _sliderValues
 
-    private val _splits = MutableStateFlow<List<Split>>(emptyList())
-    val splits: StateFlow<List<Split>> = _splits
+    private val _splits = MutableStateFlow<List<UIModel.SplitsModel>>(emptyList())
+    val splits: StateFlow<List<UIModel.SplitsModel>> = _splits
 
     fun setDistance(distance: Float) {
         setNewSliderValues(distance)
         _distance.value = distance
+        updateSplits()
     }
 
     private fun setNewSliderValues(distance: Float) {
-            _sliderValues.value = getNewSliderBounds(distance)
+        _sliderValues.value = getNewSliderBounds(distance)
     }
 
     private fun getNewSliderBounds(distance: Float): List<Float> {
@@ -67,7 +69,11 @@ class SplitsViewModel @Inject constructor() : ViewModel() {
     private fun updateSplits() {
         splitsCalculatorHelper.generateSplits(_distance.value, _frequency.value, _duration.value)
         checkAndHandleWhenListIsEqual()
-        _splits.value = splitsCalculatorHelper.getSplitsList()
+        val splitsInUIModel = mutableListOf<UIModel.SplitsModel>()
+        splitsCalculatorHelper.getSplitsList().map { split ->
+            splitsInUIModel.add(UIModel.SplitsModel(split))
+        }
+        _splits.value = splitsInUIModel
 
     }
 

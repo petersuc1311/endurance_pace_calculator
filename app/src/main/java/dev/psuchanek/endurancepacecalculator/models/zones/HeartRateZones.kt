@@ -1,4 +1,4 @@
-package dev.psuchanek.endurancepacecalculator.models
+package dev.psuchanek.endurancepacecalculator.models.zones
 
 data class HeartRateZones(
     override val zone: Int = 1,

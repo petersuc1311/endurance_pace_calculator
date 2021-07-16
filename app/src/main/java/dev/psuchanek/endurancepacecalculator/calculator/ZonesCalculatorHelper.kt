@@ -1,9 +1,9 @@
 package dev.psuchanek.endurancepacecalculator.calculator
 
-import dev.psuchanek.endurancepacecalculator.models.HeartRateZones
-import dev.psuchanek.endurancepacecalculator.models.PaceZones
-import dev.psuchanek.endurancepacecalculator.models.PowerZones
-import dev.psuchanek.endurancepacecalculator.models.Zones
+import dev.psuchanek.endurancepacecalculator.models.zones.HeartRateZones
+import dev.psuchanek.endurancepacecalculator.models.zones.PaceZones
+import dev.psuchanek.endurancepacecalculator.models.zones.PowerZones
+import dev.psuchanek.endurancepacecalculator.models.zones.Zones
 import java.security.InvalidParameterException
 
 
@@ -65,11 +65,11 @@ class ZonesCalculatorHelper : CalculatorHelper() {
         }
     }
 
-
     fun generateHeartRateZones(lthr: Int) {
         this.lthr = lthr
         zones = calculateZones(boundsList = LIST_OF_HR_ZONE_BOUNDS, LTHR)
     }
+
 
 
     private fun calculateZones(boundsList: List<Int>, methodType: Int): List<Zones> {
@@ -94,7 +94,7 @@ class ZonesCalculatorHelper : CalculatorHelper() {
                     zonesList.add(
                         i, getZoneModel(
                             methodType = methodType,
-                            zone = i+1,
+                            zone = i + 1,
                             lowerZoneBound = boundsList[i],
                             upperZoneBound = boundsList[i + 1],
                             lowerRange = lowerBoundValue,
@@ -107,7 +107,7 @@ class ZonesCalculatorHelper : CalculatorHelper() {
                     zonesList.add(
                         i, getZoneModel(
                             methodType = methodType,
-                            zone = i+1,
+                            zone = i + 1,
                             lowerZoneBound = boundsList[i],
                             upperZoneBound = ZONE_MAX_UPPER_ZONE,
                             lowerRange = lowerBoundValue,

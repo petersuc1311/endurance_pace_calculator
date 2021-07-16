@@ -1,4 +1,4 @@
-package dev.psuchanek.endurancepacecalculator.models
+package dev.psuchanek.endurancepacecalculator.models.zones
 
 open class Zones(
     open val zone: Int,

@@ -5,16 +5,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
 import dev.psuchanek.endurancepacecalculator.calculator.ZonesCalculatorHelper
-import dev.psuchanek.endurancepacecalculator.models.HeartRateZones
-import dev.psuchanek.endurancepacecalculator.models.PaceZones
-import dev.psuchanek.endurancepacecalculator.models.PowerZones
+import dev.psuchanek.endurancepacecalculator.models.zones.HeartRateZones
+import dev.psuchanek.endurancepacecalculator.models.zones.PaceZones
+import dev.psuchanek.endurancepacecalculator.models.zones.PowerZones
 import dev.psuchanek.endurancepacecalculator.utils.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

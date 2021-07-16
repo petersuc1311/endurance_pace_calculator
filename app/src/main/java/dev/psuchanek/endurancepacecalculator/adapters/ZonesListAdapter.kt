@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesListItemBinding
-import dev.psuchanek.endurancepacecalculator.models.Zones
+import dev.psuchanek.endurancepacecalculator.models.zones.Zones
 
 class ZonesListAdapter : ListAdapter<Zones, ZonesListAdapter.ZonesViewHolder>(diffUtil) {
 

@@ -45,7 +45,7 @@ class SplitsViewModelTest {
         //Then
         println(result.size)
         println(result)
-        assertThat(result[result.size - 1].totalTime).isEqualTo(expectedResult)
+        assertThat(result[result.size - 1].splitItem.totalTime).isEqualTo(expectedResult)
     }
 
     @Test
@@ -65,7 +65,7 @@ class SplitsViewModelTest {
         //Then
         println(result.size)
         println(result)
-        assertThat(result[result.size - 1].splitDistance).isEqualTo(expectedResult)
+        assertThat(result[result.size - 1].splitItem.splitDistance).isEqualTo(expectedResult)
     }
 
     @Test

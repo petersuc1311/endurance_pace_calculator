@@ -9,9 +9,11 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.slider.Slider
 import dagger.hilt.android.AndroidEntryPoint
 import dev.psuchanek.endurancepacecalculator.R
+import dev.psuchanek.endurancepacecalculator.adapters.EnduranceListAdapter
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
 import dev.psuchanek.endurancepacecalculator.calculator.SplitsCalculatorHelper
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutSplitsCalculatorBinding
@@ -26,6 +28,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
 
     private lateinit var binding: LayoutSplitsCalculatorBinding
     private val splitsViewModel: SplitsViewModel by viewModels()
+    private lateinit var enduranceAdapter: EnduranceListAdapter
 
     private lateinit var sliderDuration: Slider
 
@@ -36,7 +39,17 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
         savedInstanceState: Bundle?
     ): View {
         binding = LayoutSplitsCalculatorBinding.inflate(layoutInflater, container, false)
+        initEnduranceAdapter()
         return binding.root
+    }
+
+    private fun initEnduranceAdapter() {
+        enduranceAdapter = EnduranceListAdapter()
+        binding.layoutSplitRecyclerView.splitsRecyclerView.apply {
+            adapter = enduranceAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,8 +76,6 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
     private fun initAdapters() {
         setupDistanceAdapter()
         setupFrequencyAdapter()
-
-
     }
 
     private fun setupFrequencyAdapter() {
@@ -152,7 +163,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
 
         lifecycleScope.launch {
             splitsViewModel.splits.collect { splitsList ->
-                Timber.d("DEBUG: splitsList: $splitsList")
+                enduranceAdapter.submitList(splitsList)
             }
         }
 

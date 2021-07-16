@@ -22,7 +22,7 @@ import dev.psuchanek.endurancepacecalculator.R
 import dev.psuchanek.endurancepacecalculator.adapters.ZonesListAdapter
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutMinutesSecondsBinding
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesCalculatorBinding
-import dev.psuchanek.endurancepacecalculator.models.Zones
+import dev.psuchanek.endurancepacecalculator.models.zones.Zones
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

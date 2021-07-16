@@ -41,7 +41,7 @@ class SplitsCalculatorHelper : CalculatorHelper() {
                 i, Split(
                     splitDistance = frequency,
                     splitTime = generateDurationStringWithMilliseconds(baseSplitTime),
-                    splitTotalDistance = frequency + (frequency * i),
+                    splitTotalDistance = (frequency + (frequency * i)).roundUpDecimals(2),
                     totalTime = generateDurationStringWithMilliseconds(baseSplitTime + (baseSplitTime * i))
                 )
             )
@@ -51,7 +51,7 @@ class SplitsCalculatorHelper : CalculatorHelper() {
                 splitsList.size, Split(
                     splitDistance = splitDistanceRem,
                     splitTime = generateDurationStringWithMilliseconds(splitTimeRem),
-                    splitTotalDistance = distance,
+                    splitTotalDistance = distance.roundUpDecimals(2),
                     totalTime = generateDurationStringWithMilliseconds(durationInSeconds)
                 )
             )
@@ -96,7 +96,14 @@ class SplitsCalculatorHelper : CalculatorHelper() {
         const val SPLIT_FREQUENCY_5KM = 5f
         const val SPLIT_FREQUENCY_10KM = 10f
 
-        val LIST_OF_SPLIT_FREQUENCIES = listOf(SPLIT_FREQUENCY_100M, SPLIT_FREQUENCY_400M, SPLIT_FREQUENCY_1KM, SPLIT_FREQUENCY_3KM, SPLIT_FREQUENCY_5KM, SPLIT_FREQUENCY_10KM)
+        val LIST_OF_SPLIT_FREQUENCIES = listOf(
+            SPLIT_FREQUENCY_100M,
+            SPLIT_FREQUENCY_400M,
+            SPLIT_FREQUENCY_1KM,
+            SPLIT_FREQUENCY_3KM,
+            SPLIT_FREQUENCY_5KM,
+            SPLIT_FREQUENCY_10KM
+        )
 
         private const val DURATION_SLOWEST_1500 = 810f
         private const val DURATION_FASTEST_1500 = 180f

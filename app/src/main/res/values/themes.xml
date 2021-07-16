@@ -36,6 +36,9 @@
     <style name="ZonesListTheme" parent="TextAppearance.MaterialComponents.Headline5">
     </style>
 
+    <style name="SplitsListTheme" parent="TextAppearance.MaterialComponents.Headline6">
+    </style>
+
 
     <style name="TimeInputTextAppearance">
         <item name="android:inputType">number</item>
