@@ -2,8 +2,6 @@ package dev.psuchanek.endurancepacecalculator.calculator
 
 
 import com.google.common.truth.Truth.assertThat
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
-import dev.psuchanek.endurancepacecalculator.calculator.ZonesCalculatorHelper
 import org.junit.Before
 import org.junit.Test
 
@@ -86,7 +84,7 @@ class ZonesCalculatorHelperTest {
         val bikeFTP = 250
         val expectedResult = "125->137"
         //When
-        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE_POWER)
+        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE_POWER_ID)
         val result = zonesCalculatorHelper.getBikePowerZones()
 
         //Then
@@ -105,7 +103,7 @@ class ZonesCalculatorHelperTest {
         val bikeFTP = 250
         val expectedResult = "312->1000"
         //When
-        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE_POWER)
+        zonesCalculatorHelper.generatePowerZones(bikeFTP, CalculatorHelper.BIKE_POWER_ID)
         val result = zonesCalculatorHelper.getBikePowerZones()
 
         //Then
@@ -124,7 +122,7 @@ class ZonesCalculatorHelperTest {
         val runFTP = 250
         val expectedResult = "125->195"
         //When
-        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN_POWER)
+        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN_POWER_ID)
         val result = zonesCalculatorHelper.getRunPowerZones()
 
         //Then
@@ -143,7 +141,7 @@ class ZonesCalculatorHelperTest {
         val runFTP = 250
         val expectedResult = "312->1000"
         //When
-        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN_POWER)
+        zonesCalculatorHelper.generatePowerZones(runFTP, CalculatorHelper.RUN_POWER_ID)
         val result = zonesCalculatorHelper.getRunPowerZones()
 
         //Then

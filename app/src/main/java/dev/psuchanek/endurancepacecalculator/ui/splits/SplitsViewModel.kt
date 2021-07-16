@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
 import dev.psuchanek.endurancepacecalculator.calculator.SplitsCalculatorHelper
-import dev.psuchanek.endurancepacecalculator.models.Split
 import dev.psuchanek.endurancepacecalculator.models.UIModel
 import dev.psuchanek.endurancepacecalculator.utils.DEFAULT_SPLITS_DURATION
 import dev.psuchanek.endurancepacecalculator.utils.DEFAULT_SPLITS_SLIDER_VALUES
@@ -61,7 +60,7 @@ class SplitsViewModel @Inject constructor() : ViewModel() {
 
     fun submitDuration(duration: Float) {
         _duration.value = duration
-        _durationValuesList.value = splitsCalculatorHelper.generateDurationListOfStrings(duration)
+        _durationValuesList.value = splitsCalculatorHelper.generateDurationListOfStringsInHoursMinutesSeconds(duration)
         updateSplits()
 
     }

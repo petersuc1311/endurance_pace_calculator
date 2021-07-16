@@ -37,8 +37,8 @@ class ZonesCalculatorHelper : CalculatorHelper() {
         paceValue200: Float
     ) {
         calculateCriticalSwimSpeed(paceValue400, paceValue200)
-        criticalSwimSpeedPaceValues = generatePaceListOfStrings(swimCSSValue.toInt())
-        zones = calculateZones(boundsList = LIST_OF_SWIM_ZONE_BOUNDS, methodType = SWIM_PACE)
+        criticalSwimSpeedPaceValues = generatePaceListInMinutesSeconds(swimCSSValue.toInt())
+        zones = calculateZones(boundsList = LIST_OF_SWIM_ZONE_BOUNDS, methodType = SWIM_PACE_ID)
     }
 
     private fun calculateCriticalSwimSpeed(paceValue400: Float, paceValue200: Float) {
@@ -48,14 +48,14 @@ class ZonesCalculatorHelper : CalculatorHelper() {
 
     fun generatePowerZones(ftp: Int, activity: Int) {
         when (activity) {
-            BIKE_POWER -> {
+            BIKE_POWER_ID -> {
                 bikeFTP = ftp
                 zones = calculateZones(
                     boundsList = LIST_OF_BIKE_POWER_ZONE_BOUNDS,
                     methodType = activity
                 )
             }
-            RUN_POWER -> {
+            RUN_POWER_ID -> {
                 runFTP = ftp
                 zones = calculateZones(
                     boundsList = LIST_OF_RUN_POWER_ZONE_BOUNDS,
@@ -67,7 +67,7 @@ class ZonesCalculatorHelper : CalculatorHelper() {
 
     fun generateHeartRateZones(lthr: Int) {
         this.lthr = lthr
-        zones = calculateZones(boundsList = LIST_OF_HR_ZONE_BOUNDS, LTHR)
+        zones = calculateZones(boundsList = LIST_OF_HR_ZONE_BOUNDS, LTHR_ID)
     }
 
 
@@ -132,16 +132,16 @@ class ZonesCalculatorHelper : CalculatorHelper() {
         upperRange: Int
     ): Zones {
         return when (methodType) {
-            SWIM_PACE -> {
+            SWIM_PACE_ID -> {
                 PaceZones(
                     zone = zone,
                     lowerZoneBound = lowerZoneBound,
                     upperZoneBound = upperZoneBound,
-                    lowerPaceRange = generatePaceListOfStrings(lowerRange),
-                    upperPaceRange = generatePaceListOfStrings(upperRange)
+                    lowerPaceRange = generatePaceListInMinutesSeconds(lowerRange),
+                    upperPaceRange = generatePaceListInMinutesSeconds(upperRange)
                 )
             }
-            BIKE_POWER, RUN_POWER -> {
+            BIKE_POWER_ID, RUN_POWER_ID -> {
                 PowerZones(
                     zone = zone,
                     lowerZoneBound = lowerZoneBound,
@@ -150,7 +150,7 @@ class ZonesCalculatorHelper : CalculatorHelper() {
                     upperPowerRange = upperRange
                 )
             }
-            LTHR -> {
+            LTHR_ID -> {
                 HeartRateZones(
                     zone = zone,
                     lowerZoneBound = lowerZoneBound,
@@ -167,16 +167,16 @@ class ZonesCalculatorHelper : CalculatorHelper() {
 
     private fun calculateZoneBound(zoneBound: Int, activity: Int): Int {
         return when (activity) {
-            SWIM_PACE -> {
+            SWIM_PACE_ID -> {
                 zoneBoundCalculationHelper(swimCSSValue.toInt(), zoneBound, true)
             }
-            BIKE_POWER -> {
+            BIKE_POWER_ID -> {
                 zoneBoundCalculationHelper(bikeFTP, zoneBound)
             }
-            RUN_POWER -> {
+            RUN_POWER_ID -> {
                 zoneBoundCalculationHelper(runFTP, zoneBound)
             }
-            LTHR -> {
+            LTHR_ID -> {
                 zoneBoundCalculationHelper(lthr, zoneBound)
             }
             else -> throw InvalidParameterException("The activity: $activity, is not supported.")
@@ -201,6 +201,11 @@ class ZonesCalculatorHelper : CalculatorHelper() {
 
 
     companion object {
+        const val RUN_POWER_ID = 101
+        const val BIKE_POWER_ID = 102
+        const val LTHR_ID = 103
+        const val SWIM_PACE_ID = 104
+        const val RUN_PACE_ID = 105
 
         private const val SWIM_ZONE_ONE_LOWER_ZONE_BOUND = 75
         private const val SWIM_ZONE_ONE_UPPER_ZONE_BOUND = 84

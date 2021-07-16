@@ -66,7 +66,7 @@ class PaceViewModelTest {
         val result = paceViewModel.triDurationValue.first()
 
         //Then
-        assertThat("${result[0]}:${result[1]}:${result[2]}").isEqualTo("01:33:30")
+        assertThat("${result[0]}:${result[1]}:${result[2]}").isEqualTo("01:34:30")
     }
 
 

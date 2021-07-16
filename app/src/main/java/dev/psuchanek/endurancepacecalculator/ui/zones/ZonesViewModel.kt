@@ -5,10 +5,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
 import dev.psuchanek.endurancepacecalculator.calculator.ZonesCalculatorHelper
+import dev.psuchanek.endurancepacecalculator.calculator.ZonesCalculatorHelper.Companion.BIKE_POWER_ID
+import dev.psuchanek.endurancepacecalculator.calculator.ZonesCalculatorHelper.Companion.RUN_POWER_ID
 import dev.psuchanek.endurancepacecalculator.models.UIModel
-import dev.psuchanek.endurancepacecalculator.models.zones.HeartRateZones
-import dev.psuchanek.endurancepacecalculator.models.zones.PaceZones
-import dev.psuchanek.endurancepacecalculator.models.zones.PowerZones
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -101,8 +100,7 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
             ZoneActivity.BIKE -> {
                 viewModelScope.launch {
                     zonesCalculatorHelper.generatePowerZones(
-                        ftp.toInt(),
-                        CalculatorHelper.BIKE_POWER
+                        ftp.toInt(), BIKE_POWER_ID
                     )
                     if (zonesCalculatorHelper.getBikePowerZones() == _powerZones.value) {
                         _powerZones.value = emptyList()
@@ -118,8 +116,7 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
             ZoneActivity.RUN -> {
                 viewModelScope.launch {
                     zonesCalculatorHelper.generatePowerZones(
-                        ftp.toInt(),
-                        CalculatorHelper.RUN_POWER
+                        ftp.toInt(), RUN_POWER_ID
                     )
                     if (zonesCalculatorHelper.getBikePowerZones() == _powerZones.value) {
                         _powerZones.value = emptyList()
@@ -146,9 +143,9 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
             }
         }
         _sliderSwimPace400.value =
-            zonesCalculatorHelper.generatePaceListOfStrings(paceValue400.toInt())
+            zonesCalculatorHelper.generatePaceListInMinutesSeconds(paceValue400.toInt())
         _sliderSwimPace200.value =
-            zonesCalculatorHelper.generatePaceListOfStrings(paceValue200.toInt())
+            zonesCalculatorHelper.generatePaceListInMinutesSeconds(paceValue200.toInt())
         _swimCSS.value = zonesCalculatorHelper.getCSSPace()
 
 

@@ -40,9 +40,9 @@ class SplitsCalculatorHelper : CalculatorHelper() {
             splitsList.add(
                 i, Split(
                     splitDistance = frequency,
-                    splitTime = generateDurationStringWithMilliseconds(baseSplitTime),
+                    splitTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(baseSplitTime),
                     splitTotalDistance = (frequency + (frequency * i)).roundUpDecimals(2),
-                    totalTime = generateDurationStringWithMilliseconds(baseSplitTime + (baseSplitTime * i))
+                    totalTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(baseSplitTime + (baseSplitTime * i))
                 )
             )
         }
@@ -50,9 +50,9 @@ class SplitsCalculatorHelper : CalculatorHelper() {
             splitsList.add(
                 splitsList.size, Split(
                     splitDistance = splitDistanceRem,
-                    splitTime = generateDurationStringWithMilliseconds(splitTimeRem),
+                    splitTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(splitTimeRem),
                     splitTotalDistance = distance.roundUpDecimals(2),
-                    totalTime = generateDurationStringWithMilliseconds(durationInSeconds)
+                    totalTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(durationInSeconds)
                 )
             )
         }

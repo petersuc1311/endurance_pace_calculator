@@ -7,7 +7,7 @@ import java.text.DecimalFormat
 open class CalculatorHelper {
 
 
-    fun generateDurationListOfStrings(durationInSeconds: Float): List<String> {
+    fun generateDurationListOfStringsInHoursMinutesSeconds(durationInSeconds: Float): List<String> {
         val hoursOutput = (durationInSeconds / SECONDS_IN_ONE_HOUR).toInt()
         val minutesOutput =
             ((durationInSeconds - hoursOutput * SECONDS_IN_ONE_HOUR) / SECONDS_IN_ONE_MINUTE).toInt()
@@ -20,7 +20,7 @@ open class CalculatorHelper {
         )
     }
 
-    fun generateDurationStringWithMilliseconds(durationInSeconds: Float): String {
+    fun generateDurationStringInHoursMinutesSecondsWithMilliseconds(durationInSeconds: Float): String {
         val hoursOutput = (durationInSeconds / SECONDS_IN_ONE_HOUR).toInt()
         val minutesOutput =
             ((durationInSeconds - hoursOutput * SECONDS_IN_ONE_HOUR) / SECONDS_IN_ONE_MINUTE).toInt()
@@ -50,7 +50,7 @@ open class CalculatorHelper {
             if (seconds > 9) "$seconds" else "0${seconds}"
     }
 
-    fun generatePaceListOfStrings(paceInSeconds: Int): List<String> {
+    fun generatePaceListInMinutesSeconds(paceInSeconds: Int): List<String> {
         val minutes = paceInSeconds / SECONDS_IN_ONE_MINUTE
         val seconds = paceInSeconds - minutes * SECONDS_IN_ONE_MINUTE
         return listOf(
@@ -94,12 +94,6 @@ open class CalculatorHelper {
         val DEFAULT_PACE = listOf("00", "00")
         val DEFAULT_DURATION = listOf("00", "00", "00")
 
-        const val RUN_POWER = 101
-        const val BIKE_POWER = 102
-        const val LTHR = 103
-        const val SWIM_PACE = 104
-        const val RUN_PACE = 105
-
         const val SWIM_UNIT_COEF = 100
         const val SECONDS_IN_ONE_HOUR = 3600
         const val SECONDS_IN_ONE_MINUTE = 60
@@ -114,32 +108,8 @@ open class CalculatorHelper {
         val LIST_OF_RUN_DISTANCES =
             listOf(RUN_1500, RUN_3K, RUN_5K, RUN_10K, RUN_HALF_MARATHON, RUN_FULL_MARATHON)
 
-        const val SWIM = 111
-        const val T1 = 222
-        const val BIKE = 333
-        const val T2 = 444
-        const val RUN = 555
 
-        const val SPRINT_TRI = 11
-        const val OLYMPIC_TRI = 22
-        const val HALF_DISTANCE_TRI = 33
-        const val FULL_DISTANCE_TRI = 44
 
-        const val SPRINT_SWIM_METRIC = 750
-        const val SPRINT_BIKE_METRIC = 20
-        const val SPRINT_RUN_METRIC = 5
-
-        const val OLYMPIC_SWIM_METRIC = 1500
-        const val OLYMPIC_BIKE_METRIC = 40
-        const val OLYMPIC_RUN_METRIC = 10
-
-        const val HALF_DISTANCE_SWIM_METRIC = 1900
-        const val HALF_DISTANCE_BIKE_METRIC = 90f
-        const val HALF_DISTANCE_RUN_METRIC = 21.1f
-
-        const val FULL_DISTANCE_SWIM_METRIC = 3800
-        const val FULL_DISTANCE_BIKE_METRIC = 180f
-        const val FULL_DISTANCE_RUN_METRIC = 42.2f
 
 
     }

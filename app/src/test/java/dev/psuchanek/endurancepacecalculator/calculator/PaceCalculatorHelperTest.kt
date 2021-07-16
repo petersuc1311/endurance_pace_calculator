@@ -1,19 +1,19 @@
 package dev.psuchanek.endurancepacecalculator.calculator
 
 import com.google.common.truth.Truth.assertThat
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.BIKE
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.FULL_DISTANCE_TRI
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.HALF_DISTANCE_TRI
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.OLYMPIC_TRI
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.RUN
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.RUN_10K
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.RUN_5K
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.RUN_FULL_MARATHON
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.RUN_HALF_MARATHON
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.SPRINT_TRI
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.SWIM
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.T1
-import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper.Companion.T2
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.BIKE
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.FULL_DISTANCE_TRI_ID
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.HALF_DISTANCE_TRI_ID
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.OLYMPIC_TRI_ID
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.RUN
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.SPRINT_TRI_ID
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.SWIM
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.T1
+import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.T2
 import org.junit.Before
 import org.junit.Test
 
@@ -32,10 +32,10 @@ class PaceCalculatorHelperTest {
         //Given
         val runPaceInFloat = 330.0f
         //When
-        val result = paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(runPaceInFloat, RUN)
+        val result = paceCalculator.getTriathlonSwimOrTransitionTimePaceString(runPaceInFloat, RUN)
 
         //Then
-        assertThat(result).isEqualTo("5:30")
+        assertThat(result).isEqualTo("05:30")
     }
 
     @Test
@@ -43,7 +43,7 @@ class PaceCalculatorHelperTest {
         //Given
         val runPaceInFloat = 330.0f
         //When
-        val result = paceCalculator.convertRunPaceValueToDuration(runPaceInFloat, RUN_5K)
+        val result = paceCalculator.getRunDurationListOfStringsFromPaceAndDistanceValue(runPaceInFloat, RUN_5K)
 
         //Then
         assertThat("${result[0]}:${result[1]}:${result[2]}").isEqualTo("00:27:30")
@@ -54,7 +54,7 @@ class PaceCalculatorHelperTest {
         //Given
         val runPaceInFloat = 330.0f
         //When
-        val result = paceCalculator.convertRunPaceValueToDuration(runPaceInFloat, RUN_10K)
+        val result = paceCalculator.getRunDurationListOfStringsFromPaceAndDistanceValue(runPaceInFloat, RUN_10K)
 
         //Then
         assertThat("${result[0]}:${result[1]}:${result[2]}").isEqualTo("00:55:00")
@@ -65,7 +65,7 @@ class PaceCalculatorHelperTest {
         //Given
         val runPaceInFloat = 330.0f
         //When
-        val result = paceCalculator.convertRunPaceValueToDuration(runPaceInFloat, RUN_HALF_MARATHON)
+        val result = paceCalculator.getRunDurationListOfStringsFromPaceAndDistanceValue(runPaceInFloat, RUN_HALF_MARATHON)
 
         //Then
         assertThat("${result[0]}:${result[1]}:${result[2]}").isEqualTo("01:56:02")
@@ -76,7 +76,7 @@ class PaceCalculatorHelperTest {
         //Given
         val runPaceInFloat = 330.0f
         //When
-        val result = paceCalculator.convertRunPaceValueToDuration(runPaceInFloat, RUN_FULL_MARATHON)
+        val result = paceCalculator.getRunDurationListOfStringsFromPaceAndDistanceValue(runPaceInFloat, RUN_FULL_MARATHON)
 
         //Then
         assertThat("${result[0]}:${result[1]}:${result[2]}").isEqualTo("03:52:04")
@@ -87,10 +87,10 @@ class PaceCalculatorHelperTest {
         //Given
         val swimPaceInFloat = 120.0f
         //When
-        val result = paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(swimPaceInFloat, SWIM)
+        val result = paceCalculator.getTriathlonSwimOrTransitionTimePaceString(swimPaceInFloat, SWIM)
 
         //Then
-        assertThat(result).isEqualTo("2:00")
+        assertThat(result).isEqualTo("02:00")
     }
 
     @Test
@@ -100,20 +100,20 @@ class PaceCalculatorHelperTest {
         val transitionTime = 120f
         val bikeSpeed = 25f
         val runPace = 300f
-        val triathlonDistance =SPRINT_TRI
+        val triathlonDistance =SPRINT_TRI_ID
 
         //When
         paceCalculator.generateDurationInSecondsFromPaceValue(swimPace, SWIM, triathlonDistance)
         paceCalculator.generateDurationInSecondsFromPaceValue(bikeSpeed, BIKE, triathlonDistance)
         paceCalculator.generateDurationInSecondsFromPaceValue(runPace, RUN, triathlonDistance)
 
-        paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(transitionTime, T1)
-        paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(transitionTime, T2)
+        paceCalculator.getTriathlonSwimOrTransitionTimePaceString(transitionTime, T1)
+        paceCalculator.getTriathlonSwimOrTransitionTimePaceString(transitionTime, T2)
 
         val result = paceCalculator.getTriathlonTotalDurationListOfValues()
 
     //Then
-    assertThat("${result[0][1]}:${result[1]}:${result[2]}").isEqualTo("1:31:00")
+    assertThat("${result[0][1]}:${result[1]}:${result[2]}").isEqualTo("1:32:00")
 
     }
 
@@ -124,15 +124,15 @@ class PaceCalculatorHelperTest {
         val transitionTime = 120f
         val bikeSpeed = 25f
         val runPace = 300f
-        val triathlonDistance = HALF_DISTANCE_TRI
+        val triathlonDistance = HALF_DISTANCE_TRI_ID
 
         //When
         paceCalculator.generateDurationInSecondsFromPaceValue(swimPace, SWIM, triathlonDistance)
         paceCalculator.generateDurationInSecondsFromPaceValue(bikeSpeed, BIKE, triathlonDistance)
         paceCalculator.generateDurationInSecondsFromPaceValue(runPace, RUN, triathlonDistance)
 
-        paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(transitionTime, T1)
-        paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(transitionTime, T2)
+        paceCalculator.getTriathlonSwimOrTransitionTimePaceString(transitionTime, T1)
+        paceCalculator.getTriathlonSwimOrTransitionTimePaceString(transitionTime, T2)
 
         val result = paceCalculator.getTriathlonTotalDurationListOfValues()
 
@@ -148,15 +148,15 @@ class PaceCalculatorHelperTest {
         val transitionTime = 120f
         val bikeSpeed = 25f
         val runPace = 300f
-        val triathlonDistance = OLYMPIC_TRI
+        val triathlonDistance = OLYMPIC_TRI_ID
 
         //When
         paceCalculator.generateDurationInSecondsFromPaceValue(swimPace, SWIM, triathlonDistance)
         paceCalculator.generateDurationInSecondsFromPaceValue(bikeSpeed, BIKE, triathlonDistance)
         paceCalculator.generateDurationInSecondsFromPaceValue(runPace, RUN, triathlonDistance)
 
-        paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(transitionTime, T1)
-        paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(transitionTime, T2)
+        paceCalculator.getTriathlonSwimOrTransitionTimePaceString(transitionTime, T1)
+        paceCalculator.getTriathlonSwimOrTransitionTimePaceString(transitionTime, T2)
 
         val result = paceCalculator.getTriathlonTotalDurationListOfValues()
 
@@ -172,15 +172,15 @@ class PaceCalculatorHelperTest {
         val transitionTime = 120f
         val bikeSpeed = 25f
         val runPace = 300f
-        val triathlonDistance = FULL_DISTANCE_TRI
+        val triathlonDistance = FULL_DISTANCE_TRI_ID
 
         //When
         paceCalculator.generateDurationInSecondsFromPaceValue(swimPace, SWIM, triathlonDistance)
         paceCalculator.generateDurationInSecondsFromPaceValue(bikeSpeed, BIKE, triathlonDistance)
         paceCalculator.generateDurationInSecondsFromPaceValue(runPace, RUN, triathlonDistance)
 
-        paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(transitionTime, T1)
-        paceCalculator.generateTriathlonSwimOrTransitionTimePaceString(transitionTime, T2)
+        paceCalculator.getTriathlonSwimOrTransitionTimePaceString(transitionTime, T1)
+        paceCalculator.getTriathlonSwimOrTransitionTimePaceString(transitionTime, T2)
 
         val result = paceCalculator.getTriathlonTotalDurationListOfValues()
 
