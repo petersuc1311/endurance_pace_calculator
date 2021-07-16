@@ -19,10 +19,10 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import dev.psuchanek.endurancepacecalculator.R
-import dev.psuchanek.endurancepacecalculator.adapters.ZonesListAdapter
+import dev.psuchanek.endurancepacecalculator.adapters.EnduranceListAdapter
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutMinutesSecondsBinding
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesCalculatorBinding
-import dev.psuchanek.endurancepacecalculator.models.zones.Zones
+import dev.psuchanek.endurancepacecalculator.models.UIModel
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
 
     private lateinit var binding: LayoutZonesCalculatorBinding
-    private lateinit var zonesAdapter: ZonesListAdapter
+    private lateinit var enduranceAdapter: EnduranceListAdapter
     private val zonesViewModel: ZonesViewModel by viewModels()
 
     private lateinit var sliderSwimPace400: Slider
@@ -52,9 +52,9 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
     }
 
     private fun setupListAdapter() {
-        zonesAdapter = ZonesListAdapter()
+        enduranceAdapter = EnduranceListAdapter()
         binding.layoutZonesChart.zonesRecyclerView.apply {
-            adapter = zonesAdapter
+            adapter = enduranceAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
@@ -96,12 +96,12 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
 
 
     private fun setupSliderListeners() {
-        sliderSwimPace400.addOnChangeListener(addSliderOnChangeValueListener())
-        sliderSwimPace200.addOnChangeListener(addSliderOnChangeValueListener())
+        sliderSwimPace400.addOnChangeListener(sliderOnChangeValueListener)
+        sliderSwimPace200.addOnChangeListener(sliderOnChangeValueListener)
 
     }
 
-    private fun addSliderOnChangeValueListener() = Slider.OnChangeListener { slider, value, _ ->
+    private val sliderOnChangeValueListener = Slider.OnChangeListener { slider, value, _ ->
         when (slider.id) {
             sliderSwimPace400.id -> {
                 submitSwimPaceValuesToViewModel(value, sliderSwimPace200.value)
@@ -144,56 +144,67 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
         }
     }
 
+
+
     private fun setupSpinnerListeners() {
-        binding.dropDownZonesSpinner.onItemClickListener = methodSpinnerOnItemClickListener()
-        binding.layoutPowerZones.dropDownSportChoiceSpinner.onItemClickListener =
-            zoneActivitySpinnerOnItemClickListener()
+        binding.dropDownZonesSpinner.apply {
+            onItemClickListener = itemClickListener(this.id)
+        }
+        binding.layoutPowerZones.dropDownSportChoiceSpinner.apply {
+            onItemClickListener = itemClickListener(this.id)
+        }
 
     }
 
-    private fun methodSpinnerOnItemClickListener() =
+    private fun itemClickListener(id: Int) =
         AdapterView.OnItemClickListener { _, _, position, _ ->
-            when (position) {
-                0 -> {
+            when (id) {
+                binding.dropDownZonesSpinner.id -> {
+                    handleZonesMethodChoice(position)
+                }
+                binding.layoutPowerZones.dropDownSportChoiceSpinner.id -> {
+                    handleSportChoice(position)
+                }
 
-                    zonesViewModel.setZoneMethodType(ZoneMethodType.LTHR)
-                    submitBpmToViewModel(textInputBPM.text.toString())
-
-                }
-                1 -> {
-
-                    zonesViewModel.setZoneMethodType(ZoneMethodType.POWER)
-                    submitPowerToViewModel(textInputFTP.text.toString())
-                }
-                2 -> {
-                    clearAdapterList()
-                    zonesViewModel.setZoneMethodType(ZoneMethodType.RUN_PACE)
-                }
-                3 -> {
-                    clearAdapterList()
-                    zonesViewModel.setZoneMethodType(ZoneMethodType.SWIM_PACE)
-                    submitSwimPaceValuesToViewModel(
-                        sliderSwimPace400.value,
-                        sliderSwimPace200.value
-                    )
-                }
             }
         }
 
-
-    private fun zoneActivitySpinnerOnItemClickListener() =
-        AdapterView.OnItemClickListener { _, _, position, _ ->
-            when (position) {
-                0 -> {
-                    zonesViewModel.setPowerZoneActivity(ZoneActivity.BIKE)
-
-                }
-                1 -> {
-                    zonesViewModel.setPowerZoneActivity(ZoneActivity.RUN)
-                }
+    private fun handleZonesMethodChoice(position: Int) {
+        when (position) {
+            0 -> {
+                zonesViewModel.setZoneMethodType(ZoneMethodType.LTHR)
+                submitBpmToViewModel(textInputBPM.text.toString())
             }
-            submitPowerToViewModel(textInputFTP.text.toString())
+            1 -> {
+                zonesViewModel.setZoneMethodType(ZoneMethodType.POWER)
+                submitPowerToViewModel(textInputFTP.text.toString())
+            }
+            2 -> {
+                clearAdapterList()
+                zonesViewModel.setZoneMethodType(ZoneMethodType.RUN_PACE)
+            }
+            3 -> {
+                clearAdapterList()
+                zonesViewModel.setZoneMethodType(ZoneMethodType.SWIM_PACE)
+                submitSwimPaceValuesToViewModel(
+                    sliderSwimPace400.value,
+                    sliderSwimPace200.value
+                )
+            }
         }
+    }
+
+    private fun handleSportChoice(position: Int) {
+        when (position) {
+            0 -> {
+                zonesViewModel.setPowerZoneActivity(ZoneActivity.BIKE)
+            }
+            1 -> {
+                zonesViewModel.setPowerZoneActivity(ZoneActivity.RUN)
+            }
+        }
+        submitPowerToViewModel(textInputFTP.text.toString())
+    }
 
     private fun submitBpmToViewModel(bpm: String) {
         zonesViewModel.submitBPM(bpm)
@@ -268,13 +279,13 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
 
         lifecycleScope.launch {
             zonesViewModel.lthrZones.collect { zones ->
-                submitListToZonesAdapter(zones)
+                submitListToEnduranceAdapter(zones)
             }
         }
 
         lifecycleScope.launch {
             zonesViewModel.powerZones.collect { zones ->
-                submitListToZonesAdapter(zones)
+                submitListToEnduranceAdapter(zones)
             }
         }
 
@@ -309,14 +320,14 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
 
         lifecycleScope.launch {
             zonesViewModel.swimZones.collect { zones ->
-                submitListToZonesAdapter(zones)
+                submitListToEnduranceAdapter(zones)
             }
         }
 
     }
 
-    private fun <T : Zones> submitListToZonesAdapter(zones: List<T>) {
-        zonesAdapter.submitList(zones)
+    private fun submitListToEnduranceAdapter(zonesList: List<UIModel.ZonesModel>) {
+        enduranceAdapter.submitList(zonesList)
     }
 
     private fun LayoutMinutesSecondsBinding.updateMinutesSecondsUI(list: List<String>) {
@@ -343,7 +354,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
     }
 
     private fun clearAdapterList() {
-        zonesAdapter.submitList(emptyList())
+        enduranceAdapter.submitList(emptyList())
     }
 
     private fun changeZonesLayoutVisibility(lthr: Boolean, power: Boolean, swimPace: Boolean) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.psuchanek.endurancepacecalculator.calculator.CalculatorHelper
 import dev.psuchanek.endurancepacecalculator.calculator.ZonesCalculatorHelper
+import dev.psuchanek.endurancepacecalculator.models.UIModel
 import dev.psuchanek.endurancepacecalculator.models.zones.HeartRateZones
 import dev.psuchanek.endurancepacecalculator.models.zones.PaceZones
 import dev.psuchanek.endurancepacecalculator.models.zones.PowerZones
@@ -27,11 +28,11 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
     private val _inputStatus = MutableStateFlow(InputCheckStatus.PASS)
     val inputStatus: StateFlow<InputCheckStatus> = _inputStatus
 
-    private val _lthrZones = MutableStateFlow<List<HeartRateZones>>(emptyList())
-    val lthrZones: StateFlow<List<HeartRateZones>> = _lthrZones
+    private val _lthrZones = MutableStateFlow<List<UIModel.ZonesModel>>(emptyList())
+    val lthrZones: StateFlow<List<UIModel.ZonesModel>> = _lthrZones
 
-    private val _powerZones = MutableStateFlow<List<PowerZones>>(emptyList())
-    val powerZones: StateFlow<List<PowerZones>> = _powerZones
+    private val _powerZones = MutableStateFlow<List<UIModel.ZonesModel>>(emptyList())
+    val powerZones: StateFlow<List<UIModel.ZonesModel>> = _powerZones
 
     private val _sliderSwimPace400 = MutableStateFlow<List<String>>(emptyList())
     val sliderSwimPace400: StateFlow<List<String>> = _sliderSwimPace400
@@ -42,8 +43,8 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
     private val _swimCSS = MutableStateFlow<List<String>>(emptyList())
     val swimCSS: StateFlow<List<String>> = _swimCSS
 
-    private val _swimZones = MutableStateFlow<List<PaceZones>>(emptyList())
-    val swimZones: StateFlow<List<PaceZones>> = _swimZones
+    private val _swimZones = MutableStateFlow<List<UIModel.ZonesModel>>(emptyList())
+    val swimZones: StateFlow<List<UIModel.ZonesModel>> = _swimZones
 
     fun setZoneMethodType(zoneMethodType: ZoneMethodType) {
         _zoneMethodType.value = zoneMethodType
@@ -54,6 +55,8 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
     }
 
     fun submitBPM(bpm: String) {
+        val uiHeartRateZonesList = mutableListOf<UIModel.ZonesModel>()
+
         when {
             bpm.length in 1..2 -> {
                 _inputStatus.value = InputCheckStatus.LENGTH_ERROR
@@ -70,17 +73,17 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
             zonesCalculatorHelper.generateHeartRateZones(bpm.toInt())
             if (zonesCalculatorHelper.getHeartRateZones() == _lthrZones.value) {
                 _lthrZones.value = emptyList()
-
             }
         }
 
-
-        _lthrZones.value = zonesCalculatorHelper.getHeartRateZones()
-
-
+        zonesCalculatorHelper.getHeartRateZones().map { heartRateZones ->
+            uiHeartRateZonesList.add(UIModel.ZonesModel(heartRateZones))
+        }
+        _lthrZones.value = uiHeartRateZonesList
     }
 
     fun submitFTP(ftp: String) {
+        val uiPowerZonesList = mutableListOf<UIModel.ZonesModel>()
 
         when {
             ftp.length in 1..2 -> {
@@ -107,7 +110,10 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
                     }
                 }
 
-                _powerZones.value = zonesCalculatorHelper.getBikePowerZones()
+                zonesCalculatorHelper.getBikePowerZones().map { powerZones ->
+                    uiPowerZonesList.add(UIModel.ZonesModel(powerZones))
+                }
+                _powerZones.value = uiPowerZonesList
             }
             ZoneActivity.RUN -> {
                 viewModelScope.launch {
@@ -120,8 +126,10 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
 
                     }
                 }
-
-                _powerZones.value = zonesCalculatorHelper.getRunPowerZones()
+                zonesCalculatorHelper.getRunPowerZones().map { powerZones ->
+                    uiPowerZonesList.add(UIModel.ZonesModel(powerZones))
+                }
+                _powerZones.value = uiPowerZonesList
             }
         }
 
@@ -129,6 +137,8 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
     }
 
     fun submitSwimPaceValue(paceValue400: Float, paceValue200: Float) {
+        val uiSwimCssZonesList = mutableListOf<UIModel.ZonesModel>()
+
         viewModelScope.launch {
             zonesCalculatorHelper.generateCriticalSwimSpeedPaceZones(paceValue400, paceValue200)
             if (_swimZones.value == zonesCalculatorHelper.getCSSZones()) {
@@ -140,7 +150,12 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
         _sliderSwimPace200.value =
             zonesCalculatorHelper.generatePaceListOfStrings(paceValue200.toInt())
         _swimCSS.value = zonesCalculatorHelper.getCSSPace()
-        _swimZones.value = zonesCalculatorHelper.getCSSZones()
+
+
+        zonesCalculatorHelper.getCSSZones().map { swimZones ->
+            uiSwimCssZonesList.add(UIModel.ZonesModel(swimZones))
+        }
+        _swimZones.value = uiSwimCssZonesList
 
     }
 }

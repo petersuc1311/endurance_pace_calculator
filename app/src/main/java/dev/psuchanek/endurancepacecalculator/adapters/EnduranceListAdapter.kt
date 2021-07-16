@@ -31,7 +31,7 @@ class EnduranceListAdapter() :
         val item = getItem(position)
         when (holder) {
             is ZonesViewHolder -> {
-//                holder.bind(item as UIModel.ZonesModel)
+                holder.bind(item as UIModel.ZonesModel)
             }
             is SplitsViewHolder -> {
                 holder.bind(item as UIModel.SplitsModel)

@@ -12,33 +12,34 @@
         android:layout_height="wrap_content" />
 
     <include
-        android:visibility="gone"
         android:id="@+id/layoutPowerZonesHeader"
         layout="@layout/layout_power_zones_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <include
-        android:visibility="gone"
         android:id="@+id/layoutSwimPaceZonesHeader"
         layout="@layout/layout_swim_pace_zones_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
     <View
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginVertical="@dimen/dimen_24"
         android:layout_marginTop="@dimen/dimen_4"
         android:background="@android:color/darker_gray"
-        android:layout_marginVertical="@dimen/dimen_24" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/zonesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@id/separator"
         tools:listitem="@layout/layout_zones_list_item" />
 

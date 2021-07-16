@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesListItemBinding
+import dev.psuchanek.endurancepacecalculator.models.UIModel
 import dev.psuchanek.endurancepacecalculator.models.zones.Zones
 
 class ZonesViewHolder(private val binding: LayoutZonesListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(zoneItem: Zones) {
-        binding.zoneItem = zoneItem
+    fun bind(uiZoneItem: UIModel.ZonesModel) {
+        binding.zoneItem = uiZoneItem.zonesItem
         binding.executePendingBindings()
     }
 
