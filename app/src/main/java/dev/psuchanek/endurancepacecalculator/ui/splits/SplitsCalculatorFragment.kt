@@ -78,7 +78,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
         setupFrequencyAdapter()
     }
 
-    private fun setupFrequencyAdapter() {
+    private fun setupDistanceAdapter() {
         val distanceAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,
@@ -90,7 +90,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
         }
     }
 
-    private fun setupDistanceAdapter() {
+    private fun setupFrequencyAdapter() {
         val frequencyAdapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,

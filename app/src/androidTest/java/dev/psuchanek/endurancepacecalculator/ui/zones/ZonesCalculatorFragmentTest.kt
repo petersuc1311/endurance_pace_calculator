@@ -24,6 +24,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dev.psuchanek.endurancepacecalculator.R
 import dev.psuchanek.endurancepacecalculator.adapters.ZonesListAdapter
 import dev.psuchanek.endurancepacecalculator.launchFragmentInHiltContainer
+import dev.psuchanek.endurancepacecalculator.launchMainCollectionFragment
 import dev.psuchanek.endurancepacecalculator.ui.MainCollectionFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.Matcher
@@ -52,7 +53,7 @@ class ZonesCalculatorFragmentTest {
 
     @Test
     fun inputInBPM_thenSwitchToFTPwithInput_returnBackToLTHR_expectListStillVisible() {
-        launchMainCollectionFragment()
+        launchMainCollectionFragment(navController)
 
 
         onView(withText(R.string.zones_calculator_tab_label)).perform(click())
@@ -77,7 +78,7 @@ class ZonesCalculatorFragmentTest {
 
     @Test
     fun openSwimPace_thenChangeValues_switchToLTHR_inputLTHR_switchBackToSwimPace_expectRecyclerViewDisplayingSwimZones() {
-        launchMainCollectionFragment()
+        launchMainCollectionFragment(navController)
 
 
         onView(withText(R.string.zones_calculator_tab_label)).perform(click())
@@ -99,21 +100,5 @@ class ZonesCalculatorFragmentTest {
         onView(withId(R.id.zonesRecyclerView)).perform(RecyclerViewActions.scrollToPosition<ZonesListAdapter.ZonesViewHolder>(6))
 
     }
-
-
-    private fun launchMainCollectionFragment() {
-        launchFragmentInHiltContainer<MainCollectionFragment> {
-            navController.setGraph(R.navigation.nav_graph)
-            navController.setCurrentDestination(R.id.mainCollectionFragment)
-            this.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
-                if (viewLifecycleOwner != null) {
-                    // The fragment’s view has just been created
-                    Navigation.setViewNavController(this.requireView(), navController)
-                }
-            }
-        }
-    }
-
-
 
 }

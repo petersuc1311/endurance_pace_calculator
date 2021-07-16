@@ -7,8 +7,11 @@ import androidx.annotation.StyleRes
 import androidx.core.util.Preconditions
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
+import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
+import dev.psuchanek.endurancepacecalculator.ui.MainCollectionFragment
 
 inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
@@ -22,8 +25,9 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
             HiltTestActivity::class.java
         )
     ).putExtra(
-        "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY"
-        , themeResId)
+        "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY",
+        themeResId
+    )
 
     ActivityScenario.launch<HiltTestActivity>(startActivityIntent).onActivity { activity ->
         fragmentFactory?.let {
@@ -41,5 +45,19 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
             .commitNow()
 
         fragment.action()
+    }
+}
+
+
+fun launchMainCollectionFragment(navController: TestNavHostController) {
+    launchFragmentInHiltContainer<MainCollectionFragment> {
+        navController.setGraph(R.navigation.nav_graph)
+        navController.setCurrentDestination(R.id.mainCollectionFragment)
+        this.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
+            if (viewLifecycleOwner != null) {
+                // The fragment’s view has just been created
+                Navigation.setViewNavController(this.requireView(), navController)
+            }
+        }
     }
 }
