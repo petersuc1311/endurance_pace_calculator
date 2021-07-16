@@ -2,8 +2,8 @@
 <resources>
 
     <string-array name="activities_for_pace_calculator">
-        <item>Running 5K</item>
-        <item>Running 10K</item>
+        <item>Running 5km</item>
+        <item>Running 10km</item>
         <item>Running Half Marathon</item>
         <item>Running Full Marathon</item>
         <item>Sprint Triathlon</item>
@@ -15,22 +15,16 @@
     <string-array name="zones_for_zones_calculator">
         <item>Lactate Threshold Heart Rate</item>
         <item>Functional Threshold Power</item>
-        <item>Run Pace</item>
         <item>Swim Pace</item>
     </string-array>
 
     <string-array name="distances_for_splits_calculator">
         <item>1500 meters</item>
-        <item>3 km</item>
-        <item>5 km</item>
-        <item>10 km</item>
+        <item>3km</item>
+        <item>5km</item>
+        <item>10km</item>
         <item>Half Marathon</item>
         <item>Full Marathon</item>
-    </string-array>
-
-    <string-array name="units">
-        <item>KM</item>
-        <item>Mile</item>
     </string-array>
 
     <string-array name="sports">

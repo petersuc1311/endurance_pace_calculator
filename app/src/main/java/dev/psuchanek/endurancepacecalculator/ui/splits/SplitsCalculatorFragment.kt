@@ -44,7 +44,7 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
     }
 
     private fun initEnduranceAdapter() {
-        enduranceAdapter = EnduranceListAdapter()
+        enduranceAdapter = EnduranceListAdapter(requireContext())
         binding.layoutSplitRecyclerView.splitsRecyclerView.apply {
             adapter = enduranceAdapter
             layoutManager =

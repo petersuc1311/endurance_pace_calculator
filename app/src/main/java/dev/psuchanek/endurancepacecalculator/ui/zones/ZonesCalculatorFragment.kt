@@ -26,6 +26,7 @@ import dev.psuchanek.endurancepacecalculator.models.UIModel
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
 
 @AndroidEntryPoint
 class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
@@ -52,7 +53,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
     }
 
     private fun setupListAdapter() {
-        enduranceAdapter = EnduranceListAdapter()
+        enduranceAdapter = EnduranceListAdapter(requireContext())
         binding.layoutZonesChart.zonesRecyclerView.apply {
             adapter = enduranceAdapter
             layoutManager =
@@ -145,7 +146,6 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
     }
 
 
-
     private fun setupSpinnerListeners() {
         binding.dropDownZonesSpinner.apply {
             onItemClickListener = itemClickListener(this.id)
@@ -180,10 +180,6 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
                 submitPowerToViewModel(textInputFTP.text.toString())
             }
             2 -> {
-                clearAdapterList()
-                zonesViewModel.setZoneMethodType(ZoneMethodType.RUN_PACE)
-            }
-            3 -> {
                 clearAdapterList()
                 zonesViewModel.setZoneMethodType(ZoneMethodType.SWIM_PACE)
                 submitSwimPaceValuesToViewModel(
@@ -346,9 +342,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
             ZoneMethodType.SWIM_PACE -> {
                 changeZonesLayoutVisibility(lthr = false, power = false, swimPace = true)
             }
-            ZoneMethodType.RUN_PACE -> {
-
-            }
+            else -> throw IllegalStateException("This  zone method type is not supported")
         }
 
     }

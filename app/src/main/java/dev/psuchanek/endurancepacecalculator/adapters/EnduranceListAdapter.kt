@@ -1,17 +1,19 @@
 package dev.psuchanek.endurancepacecalculator.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import dev.psuchanek.endurancepacecalculator.R
 import dev.psuchanek.endurancepacecalculator.adapters.viewholders.SplitsViewHolder
 import dev.psuchanek.endurancepacecalculator.adapters.viewholders.ZonesViewHolder
 import dev.psuchanek.endurancepacecalculator.models.UIModel
 import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
 
-class EnduranceListAdapter() :
+class EnduranceListAdapter(private val context: Context) :
     ListAdapter<UIModel, RecyclerView.ViewHolder>(getDiffUtil()) {
 
 
@@ -31,12 +33,39 @@ class EnduranceListAdapter() :
         val item = getItem(position)
         when (holder) {
             is ZonesViewHolder -> {
-                holder.bind(item as UIModel.ZonesModel)
+                holder.apply {
+                    bind(item as UIModel.ZonesModel)
+                    changeViewHolderBackground(this, position)
+                }
             }
             is SplitsViewHolder -> {
-                holder.bind(item as UIModel.SplitsModel)
+                holder.apply {
+                    bind(item as UIModel.SplitsModel)
+                    changeViewHolderBackground(this, position)
+                }
             }
             else -> throw IllegalArgumentException("Model is not supported.")
+        }
+    }
+
+    private fun changeViewHolderBackground(
+        holder: RecyclerView.ViewHolder,
+        position: Int
+    ) {
+        if (position % 2 == 0) {
+            holder.itemView.setBackgroundColor(
+                context.resources.getColor(
+                    R.color.lighter_gray,
+                    null
+                )
+            )
+        } else {
+            holder.itemView.setBackgroundColor(
+                context.resources.getColor(
+                    R.color.white,
+                    null
+                )
+            )
         }
     }
 
