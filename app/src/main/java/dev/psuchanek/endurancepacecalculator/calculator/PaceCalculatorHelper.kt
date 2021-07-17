@@ -17,6 +17,12 @@ class PaceCalculatorHelper : CalculatorHelper() {
 
     private var triathlonTotalDurationListOfValues: List<String> = emptyList()
 
+    fun getTriathlonActivitiesDurations() = listOf(
+        generateDurationStringsInHoursMinutesSeconds(swimDurationInSeconds),
+        generateDurationStringsInHoursMinutesSeconds(bikeDurationInSeconds),
+        generateDurationStringsInHoursMinutesSeconds(triathlonRunDurationInSeconds)
+    )
+
     fun getTriathlonTotalDurationListOfValues(): List<String> {
         setTriathlonTotalDurationValues()
         return triathlonTotalDurationListOfValues
@@ -53,7 +59,7 @@ class PaceCalculatorHelper : CalculatorHelper() {
     ): String {
         setPaceOfActivityInSeconds(paceValue, activityType)
 
-        return when(activityType) {
+        return when (activityType) {
             SWIM -> {
                 generatePaceString(swimPaceInSeconds)
             }

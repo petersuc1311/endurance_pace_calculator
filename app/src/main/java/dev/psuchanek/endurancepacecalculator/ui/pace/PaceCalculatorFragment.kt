@@ -110,38 +110,45 @@ class PaceCalculatorFragment : Fragment(R.layout.layout_pace_calculator) {
 
         lifecycleScope.launch {
             paceViewModel.triSwimPaceValue.collect {
-                binding.layoutTriathlon.tiSwimPace.text = it
+                binding.layoutTriathlon.tvSwimPace.text = it
             }
         }
 
         lifecycleScope.launch {
             paceViewModel.transitionOneValue.collect {
-                binding.layoutTriathlon.tiTransitionOneTime.text = it
+                binding.layoutTriathlon.tvTransitionOneTime.text = it
             }
         }
 
         lifecycleScope.launch {
             paceViewModel.triBikePaceValue.collect {
-                binding.layoutTriathlon.tiBikePace.text = it
+                binding.layoutTriathlon.tvBikePace.text = it
             }
         }
 
         lifecycleScope.launch {
             paceViewModel.transitionTwoValue.collect {
-                binding.layoutTriathlon.tiTransitionTwoTime.text = it
+                binding.layoutTriathlon.tvTransitionTwoTime.text = it
             }
 
         }
 
         lifecycleScope.launch {
             paceViewModel.triRunPaceValue.collect {
-                binding.layoutTriathlon.tiRunPace.text = it
+                binding.layoutTriathlon.tvRunPace.text = it
             }
         }
 
         lifecycleScope.launch {
             paceViewModel.triDurationValue.collect { durationList ->
                 updateTriathlonDurationUI(durationList)
+            }
+        }
+
+        lifecycleScope.launch {
+            paceViewModel.activitiesTotalTimes.collect { activitiesTotalTimes ->
+                updateTotalTimesUI(activitiesTotalTimes)
+
             }
         }
     }
@@ -169,6 +176,14 @@ class PaceCalculatorFragment : Fragment(R.layout.layout_pace_calculator) {
         tvTriathlonDurationSeconds.text = durationList[2]
 
 
+    }
+
+    private fun updateTotalTimesUI(activitiesTotalTimes: List<String>) {
+        if (activitiesTotalTimes.isNotEmpty()) {
+            binding.layoutTriathlon.tvSwimTotalTime.text = activitiesTotalTimes[0]
+            binding.layoutTriathlon.tvBikeTotalTime.text = activitiesTotalTimes[1]
+            binding.layoutTriathlon.tvRunTotalTime.text = activitiesTotalTimes[2]
+        }
     }
 
     private fun initAdapters() {

@@ -11,7 +11,6 @@ import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Com
 import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.HALF_DISTANCE_TRI_ID
 import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.OLYMPIC_TRI_ID
 import dev.psuchanek.endurancepacecalculator.calculator.PaceCalculatorHelper.Companion.SPRINT_TRI_ID
-import dev.psuchanek.endurancepacecalculator.calculator.ZonesCalculatorHelper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -50,6 +49,9 @@ class PaceViewModel @Inject constructor() :
     private val _triRunPaceValue = MutableStateFlow("5:30")
     val triRunPaceValue: StateFlow<String> = _triRunPaceValue
 
+    private val _activitiesTotalTimes = MutableStateFlow<List<String>>(emptyList())
+    val activitiesTotalTimes: StateFlow<List<String>> = _activitiesTotalTimes
+
 
     fun setActivityType(activityType: ActivityType) {
         _activityType.value = activityType
@@ -61,10 +63,11 @@ class PaceViewModel @Inject constructor() :
     }
 
     private fun setRunDurationValue(value: Float) {
-        _runDurationValues.value = paceCalculatorHelper.getRunDurationListOfStringsFromPaceAndDistanceValue(
-            value,
-            getRunDistance()
-        )
+        _runDurationValues.value =
+            paceCalculatorHelper.getRunDurationListOfStringsFromPaceAndDistanceValue(
+                value,
+                getRunDistance()
+            )
     }
 
     private fun setRunPaceValue(value: Float) {
@@ -134,6 +137,11 @@ class PaceViewModel @Inject constructor() :
             }
         }
         _triDurationValue.value = paceCalculatorHelper.getTriathlonTotalDurationListOfValues()
+        updateTotalTimes()
+    }
+
+    private fun updateTotalTimes() {
+        _activitiesTotalTimes.value = paceCalculatorHelper.getTriathlonActivitiesDurations()
     }
 
     private fun getRunDistance(): Float = when (_activityType.value) {

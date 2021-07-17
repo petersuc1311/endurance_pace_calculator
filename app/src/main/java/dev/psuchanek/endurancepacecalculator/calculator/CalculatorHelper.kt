@@ -20,6 +20,17 @@ open class CalculatorHelper {
         )
     }
 
+    fun generateDurationStringsInHoursMinutesSeconds(durationInSeconds: Float): String {
+        val hoursOutput = (durationInSeconds / SECONDS_IN_ONE_HOUR).toInt()
+        val minutesOutput =
+            ((durationInSeconds - hoursOutput * SECONDS_IN_ONE_HOUR) / SECONDS_IN_ONE_MINUTE).toInt()
+        val secondsOutput =
+            (durationInSeconds - hoursOutput * SECONDS_IN_ONE_HOUR - minutesOutput * SECONDS_IN_ONE_MINUTE).toInt()
+        return "${hoursOutput.convertToDoubleDigitStringFormat()}:${minutesOutput.convertToDoubleDigitStringFormat()}:${secondsOutput.convertToDoubleDigitStringFormat()}"
+
+
+    }
+
     fun generateDurationStringInHoursMinutesSecondsWithMilliseconds(durationInSeconds: Float): String {
         val hoursOutput = (durationInSeconds / SECONDS_IN_ONE_HOUR).toInt()
         val minutesOutput =
@@ -44,10 +55,11 @@ open class CalculatorHelper {
     }
 
     private fun checkMillisecondsInSecondsAndConvertToString(seconds: Float): String {
-        return if (seconds.rem(1).equals(0.00f))
+        return if (seconds.rem(1).equals(0.00f)) {
             seconds.toInt().convertToDoubleDigitStringFormat()
-        else
+        } else {
             if (seconds > 9) "$seconds" else "0${seconds}"
+        }
     }
 
     fun generatePaceListInMinutesSeconds(paceInSeconds: Int): List<String> {
@@ -107,9 +119,6 @@ open class CalculatorHelper {
 
         val LIST_OF_RUN_DISTANCES =
             listOf(RUN_1500, RUN_3K, RUN_5K, RUN_10K, RUN_HALF_MARATHON, RUN_FULL_MARATHON)
-
-
-
 
 
     }

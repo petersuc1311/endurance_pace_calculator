@@ -1,102 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp">
+    android:layout_height="match_parent">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/layoutSplitsHeader"
+        layout="@layout/layout_splits_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineSplitsFirst"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.1" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvSplitDistanceLabel"
-            style="@style/LabelsTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/distance_label"
-            app:layout_constraintEnd_toEndOf="@id/guidelineSplitsFirst"
-            app:layout_constraintStart_toStartOf="@id/guidelineSplitsFirst"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineSplitsSecond"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/splitsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/layoutSplitsHeader"
+        tools:listitem="@layout/layout_splits_list_item" />
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvSplitTimeLabel"
-            style="@style/LabelsTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/split_time_label"
-            app:layout_constraintEnd_toEndOf="@id/guidelineSplitsSecond"
-            app:layout_constraintStart_toStartOf="@id/guidelineSplitsSecond"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineSplitsThird"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.55" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvSplitsTotalDistanceLabel"
-            style="@style/LabelsTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_distance_label"
-            app:layout_constraintEnd_toEndOf="@id/guidelineSplitsThird"
-            app:layout_constraintStart_toStartOf="@id/guidelineSplitsThird"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineSplitsFourth"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.80" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvSplitsTotalTimeLabel"
-            style="@style/LabelsTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_time_label"
-            app:layout_constraintEnd_toEndOf="@id/guidelineSplitsFourth"
-            app:layout_constraintStart_toStartOf="@id/guidelineSplitsFourth"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/separator"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/dimen_4"
-            android:backgroundTint="@android:color/darker_gray"
-            app:layout_constraintTop_toBottomOf="@id/tvSplitDistanceLabel" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:scrollbars="vertical"
-            android:id="@+id/splitsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/separator"
-            tools:listitem="@layout/layout_splits_list_item" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
