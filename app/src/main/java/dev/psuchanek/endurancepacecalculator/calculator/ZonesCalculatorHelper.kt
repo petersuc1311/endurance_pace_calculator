@@ -248,12 +248,10 @@ class ZonesCalculatorHelper : CalculatorHelper() {
             )
 
         private const val RUN_POWER_ZONE_ONE_LOWER_ZONE_BOUND = 50
-        private const val RUN_POWER_ZONE_ONE_UPPER_ZONE_BOUND = 78
+        private const val RUN_POWER_ZONE_ONE_UPPER_ZONE_BOUND = 76
         private const val RUN_POWER_ZONE_TWO_UPPER_ZONE_BOUND = 88
-        private const val RUN_POWER_ZONE_THREE_UPPER_ZONE_BOUND = 95
-        private const val RUN_POWER_ZONE_FOUR_UPPER_ZONE_BOUND = 102
-        private const val RUN_POWER_ZONE_FIVE_UPPER_ZONE_BOUND = 115
-        private const val RUN_POWER_ZONE_SIX_UPPER_ZONE_BOUND = 125
+        private const val RUN_POWER_ZONE_THREE_UPPER_ZONE_BOUND = 100
+        private const val RUN_POWER_ZONE_FOUR_UPPER_ZONE_BOUND = 120
 
         private val LIST_OF_RUN_POWER_ZONE_BOUNDS =
             listOf(
@@ -261,16 +259,14 @@ class ZonesCalculatorHelper : CalculatorHelper() {
                 RUN_POWER_ZONE_ONE_UPPER_ZONE_BOUND,
                 RUN_POWER_ZONE_TWO_UPPER_ZONE_BOUND,
                 RUN_POWER_ZONE_THREE_UPPER_ZONE_BOUND,
-                RUN_POWER_ZONE_FOUR_UPPER_ZONE_BOUND,
-                RUN_POWER_ZONE_FIVE_UPPER_ZONE_BOUND,
-                RUN_POWER_ZONE_SIX_UPPER_ZONE_BOUND
+                RUN_POWER_ZONE_FOUR_UPPER_ZONE_BOUND
             )
 
         private const val HR_ZONE_ONE_LOWER_ZONE_BOUND = 72
         private const val HR_ZONE_ONE_UPPER_ZONE_BOUND = 85
         private const val HR_ZONE_TWO_UPPER_ZONE_BOUND = 90
-        private const val HR_ZONE_THREE_UPPER_ZONE_BOUND = 95
-        private const val HR_ZONE_FOUR_UPPER_ZONE_BOUND = 100
+        private const val HR_ZONE_THREE_UPPER_ZONE_BOUND = 100
+        private const val HR_ZONE_FOUR_UPPER_ZONE_BOUND = 105
 
         private val LIST_OF_HR_ZONE_BOUNDS =
             listOf(

@@ -16,7 +16,7 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/distance_label"
+        android:text="@string/split_number_label"
         app:layout_constraintEnd_toEndOf="@id/guidelineSplitsFirst"
         app:layout_constraintStart_toStartOf="@id/guidelineSplitsFirst"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/total_distance_label"
+        android:text="@string/distance_label"
         app:layout_constraintEnd_toEndOf="@id/guidelineSplitsThird"
         app:layout_constraintStart_toStartOf="@id/guidelineSplitsThird"
         app:layout_constraintTop_toTopOf="parent" />

@@ -35,7 +35,7 @@ class EnduranceListAdapter(private val context: Context) :
             is ZonesViewHolder -> {
                 holder.apply {
                     bind(item as UIModel.ZonesModel)
-                    changeViewHolderBackground(this, position)
+                    setViewHolderColor(holder, getColorResource(position))
                 }
             }
             is SplitsViewHolder -> {
@@ -53,19 +53,45 @@ class EnduranceListAdapter(private val context: Context) :
         position: Int
     ) {
         if (position % 2 == 0) {
-            holder.itemView.setBackgroundColor(
-                context.resources.getColor(
-                    R.color.lighter_gray,
-                    null
-                )
-            )
+            setViewHolderColor(holder, R.color.lighter_gray)
         } else {
-            holder.itemView.setBackgroundColor(
-                context.resources.getColor(
-                    R.color.white,
-                    null
-                )
+            setViewHolderColor(holder, R.color.white)
+        }
+    }
+
+    private fun setViewHolderColor(holder: RecyclerView.ViewHolder, colorResource: Int) {
+        holder.itemView.setBackgroundColor(
+            context.resources.getColor(
+                colorResource,
+                null
             )
+        )
+    }
+
+    private fun getColorResource(position: Int): Int {
+        return when (position) {
+            0 -> {
+                R.color.zone_one_color
+            }
+            1 -> {
+                R.color.zone_two_color
+            }
+            2 -> {
+                R.color.zone_three_color
+            }
+            3 -> {
+                R.color.zone_four_color
+            }
+            4 -> {
+                R.color.zone_five_color
+            }
+            5 -> {
+                R.color.zone_six_color
+            }
+            6 -> {
+                R.color.zone_seven_color
+            }
+            else -> throw IllegalArgumentException("Color resource not found.")
         }
     }
 

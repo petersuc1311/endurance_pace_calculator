@@ -22,7 +22,7 @@ class ZonesViewModel @Inject constructor() : ViewModel() {
     private val _zoneMethodType = MutableStateFlow(ZoneMethodType.LTHR)
     val zoneMethodType: StateFlow<ZoneMethodType> = _zoneMethodType
 
-    private val _powerZoneActivity = MutableStateFlow(ZoneActivity.BIKE)
+    private val _powerZoneActivity = MutableStateFlow(ZoneActivity.RUN)
 
     private val _inputStatus = MutableStateFlow(InputCheckStatus.PASS)
     val inputStatus: StateFlow<InputCheckStatus> = _inputStatus

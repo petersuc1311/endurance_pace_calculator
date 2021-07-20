@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/splitListItemRootLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_8">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineSplitsFirst"
@@ -25,10 +26,10 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvSplitDistance"
-            style="@style/SplitsListTheme"
+            style="@style/ListItemTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{splitsItem.getSplitDistance}"
+            android:text="@{splitsItem.getSplitNumber}"
             app:layout_constraintEnd_toEndOf="@id/guidelineSplitsFirst"
             app:layout_constraintStart_toStartOf="@id/guidelineSplitsFirst"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +44,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvSplitTime"
-            style="@style/SplitsListTheme"
+            style="@style/ListItemTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{splitsItem.getSplitTime}"
@@ -60,7 +61,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvSplitsTotalDistance"
-            style="@style/SplitsListTheme"
+            style="@style/ListItemTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{splitsItem.getTotalDistance}"
@@ -77,7 +78,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvSplitsTotalTime"
-            style="@style/SplitsListTheme"
+            style="@style/ListItemTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{splitsItem.getTotalTime}"

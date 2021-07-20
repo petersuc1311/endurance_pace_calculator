@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/zonesListItemRootLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_8">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineZonesFirst"
@@ -25,7 +26,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvZoneLabel"
-            style="@style/ZonesListTheme"
+            style="@style/ListItemTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{zoneItem.getZone}"
@@ -44,7 +45,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvPercentageLabel"
-            style="@style/ZonesListTheme"
+            style="@style/ListItemTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{zoneItem.getZoneBounds}"
@@ -61,7 +62,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvRangeLabel"
-            style="@style/ZonesListTheme"
+            style="@style/ListItemTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{zoneItem.getZoneRange}"

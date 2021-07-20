@@ -23,7 +23,7 @@
 
     <include
         android:id="@+id/layoutSwimPace400"
-        layout="@layout/layout_minutes_seconds"
+        layout="@layout/layout_textviews_minutes_seconds"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/sliderSwimPace400"
@@ -35,7 +35,7 @@
         android:id="@+id/sliderSwimPace400"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_4"
         android:stepSize="1"
         android:value="480"
         android:valueFrom="240"
@@ -50,7 +50,7 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_4"
         android:text="@string/swim_pace_for_200_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sliderSwimPace400" />
@@ -60,7 +60,7 @@
         android:id="@+id/sliderSwimPace200"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_4"
         android:stepSize="1"
         android:value="240"
         android:valueFrom="120"
@@ -72,7 +72,7 @@
 
     <include
         android:id="@+id/layoutSwimPace200"
-        layout="@layout/layout_minutes_seconds"
+        layout="@layout/layout_textviews_minutes_seconds"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/sliderSwimPace200"
@@ -87,7 +87,6 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        android:layout_marginEnd="@dimen/dimen_8"
         app:layout_constraintBottom_toBottomOf="@+id/tvSwimCSS"
         app:layout_constraintEnd_toStartOf="@+id/tvSwimCSS"
         app:layout_constraintTop_toTopOf="@+id/tvSwimCSS"
@@ -98,8 +97,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:layout_marginTop="@dimen/dimen_8"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sliderSwimPace200"

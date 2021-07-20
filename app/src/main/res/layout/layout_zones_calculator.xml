@@ -36,7 +36,7 @@
 
             <include
                 android:id="@+id/layoutHeartRateZones"
-                layout="@layout/layout_heart_rate_zones"
+                layout="@layout/layout_zones_heart_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8"
@@ -44,7 +44,7 @@
 
             <include
                 android:id="@+id/layoutPowerZones"
-                layout="@layout/layout_power_zones"
+                layout="@layout/layout_zones_power"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -53,7 +53,7 @@
 
             <include
                 android:id="@+id/layoutSwimPaceZones"
-                layout="@layout/layout_swim_pace_zones"
+                layout="@layout/layout_zones_swim_pace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"

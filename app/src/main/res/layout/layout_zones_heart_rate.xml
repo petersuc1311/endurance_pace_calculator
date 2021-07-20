@@ -31,10 +31,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiBPM"
-            style="@style/BpmInputTextAppearance"
+            style="@style/BpmFtpInputTextAppearance"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center" />
+            android:layout_height="match_parent" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textview.MaterialTextView

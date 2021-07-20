@@ -122,7 +122,7 @@ class ZonesCalculatorHelperTest {
     fun`generate run power zones from functional threshold power and return zone one`() {
         //Given
         val runFTP = 250
-        val expectedResult = "125->195"
+        val expectedResult = "125->190"
         //When
         zonesCalculatorHelper.generatePowerZones(runFTP, RUN_POWER_ID)
         val result = zonesCalculatorHelper.getRunPowerZones()
@@ -141,14 +141,14 @@ class ZonesCalculatorHelperTest {
     fun`generate run power zones from functional threshold power and return zone seven`() {
         //Given
         val runFTP = 250
-        val expectedResult = "312->1000"
+        val expectedResult = "300->1000"
         //When
         zonesCalculatorHelper.generatePowerZones(runFTP, RUN_POWER_ID)
         val result = zonesCalculatorHelper.getRunPowerZones()
 
         //Then
-        val lowerBound = "${result[6].lowerPowerRange}"
-        val upperBound = "${result[6].upperPowerRange}"
+        val lowerBound = "${result[4].lowerPowerRange}"
+        val upperBound = "${result[4].upperPowerRange}"
 
         //Then
         assertThat("$lowerBound->$upperBound").isEqualTo(
@@ -179,7 +179,7 @@ class ZonesCalculatorHelperTest {
     fun`generate heart rate zones from lactate threshold and return zone five`() {
         //Given
         val lthr = 170
-        val expectedResult = "170->1000"
+        val expectedResult = "178->1000"
         //When
         zonesCalculatorHelper.generateHeartRateZones(lthr)
         val result = zonesCalculatorHelper.getHeartRateZones()

@@ -1,13 +1,13 @@
 package dev.psuchanek.endurancepacecalculator.models
 
 data class Split(
-    val splitDistance: Float,
+    val splitNumber: Int,
     val splitTime: String,
     val splitTotalDistance: Float,
     val totalTime: String
 ) {
-    val getSplitDistance: String
-        get() = "$splitDistance"
+    val getSplitNumber: String
+        get() = "$splitNumber"
 
     val getSplitTime: String
         get() = splitTime

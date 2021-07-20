@@ -59,5 +59,6 @@
     <string name="total_distance_label">Total distance</string>
     <string name="total_time_label">Total time</string>
     <string name="time_unit_minutes_label">min</string>
+    <string name="split_number_label">Split No.</string>
 
 </resources>

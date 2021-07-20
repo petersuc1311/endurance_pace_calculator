@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,11 +7,19 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineTriLayout"
+        android:id="@+id/guidelineTriLayout65"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.65" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTriLayout825"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.825" />
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSwimLabel"
@@ -31,40 +40,41 @@
         android:valueFrom="60.0"
         android:valueTo="180.0"
         app:labelBehavior="gone"
-        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout"
+        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout65"
         app:layout_constraintStart_toStartOf="@id/tvSwimLabel"
         app:layout_constraintTop_toBottomOf="@id/tvSwimLabel" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSwimPace"
-        style="@style/PaceTextViewAppearance"
-        android:layout_width="56dp"
+        style="@style/TimeValuesTextViewAppearance"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/tvSwimTotalTime"
         app:layout_constraintEnd_toStartOf="@id/tvSwimUnit"
-        app:layout_constraintStart_toEndOf="@id/swimSlider"
+        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout825"
         app:layout_constraintTop_toTopOf="@id/swimSlider"
         tools:hint="2:00" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSwimUnit"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_4"
         android:text="@string/swim_unit_label"
         app:layout_constraintBottom_toBottomOf="@id/tvSwimPace"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTriLayout825"
         app:layout_constraintStart_toEndOf="@id/tvSwimPace"
         app:layout_constraintTop_toTopOf="@id/tvSwimPace" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSwimTotalTime"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/swimSlider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTriLayout825"
+        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout825"
         app:layout_constraintTop_toBottomOf="@id/tvSwimPace"
         tools:hint="00:00:00" />
 
@@ -73,7 +83,7 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_4"
         android:text="@string/transition_one_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/swimSlider" />
@@ -88,29 +98,31 @@
         android:valueFrom="60"
         android:valueTo="540"
         app:labelBehavior="gone"
-        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout"
+        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout65"
         app:layout_constraintStart_toStartOf="@id/tvTransitionOneLabel"
         app:layout_constraintTop_toBottomOf="@id/tvTransitionOneLabel" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTransitionOneTime"
-        style="@style/PaceTextViewAppearance"
-        android:layout_width="56dp"
+        style="@style/TimeValuesTextViewAppearance"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/transitionOneSlider"
         app:layout_constraintEnd_toStartOf="@id/tvTimeUnitTransitionOne"
-        app:layout_constraintStart_toEndOf="@id/transitionOneSlider"
+        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout825"
         app:layout_constraintTop_toTopOf="@id/transitionOneSlider"
         tools:hint="5:00" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTimeUnitTransitionOne"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_4"
         android:text="@string/time_unit_minutes_label"
         app:layout_constraintBottom_toBottomOf="@id/tvTransitionOneTime"
-        app:layout_constraintStart_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTriLayout825"
+        app:layout_constraintStart_toEndOf="@id/tvTransitionOneTime"
         app:layout_constraintTop_toTopOf="@id/tvTransitionOneTime" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -118,7 +130,7 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_4"
         android:text="@string/bike_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/transitionOneSlider" />
@@ -133,39 +145,41 @@
         android:valueFrom="20"
         android:valueTo="50"
         app:labelBehavior="gone"
-        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout"
+        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout65"
         app:layout_constraintStart_toStartOf="@id/tvBikeLabel"
         app:layout_constraintTop_toBottomOf="@id/tvBikeLabel" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvBikePace"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/tvBikeTotalTime"
-        app:layout_constraintEnd_toStartOf="@id/tvSwimUnit"
-        app:layout_constraintStart_toEndOf="@id/bikeSlider"
+        app:layout_constraintEnd_toStartOf="@id/tvBikeUnit"
+        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout825"
         app:layout_constraintTop_toTopOf="@id/bikeSlider"
         tools:hint="25" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvBikeUnit"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_4"
         android:text="@string/bike_unit_label"
         app:layout_constraintBottom_toBottomOf="@id/tvBikePace"
-        app:layout_constraintStart_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTriLayout825"
+        app:layout_constraintStart_toEndOf="@id/tvBikePace"
         app:layout_constraintTop_toTopOf="@id/tvBikePace" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvBikeTotalTime"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/bikeSlider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTriLayout825"
+        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout825"
         app:layout_constraintTop_toBottomOf="@id/tvBikePace"
         tools:hint="00:00:00" />
 
@@ -175,8 +189,8 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
-        android:text="@string/transition_one_label"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:text="@string/transition_two_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bikeSlider" />
 
@@ -190,29 +204,31 @@
         android:valueFrom="60"
         android:valueTo="540"
         app:labelBehavior="gone"
-        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout"
+        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout65"
         app:layout_constraintStart_toStartOf="@id/tvTransitionTwoLabel"
         app:layout_constraintTop_toBottomOf="@id/tvTransitionTwoLabel" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTransitionTwoTime"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/transitionTwoSlider"
         app:layout_constraintEnd_toStartOf="@id/tvTimeUnitTransitionTwo"
-        app:layout_constraintStart_toEndOf="@id/transitionTwoSlider"
+        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout825"
         app:layout_constraintTop_toTopOf="@id/transitionTwoSlider"
         tools:hint="5:00" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTimeUnitTransitionTwo"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_4"
         android:text="@string/time_unit_minutes_label"
         app:layout_constraintBottom_toBottomOf="@id/tvTransitionTwoTime"
-        app:layout_constraintStart_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTriLayout825"
+        app:layout_constraintStart_toEndOf="@id/tvTransitionTwoTime"
         app:layout_constraintTop_toTopOf="@id/tvTransitionTwoTime" />
 
 
@@ -221,7 +237,7 @@
         style="@style/LabelsTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_4"
         android:text="@string/run_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/transitionTwoSlider" />
@@ -236,41 +252,53 @@
         android:valueFrom="120"
         android:valueTo="540"
         app:labelBehavior="gone"
-        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout"
+        app:layout_constraintEnd_toStartOf="@id/guidelineTriLayout65"
         app:layout_constraintStart_toStartOf="@id/tvRunLabel"
         app:layout_constraintTop_toBottomOf="@id/tvRunLabel" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvRunPace"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/tvRunTotalTime"
         app:layout_constraintEnd_toStartOf="@id/tvRunUnit"
-        app:layout_constraintStart_toEndOf="@id/runSlider"
+        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout825"
         app:layout_constraintTop_toTopOf="@id/runSlider"
         tools:hint="5:30" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvRunUnit"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_4"
         android:text="@string/run_unit_label"
         app:layout_constraintBottom_toBottomOf="@id/tvRunPace"
-        app:layout_constraintStart_toStartOf="@id/tvSwimUnit"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTriLayout825"
+        app:layout_constraintStart_toEndOf="@id/tvRunPace"
         app:layout_constraintTop_toTopOf="@id/tvRunPace" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvRunTotalTime"
-        style="@style/PaceTextViewAppearance"
+        style="@style/TimeValuesTextViewAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/runSlider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout"
+        app:layout_constraintEnd_toEndOf="@id/guidelineTriLayout825"
+        app:layout_constraintStart_toStartOf="@id/guidelineTriLayout825"
         app:layout_constraintTop_toBottomOf="@id/tvRunPace"
         tools:hint="00:00:00" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:background="@color/lighter_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/runSlider" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTotalTimeLabel"
@@ -280,14 +308,14 @@
         android:layout_marginTop="@dimen/dimen_8"
         android:text="@string/total_duration_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/runSlider" />
+        app:layout_constraintTop_toBottomOf="@id/separator" />
 
     <include
         android:id="@+id/layoutTriathlonTotalDurationTime"
         layout="@layout/layout_textviews_hour_minutes_seconds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_4"
         app:layout_constraintTop_toBottomOf="@id/tvTotalTimeLabel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

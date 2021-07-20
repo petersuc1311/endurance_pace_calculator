@@ -39,8 +39,7 @@
             android:id="@+id/tiFTP"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/BpmInputTextAppearance"
-            android:textAlignment="center" />
+            style="@style/BpmFtpInputTextAppearance"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 

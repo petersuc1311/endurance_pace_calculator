@@ -39,20 +39,28 @@ class SplitsCalculatorHelper : CalculatorHelper() {
         for (i in 0 until multiplier.toInt()) {
             splitsList.add(
                 i, Split(
-                    splitDistance = frequency,
-                    splitTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(baseSplitTime),
+                    splitNumber = i + 1,
+                    splitTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(
+                        baseSplitTime
+                    ),
                     splitTotalDistance = (frequency + (frequency * i)).roundUpDecimals(2),
-                    totalTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(baseSplitTime + (baseSplitTime * i))
+                    totalTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(
+                        baseSplitTime + (baseSplitTime * i)
+                    )
                 )
             )
         }
         if (!multiplier.rem(1).equals(0.00f)) {
             splitsList.add(
                 splitsList.size, Split(
-                    splitDistance = splitDistanceRem,
-                    splitTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(splitTimeRem),
+                    splitNumber = splitsList.size + 1,
+                    splitTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(
+                        splitTimeRem
+                    ),
                     splitTotalDistance = distance.roundUpDecimals(2),
-                    totalTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(durationInSeconds)
+                    totalTime = generateDurationStringInHoursMinutesSecondsWithMilliseconds(
+                        durationInSeconds
+                    )
                 )
             )
         }
@@ -80,7 +88,6 @@ class SplitsCalculatorHelper : CalculatorHelper() {
         baseSplitTime: Float,
         multiplier: Float
     ): Float {
-        val multiplierWithoutDecimals = multiplier.toInt()
         return (durationInSeconds - (baseSplitTime * multiplier.withoutDecimals())).roundUpDecimals(
             2
         )

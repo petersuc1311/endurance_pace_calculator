@@ -39,7 +39,11 @@ class SplitsViewModelTest {
         val expectedResult = "25:00"
 
         //When
-        splitsViewModel.updateSplitsUI(duration)
+        with(splitsViewModel) {
+            //When
+            setDurationValue(duration)
+            updateSplitsUI()
+        }
         val result = splitsViewModel.splits.first()
 
         //Then
@@ -54,18 +58,23 @@ class SplitsViewModelTest {
         val distance = CalculatorHelper.RUN_5K
         val frequency = SplitsCalculatorHelper.SPLIT_FREQUENCY_400M
         val duration = 1500f //25 minutes in seconds
-        val expectedResult = 0.2f
+        val expectedResult = 13
 
         //When
-        splitsViewModel.setDistance(distance)
-        splitsViewModel.setFrequency(frequency)
-        splitsViewModel.updateSplitsUI(duration)
+        with(splitsViewModel) {
+
+            //When
+            setDurationValue(duration)
+            setDistance(distance)
+            setFrequency(frequency)
+            updateSplitsUI()
+        }
         val result = splitsViewModel.splits.first()
 
         //Then
         println(result.size)
         println(result)
-        assertThat(result[result.size - 1].splitItem.splitDistance).isEqualTo(expectedResult)
+        assertThat(result[result.size - 1].splitItem.splitNumber).isEqualTo(expectedResult)
     }
 
     @Test

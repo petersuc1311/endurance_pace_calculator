@@ -20,13 +20,12 @@ import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import dev.psuchanek.endurancepacecalculator.R
 import dev.psuchanek.endurancepacecalculator.adapters.EnduranceListAdapter
-import dev.psuchanek.endurancepacecalculator.databinding.LayoutMinutesSecondsBinding
+import dev.psuchanek.endurancepacecalculator.databinding.LayoutTextviewsMinutesSecondsBinding
 import dev.psuchanek.endurancepacecalculator.databinding.LayoutZonesCalculatorBinding
 import dev.psuchanek.endurancepacecalculator.models.UIModel
 import dev.psuchanek.endurancepacecalculator.utils.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.IllegalStateException
 
 @AndroidEntryPoint
 class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
@@ -81,6 +80,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
             this@ZonesCalculatorFragment.sliderSwimPace400 = sliderSwimPace400
             this@ZonesCalculatorFragment.sliderSwimPace200 = sliderSwimPace200
         }
+
     }
 
     private val editor =
@@ -193,10 +193,10 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
     private fun handleSportChoice(position: Int) {
         when (position) {
             0 -> {
-                zonesViewModel.setPowerZoneActivity(ZoneActivity.BIKE)
+                zonesViewModel.setPowerZoneActivity(ZoneActivity.RUN)
             }
             1 -> {
-                zonesViewModel.setPowerZoneActivity(ZoneActivity.RUN)
+                zonesViewModel.setPowerZoneActivity(ZoneActivity.BIKE)
             }
         }
         submitPowerToViewModel(textInputFTP.text.toString())
@@ -326,7 +326,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
         enduranceAdapter.submitList(zonesList)
     }
 
-    private fun LayoutMinutesSecondsBinding.updateMinutesSecondsUI(list: List<String>) {
+    private fun LayoutTextviewsMinutesSecondsBinding.updateMinutesSecondsUI(list: List<String>) {
         this.tvPaceMinutes.text = list[0]
         this.tvPaceSeconds.text = list[1]
     }
@@ -342,7 +342,6 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
             ZoneMethodType.SWIM_PACE -> {
                 changeZonesLayoutVisibility(lthr = false, power = false, swimPace = true)
             }
-            else -> throw IllegalStateException("This  zone method type is not supported")
         }
 
     }
@@ -356,6 +355,7 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
         binding.layoutPowerZones.root.isVisible = power
         binding.layoutSwimPaceZones.root.isVisible = swimPace
         changeZonesListHeaderVisibility(lthr, power, swimPace)
+
     }
 
     private fun changeZonesListHeaderVisibility(lthr: Boolean, power: Boolean, swimPace: Boolean) {

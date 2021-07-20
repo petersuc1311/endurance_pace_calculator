@@ -70,7 +70,7 @@ class SplitsCalculatorHelperTest {
         val frequency = SplitsCalculatorHelper.SPLIT_FREQUENCY_400M
         val durationInSeconds = 1500f
         val expectedResult = Split(
-            splitDistance = 0.2f,
+            splitNumber = 13,
             splitTime = "01:00",
             splitTotalDistance = CalculatorHelper.RUN_5K,
             totalTime = "25:00"
@@ -93,7 +93,7 @@ class SplitsCalculatorHelperTest {
         val durationInSeconds = 3000f
         val expectedListSize = 25
         val expectedResult = Split(
-            splitDistance = 0.4f,
+            splitNumber = 25,
             splitTime = "02:00",
             splitTotalDistance = CalculatorHelper.RUN_10K,
             totalTime = "50:00"
@@ -116,9 +116,9 @@ class SplitsCalculatorHelperTest {
         val durationInSeconds = 7200f
 
         val expectedResult = Split(
-            splitDistance = 0.098f,
+            splitNumber = 8,
             splitTime = "00:40.91",
-            splitTotalDistance = distance,
+            splitTotalDistance = 21.1f,
             totalTime = "02:00:00"
         )
 
@@ -140,9 +140,9 @@ class SplitsCalculatorHelperTest {
         val durationInSeconds = 14400f
 
         val expectedResult = Split(
-            splitDistance = 0.195f,
+            splitNumber = 15,
             splitTime = "01:11.56",
-            splitTotalDistance = distance,
+            splitTotalDistance = 42.2f,
             totalTime = "04:00:00"
         )
 
