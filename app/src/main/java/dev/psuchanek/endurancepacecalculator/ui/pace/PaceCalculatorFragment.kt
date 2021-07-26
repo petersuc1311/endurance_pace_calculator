@@ -239,12 +239,12 @@ class PaceCalculatorFragment : Fragment(R.layout.layout_pace_calculator) {
     private fun activitySpinnerOnItemClickListener() =
         AdapterView.OnItemClickListener { _, _, position, _ ->
             when (position) {
-                0, 1, 2, 3 -> {
+                ACTIVITY_CHOICE_RUN_5KM, ACTIVITY_CHOICE_RUN_10KM, ACTIVITY_CHOICE_RUN_HALF_MARATHON, ACTIVITY_CHOICE_RUN_FULL_MARATHON -> {
                     switchRunAndTriathlonCalculatorVisibility()
                     position.setActivityTypeFromPosition()
                 }
 
-                4, 5, 6, 7 -> {
+                ACTIVITY_CHOICE_TRIATHLON_SPRINT, ACTIVITY_CHOICE_TRIATHLON_OLYMPIC, ACTIVITY_CHOICE_TRIATHLON_HALF, ACTIVITY_CHOICE_TRIATHLON_FULL -> {
                     switchRunAndTriathlonCalculatorVisibility(false)
                     position.setActivityTypeFromPosition()
                 }
@@ -258,36 +258,36 @@ class PaceCalculatorFragment : Fragment(R.layout.layout_pace_calculator) {
 
     private fun Int.setActivityTypeFromPosition() {
         when (this) {
-            0 -> {
+            ACTIVITY_CHOICE_RUN_5KM -> {
                 ActivityType.RUN_FIVE_KM.setActivityTypeInViewModel()
             }
-            1 -> {
+            ACTIVITY_CHOICE_RUN_10KM -> {
                 ActivityType.RUN_TEN_KM.setActivityTypeInViewModel()
             }
-            2 -> {
+            ACTIVITY_CHOICE_RUN_HALF_MARATHON -> {
                 ActivityType.RUN_HALF_MARATHON.setActivityTypeInViewModel()
             }
-            3 -> {
+            ACTIVITY_CHOICE_RUN_FULL_MARATHON -> {
                 ActivityType.RUN_FULL_MARATHON.setActivityTypeInViewModel()
             }
-            4 -> {
+            ACTIVITY_CHOICE_TRIATHLON_SPRINT -> {
                 ActivityType.SPRINT.setActivityTypeInViewModel()
             }
-            5 -> {
+            ACTIVITY_CHOICE_TRIATHLON_OLYMPIC -> {
                 ActivityType.OLYMPIC.setActivityTypeInViewModel()
             }
-            6 -> {
+            ACTIVITY_CHOICE_TRIATHLON_HALF -> {
                 ActivityType.HALF_TRIATHLON.setActivityTypeInViewModel()
             }
-            7 -> {
+            ACTIVITY_CHOICE_TRIATHLON_FULL -> {
                 ActivityType.FULL_TRIATHLON.setActivityTypeInViewModel()
             }
         }
         when (this) {
-            in 0..3 -> {
+            in ACTIVITY_CHOICE_RUN_5KM..ACTIVITY_CHOICE_RUN_FULL_MARATHON -> {
                 submitPaceValuesToViewModel(sliderRunPace.value)
             }
-            in 4..7 -> {
+            in ACTIVITY_CHOICE_TRIATHLON_SPRINT..ACTIVITY_CHOICE_TRIATHLON_FULL -> {
                 submitTriathlonStagePaceToViewModel(sliderSwim.value, TriStage.SWIM)
                 submitTriathlonStagePaceToViewModel(sliderTransitionOne.value, TriStage.T1)
                 submitTriathlonStagePaceToViewModel(sliderBike.value, TriStage.BIKE)
@@ -300,6 +300,18 @@ class PaceCalculatorFragment : Fragment(R.layout.layout_pace_calculator) {
 
     private fun ActivityType.setActivityTypeInViewModel() {
         paceViewModel.setActivityType(this)
+    }
+
+    companion object {
+        private const val ACTIVITY_CHOICE_RUN_5KM = 0
+        private const val ACTIVITY_CHOICE_RUN_10KM = 1
+        private const val ACTIVITY_CHOICE_RUN_HALF_MARATHON = 2
+        private const val ACTIVITY_CHOICE_RUN_FULL_MARATHON = 3
+
+        private const val ACTIVITY_CHOICE_TRIATHLON_SPRINT = 4
+        private const val ACTIVITY_CHOICE_TRIATHLON_OLYMPIC = 5
+        private const val ACTIVITY_CHOICE_TRIATHLON_HALF = 6
+        private const val ACTIVITY_CHOICE_TRIATHLON_FULL = 7
     }
 }
 

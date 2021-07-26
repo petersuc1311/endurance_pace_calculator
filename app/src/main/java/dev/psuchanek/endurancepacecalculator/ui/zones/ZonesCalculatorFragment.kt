@@ -171,15 +171,15 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
 
     private fun handleZonesMethodChoice(position: Int) {
         when (position) {
-            0 -> {
+            METHOD_CHOICE_LTHR -> {
                 zonesViewModel.setZoneMethodType(ZoneMethodType.LTHR)
                 submitBpmToViewModel(textInputBPM.text.toString())
             }
-            1 -> {
+            METHOD_CHOICE_FTP -> {
                 zonesViewModel.setZoneMethodType(ZoneMethodType.POWER)
                 submitPowerToViewModel(textInputFTP.text.toString())
             }
-            2 -> {
+            METHOD_CHOICE_SWIM_PACE -> {
                 clearAdapterList()
                 zonesViewModel.setZoneMethodType(ZoneMethodType.SWIM_PACE)
                 submitSwimPaceValuesToViewModel(
@@ -192,10 +192,10 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
 
     private fun handleSportChoice(position: Int) {
         when (position) {
-            0 -> {
+            SPORT_CHOICE_RUN -> {
                 zonesViewModel.setPowerZoneActivity(ZoneActivity.RUN)
             }
-            1 -> {
+            SPORT_CHOICE_BIKE -> {
                 zonesViewModel.setPowerZoneActivity(ZoneActivity.BIKE)
             }
         }
@@ -377,6 +377,15 @@ class ZonesCalculatorFragment : Fragment(R.layout.layout_zones_calculator) {
                 binding.layoutHeartRateZones.tiLayoutBPM.error = null
             }
         }
+    }
+
+    companion object {
+        private const val METHOD_CHOICE_LTHR = 0
+        private const val METHOD_CHOICE_FTP = 1
+        private const val METHOD_CHOICE_SWIM_PACE = 2
+
+        private const val SPORT_CHOICE_RUN = 0
+        private const val SPORT_CHOICE_BIKE = 1
     }
 
 

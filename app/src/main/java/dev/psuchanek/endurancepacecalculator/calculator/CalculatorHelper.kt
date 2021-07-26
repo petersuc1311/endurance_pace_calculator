@@ -4,7 +4,7 @@ import java.lang.IllegalArgumentException
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-open class CalculatorHelper {
+sealed class CalculatorHelper {
 
 
     fun generateDurationListOfStringsInHoursMinutesSeconds(durationInSeconds: Float): List<String> {

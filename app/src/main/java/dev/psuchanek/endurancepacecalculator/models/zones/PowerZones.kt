@@ -6,5 +6,4 @@ data class PowerZones(
     override val upperZoneBound: Int = 0,
     val lowerPowerRange: Int = 0,
     val upperPowerRange: Int = 0
-) : Zones(zone, lowerZoneBound, upperZoneBound, lowerPowerRange, upperPowerRange) {
-}
+) : Zones(zone, lowerZoneBound, upperZoneBound, lowerPowerRange, upperPowerRange)

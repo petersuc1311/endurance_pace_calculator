@@ -198,4 +198,5 @@ class SplitsCalculatorFragment : Fragment(R.layout.layout_splits_calculator) {
     }
 
 
+
 }

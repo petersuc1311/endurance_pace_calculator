@@ -6,5 +6,4 @@ data class PaceZones(
     override var upperZoneBound: Int = 0,
     val lowerPaceRange: List<String> = emptyList(),
     val upperPaceRange: List<String> = emptyList()
-) : Zones(zone, lowerZoneBound, upperZoneBound, lowerPaceRange, upperPaceRange) {
-}
+) : Zones(zone, lowerZoneBound, upperZoneBound, lowerPaceRange, upperPaceRange)
