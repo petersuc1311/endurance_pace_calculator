@@ -55,7 +55,6 @@ fun launchMainCollectionFragment(navController: TestNavHostController) {
         navController.setCurrentDestination(R.id.mainCollectionFragment)
         this.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
             if (viewLifecycleOwner != null) {
-                // The fragment’s view has just been created
                 Navigation.setViewNavController(this.requireView(), navController)
             }
         }
